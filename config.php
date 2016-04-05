@@ -6,6 +6,11 @@ return [
         'username' => 'root',
         'password' => '',
         'database' => 'database',
-        'charset'  => 'utf-8',
+        'charset'  => 'utf8',
+    ],
+    'tables'     => [
+        'users' => [
+
+        ],
     ],
 ];
