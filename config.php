@@ -4,8 +4,8 @@ return [
     'connection' => [
         'hostname' => 'localhost',
         'username' => 'root',
-        'password' => '',
-        'database' => 'database',
+        'password' => 'password',
+        'database' => 'admin',
         'charset'  => 'utf8',
     ],
     'tables'     => [

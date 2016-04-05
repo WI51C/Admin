@@ -2,4 +2,4 @@
 
 require '../vendor/autoload.php';
 
-var_dump(include('../connection.php'));
+$db = include('../connection.php');
