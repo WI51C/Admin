@@ -17,20 +17,12 @@ require 'pages/top.php';
 
 ?>
     <ul>
-        <?php
-        foreach ($content[0] as $key => $value) {
-            ?>
+        <?php foreach ($content[0] as $key => $value): ?>
             <li>
-                <div>
-                    <?= $key ?>
-                </div>
-                <div>
-                    <?= $value ?>
-                </div>
+                <div><?= $key ?></div>
+                <div><?= $value ?></div>
             </li>
-            <?php
-        }
-        ?>
+        <?php endforeach ?>
     </ul>
 <?php
 

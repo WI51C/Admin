@@ -2,14 +2,6 @@
 
 require '../vendor/autoload.php';
 
-$db     = get_connection();
-$config = get_config();
-$tables = $db
-    ->where('TABLE_TYPE', 'BASE TABLE')
-    ->where('TABLE_NAME', array_keys($config['tables']), 'IN')
-    ->where('TABLE_SCHEMA', $config['connection']['database'])
-    ->get('INFORMATION_SCHEMA.TABLES', null, ['TABLE_NAME']);
-
 require 'pages/top.php';
 ?>
     <ul>

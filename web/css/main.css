@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #eee; }
+
+nav {
+  padding: 20px; }
+  nav li {
+    margin-bottom: 20px;
+    display: block; }
+    nav li a {
+      display: block; }
+
+body {
+  background: #333; }
+
+/*# sourceMappingURL=main.css.map */
