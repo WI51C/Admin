@@ -1,0 +1,99 @@
+* {
+  font-family: Raleway; }
+
+#menu {
+  padding: 0;
+  background: #212121;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px; }
+  #menu a {
+    padding: 5px 5px 5px 15px;
+    width: 100%;
+    font-size: 1.7rem;
+    text-align: left;
+    color: #ecfeec; }
+  #menu a:hover {
+    background: #2fef2f; }
+  #menu .current {
+    background: #0fc30f; }
+  #menu .logoarea {
+    color: #ecfeec;
+    margin: 35px 5px; }
+    #menu .logoarea h1 {
+      font-size: 2.5rem;
+      margin: 0 0 0 0px;
+      text-align: center; }
+    #menu .logoarea p {
+      margin: 0 0 0 0px;
+      text-align: center; }
+
+#content {
+  margin-bottom: 55px;
+  padding-left: 0;
+  padding-right: 0; }
+  #content #bread {
+    padding: 10px 0 10px 0;
+    background: #ecfeec; }
+  #content h2 {
+    font-size: 2rem; }
+  #content i.edit {
+    color: #68f368; }
+  #content i.delete {
+    color: #f44336; }
+
+.login-outer .login-inner {
+  margin-top: 200px;
+  background: #fff;
+  padding: 40px 10px; }
+  .login-outer .login-inner .input-field {
+    margin: 30px 0; }
+  .login-outer .login-inner .btn {
+    margin-top: 30px;
+    background: #0fc30f;
+    width: 100%; }
+    .login-outer .login-inner .btn input {
+      width: 100%;
+      height: 100%; }
+  .login-outer .login-inner .toast {
+    background: #aaa; }
+
+.addbtn {
+  background: #2fef2f; }
+
+.addbtn:hover {
+  background: #8ef68e; }
+
+.input-field label {
+  color: black; }
+
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 0 0 #000; }
+
+/* label focus color */
+.input-field input[type=text]:focus + label {
+  color: black; }
+
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 0 0 #000; }
+
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 0 0 #000; }
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: black; }
+
+.btn {
+  background: #0fc30f; }
+
+.btn:hover {
+  background: #17ed17; }
+
+/*# sourceMappingURL=admin.css.map */
