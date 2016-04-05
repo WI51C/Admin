@@ -1,21 +1,15 @@
 <?php
 
-require '../vendor/autoload.php';
-
-require 'pages/top.php';
+require "../vendor/autoload.php";
+include "includes/top.phtml";
 ?>
-    <ul>
-        <?php
-        foreach ($tables['0'] as $table):
-            ?>
-            <li>
-                <a href="table.php?table=<?= $table ?>">
-                    <?= array_key_exists('alias', $config['tables'][$table]) ? $config['tables'][$table]['alias'] : $table ?>
-                </a>
-            </li>
-            <?php
-        endforeach;
-        ?>
-    </ul>
+
+<div id="content" class="col s10 offset-s2">
+    <h1>Select a category to the left.</h1>
+</div>
 <?php
-require 'pages/bottom.php';
+
+include "includes\\bot.phtml";
+?>
+
+
