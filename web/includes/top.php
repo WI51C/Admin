@@ -35,4 +35,3 @@
         </ul>
     </div>
     <div id="content" class="col s10 offset-s2">
-        <div id="inner-content">

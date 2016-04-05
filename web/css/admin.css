@@ -1,6 +1,13 @@
 * {
   font-family: Raleway; }
 
+#inner-content {
+  padding: 20px; }
+
+h2 {
+  font-size: 30px;
+  margin-top: 0; }
+
 #menu {
   padding: 0;
   background: #212121;

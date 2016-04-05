@@ -2,5 +2,9 @@
 
 require "../vendor/autoload.php";
 require "includes/top.php";
-?><p>front page</p><?php
+?>
+    <div id="inner-content">
+        <h2>Changelog:</h2>
+    </div>
+<?php
 require "includes/bottom.php";
