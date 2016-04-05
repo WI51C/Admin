@@ -1,6 +1,8 @@
 {
   "psr-4": {
-    "Admin\\": "src/Admin/",
+    "Admin\\": "src/Admin/"
+  },
+  "autoload": {
     "files": [
       "functions.php"
     ]
