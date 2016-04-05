@@ -26,3 +26,15 @@ function get_config()
 {
     return include('config.php');
 }
+
+/**
+ * Displays a php file.
+ *
+ * @param string $page
+ */
+function display_content(string $page)
+{
+    require 'pages/top.php';
+    require $page;
+    require 'pages/bottom.php';
+}

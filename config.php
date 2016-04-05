@@ -9,11 +9,8 @@ return [
         'charset'  => 'utf8',
     ],
     'tables'     => [
-        'aliases' => [
-            'user' => 'Users',
-        ],
-        'user'    => [
-
+        'user' => [
+            'alias' => 'Users',
         ],
     ],
 ];
