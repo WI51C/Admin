@@ -77,7 +77,7 @@ function apply_join(MysqliDb $db, string $table)
 }
 
 
-function merge_join_inputs($table)
+function merge_join_inputs(string $table)
 {
     $config = get_config();
     $joins  = array_key_exists('joins', $config['tables'][$table]) ? $config['tables'][$table]['joins'] : [];
@@ -85,12 +85,14 @@ function merge_join_inputs($table)
         return $value[0];
     }, $joins);
 
-    $combined = [];
+    $combined = $config['tables'][$table];
     foreach ($tables as $table) {
         $combined = array_merge($config['tables'][$table]['inputs']);
     }
 
-    return $combined;
+    return array_filter($combined, function ($value) {
+        return !(array_key_exists('hidden', $value) && $value['hidden'] === true);
+    });
 }
 
 /**
