@@ -6,6 +6,10 @@ if (!array_key_exists('table', $_GET) || !array_key_exists('primary', $_GET) || 
     header('Location: index.php');
 }
 
+if (!validate_table($_GET['table'])) {
+    header('Location: index.php');
+}
+
 $db = get_connection();
 apply_join($db, $_GET['table']);
 $content = $db->where($_GET['primary'], $_GET['identifier'])->get($_GET['table'], 1);

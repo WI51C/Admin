@@ -5,7 +5,8 @@
  *
  * @return MysqliDb
  */
-function get_connection() {
+function get_connection()
+{
     $config = require 'config.php';
 
     return new MysqliDb(
@@ -21,7 +22,8 @@ function get_connection() {
  *
  * @return array
  */
-function get_config() {
+function get_config()
+{
     return include('config.php');
 }
 
@@ -30,7 +32,8 @@ function get_config() {
  *
  * @param string $page
  */
-function display_content(string $page) {
+function display_content(string $page)
+{
     require 'pages/top.php';
     require $page;
     require 'pages/bottom.php';
@@ -41,7 +44,8 @@ function display_content(string $page) {
  *
  * @return array
  */
-function get_tables() {
+function get_tables()
+{
     $db     = get_connection();
     $config = get_config();
     $tables = [];
@@ -54,19 +58,32 @@ function get_tables() {
              as $table) {
         $table = $table['TABLE_NAME'];
         if (array_key_exists($table, $config['tables'])) {
-            $tables[ $table ] = array_key_exists('alias', $config['tables'][ $table ]) ? $config['tables'][ $table ]['alias'] : $table;
+            $tables[$table] = array_key_exists('alias', $config['tables'][$table]) ? $config['tables'][$table]['alias'] : $table;
         }
     }
 
     return $tables;
 }
 
-function apply_join(MysqliDb $db, string $table) {
+function apply_join(MysqliDb $db, string $table)
+{
     $config = get_config();
-    $joins  = array_key_exists('joins', $config['tables'][ $table ]) ? $config['tables'][ $table ]['joins'] : [];
+    $joins  = array_key_exists('joins', $config['tables'][$table]) ? $config['tables'][$table]['joins'] : [];
     foreach ($joins as $join) {
         call_user_func_array([$db, 'join'], $join);
     }
 
     return $db;
+}
+
+/**
+ * Checks if a table can be shown
+ *
+ * @param string $table
+ *
+ * @return bool
+ */
+function validate_table(string $table)
+{
+    return array_key_exists($table, get_config()['tables']);
 }
