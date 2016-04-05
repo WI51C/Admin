@@ -85,9 +85,9 @@ function merge_join_inputs(string $table)
         return $value[0];
     }, $joins);
 
-    $combined = $config['tables'][$table];
+    $combined = $config['tables'][$table]['inputs'];
     foreach ($tables as $table) {
-        $combined = array_merge($config['tables'][$table]['inputs']);
+        $combined = array_merge($combined, $config['tables'][$table]['inputs']);
     }
 
     return array_filter($combined, function ($value) {

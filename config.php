@@ -5,7 +5,7 @@ return [
     'connection' => [
         'hostname' => '127.0.0.1',
         'username' => 'root',
-        'password' => 'password',
+        'password' => 'Password',
         'database' => 'admin',
         'charset'  => 'utf8',
     ],
@@ -43,6 +43,16 @@ return [
                     'alias'  => 'Level',
                 ],
             ],
+        ],
+        'image' => [
+            'alias'  => 'Images',
+
+            'inputs' => [
+                'ImageText' =>[
+                    'type' => 'string',
+                    'alias' => 'Image Text'
+                ]
+            ]
         ],
     ],
 ];

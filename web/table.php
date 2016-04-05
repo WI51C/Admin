@@ -24,8 +24,8 @@ $info = array_filter($info, function ($value) {
     <thead>
     <tr>
         <?php
-        var_dump($info);
-        foreach ($info as $key => $item) { ?>
+        var_dump(merge_join_inputs($table));
+        foreach (merge_join_inputs($table) as $key => $item) { ?>
             <th><?= $item['alias'] ?? $key ?? null ?></th>
         <?php } ?>
     </tr>
