@@ -13,7 +13,16 @@ function get_connection()
         $config['connection']['hostname'],
         $config['connection']['username'],
         $config['connection']['password'],
-        $config['connection']['database'],
-        $config['connection']['charset']
+        $config['connection']['database']
     );
+}
+
+/**
+ * Gets the config array of the admin system
+ *
+ * @return array
+ */
+function get_config()
+{
+    return include('config.php');
 }

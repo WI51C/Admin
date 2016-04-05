@@ -9,7 +9,10 @@ return [
         'charset'  => 'utf8',
     ],
     'tables'     => [
-        'users' => [
+        'aliases' => [
+            'user' => 'Users',
+        ],
+        'user'    => [
 
         ],
     ],
