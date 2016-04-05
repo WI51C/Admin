@@ -13,6 +13,20 @@ h2 {
   margin-top: 0;
 }
 
+#reader li {
+  margin-bottom: 20px;
+
+  div {
+    padding: 20px;
+  }
+  .header {
+    background: #888;
+  }
+  .content {
+    background: #eee;
+  }
+}
+
 #menu {
   padding: 0;
   background: #212121;

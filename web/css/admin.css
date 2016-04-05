@@ -8,6 +8,15 @@ h2 {
   font-size: 30px;
   margin-top: 0; }
 
+#reader li {
+  margin-bottom: 20px; }
+  #reader li div {
+    padding: 20px; }
+  #reader li .header {
+    background: #888; }
+  #reader li .content {
+    background: #eee; }
+
 #menu {
   padding: 0;
   background: #212121;

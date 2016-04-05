@@ -5,7 +5,7 @@ return [
     'connection' => [
         'hostname' => '127.0.0.1',
         'username' => 'root',
-        'password' => 'Password',
+        'password' => 'password',
         'database' => 'admin',
         'charset'  => 'utf8',
     ],

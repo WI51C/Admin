@@ -64,7 +64,6 @@ function get_tables() {
 function apply_join(MysqliDb $db, string $table) {
     $config = get_config();
     $joins  = array_key_exists('joins', $config['tables'][ $table ]) ? $config['tables'][ $table ]['joins'] : [];
-    var_dump($joins);
     foreach ($joins as $join) {
         call_user_func_array([$db, 'join'], $join);
     }
