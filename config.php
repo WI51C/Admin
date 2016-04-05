@@ -36,7 +36,6 @@ return [
                 'length' => 4,
                 'alias' => 'Level',
             ],
-
         ],
     ],
 ];
