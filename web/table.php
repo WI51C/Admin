@@ -11,7 +11,8 @@ else
 $db     = get_connection();
 $config = get_config();
 
-$info = $config['tables'][ $table ]['input'];
+$info = $config['tables'][ $table ]['inputs'];
+apply_join($db, $table);
 $data = $db->get($table);
 $info = array_filter($info, function ($value) {
     return !(array_key_exists('hidden', $value) && $value['hidden'] === TRUE);

@@ -3,9 +3,9 @@
 return [
     'header'     => 'Header',
     'connection' => [
-        'hostname' => 'localhost',
+        'hostname' => '127.0.0.1',
         'username' => 'root',
-        'password' => 'password',
+        'password' => 'Password',
         'database' => 'admin',
         'charset'  => 'utf8',
     ],
