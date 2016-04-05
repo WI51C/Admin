@@ -20,22 +20,19 @@
 
 <body>
 
-
 <div class="row">
     <div id="menu" class="col s2">
         <div class="logoarea">
-            <h1>Eksamen</h1>
+            <h1><?= get_config()['header'] ?></h1>
             <p>Admin Control Panel</p>
         </div>
         <ul>
-            <li class="hoverable"><a class="waves-effect waves-light" href="/admin/room/list.php"><i
-                        class="material-icons">home</i> Rooms</a></li>
-            <li class="hoverable"><a class="waves-effect waves-light" href="/admin/roomtype/list.php"><i
-                        class="material-icons">format_paint</i> Room types</a></li>
-            <li class="hoverable"><a class="waves-effect waves-light" href="/admin/attributes/list.php"><i
-                        class="material-icons">bubble_chart</i> Attributes</a></li>
-            <li class="hoverable"><a class="waves-effect waves-light" href="logout.php"><i class="material-icons">power_settings_new</i>
-                    Sign out</a></li>
-
+            <?php foreach (get_tables() as $id => $table): ?>
+                <li class="hoverable">
+                    <a class="waves-effect waves-light" href="table.php?table=<?= $id ?>"><?= $table ?></a>
+                </li>
+            <?php endforeach ?>
         </ul>
     </div>
+    <div id="content" class="col s10 offset-s2">
+        <div id="inner-content">
