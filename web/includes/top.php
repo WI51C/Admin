@@ -22,7 +22,7 @@
 
 <div class="row">
     <div id="menu" class="col s2">
-        <div class="logoarea">
+        <div class="logo-area">
             <h1><?= get_config()['header'] ?></h1>
             <p>Admin Control Panel</p>
         </div>

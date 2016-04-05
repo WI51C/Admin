@@ -18,14 +18,14 @@
     background: #2fef2f; }
   #menu .current {
     background: #0fc30f; }
-  #menu .logoarea {
+  #menu .logo-area {
     color: #ecfeec;
     margin: 35px 5px; }
-    #menu .logoarea h1 {
+    #menu .logo-area h1 {
       font-size: 2.5rem;
       margin: 0 0 0 0px;
       text-align: center; }
-    #menu .logoarea p {
+    #menu .logo-area p {
       margin: 0 0 0 0px;
       text-align: center; }
 

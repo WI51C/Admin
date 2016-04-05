@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'header' => 'Header',
+    'header'     => 'Header',
     'connection' => [
         'hostname' => 'localhost',
         'username' => 'root',
@@ -15,6 +15,9 @@ return [
     'tables'     => [
         'user' => [
             'alias'  => 'Users',
+            'joins'  => [
+                ['image', 'UserImage = ImageId', 'INNER'],
+            ],
             'inputs' => [
                 'UserId'       => [
                     'hidden' => true,
