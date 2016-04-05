@@ -76,6 +76,23 @@ function apply_join(MysqliDb $db, string $table)
     return $db;
 }
 
+
+function merge_join_inputs($table)
+{
+    $config = get_config();
+    $joins  = array_key_exists('joins', $config['tables'][$table]) ? $config['tables'][$table]['joins'] : [];
+    $tables = array_map(function ($value) {
+        return $value[0];
+    }, $joins);
+
+    $combined = [];
+    foreach ($tables as $table) {
+        $combined = array_merge($config['tables'][$table]['inputs']);
+    }
+
+    return $combined;
+}
+
 /**
  * Checks if a table can be shown
  *
