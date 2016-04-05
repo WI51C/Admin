@@ -10,7 +10,8 @@ return [
     ],
     'tables'     => [
         'user' => [
-            'alias' => 'Users',
+            'alias'   => 'Users',
+            'primary' => 'UserId',
         ],
     ],
 ];
