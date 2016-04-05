@@ -9,7 +9,16 @@ return [
         'charset'  => 'utf8',
     ],
     'tables'     => [
-        'users' => [
+        'alias' => [
+        ],
+        'user'  => [
+            'excludes' => [
+                'UserId'
+            ],
+
+            'UserPassword' => [
+                'type' => 'password'
+            ]
 
         ],
     ],
