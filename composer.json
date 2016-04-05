@@ -1,0 +1,8 @@
+{
+  "psr-4": {
+    "Admin\\": "src/Admin/"
+  },
+  "require": {
+    "joshcam/mysqli-database-class": "dev-master"
+  }
+}
