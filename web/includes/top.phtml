@@ -1,0 +1,41 @@
+<?php
+//session_start();
+//
+//if (!isset($_SESSION['admin'])) {
+//    header('location: login.php');
+//}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/admin/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="/admin/css/admin.css" media="screen,projection"/>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+
+
+<div class="row">
+    <div id="menu" class="col s2">
+        <div class="logoarea">
+            <h1>Eksamen</h1>
+            <p>Admin Control Panel</p>
+        </div>
+        <ul>
+            <li class="hoverable"><a class="waves-effect waves-light" href="/admin/room/list.php"><i
+                        class="material-icons">home</i> Rooms</a></li>
+            <li class="hoverable"><a class="waves-effect waves-light" href="/admin/roomtype/list.php"><i
+                        class="material-icons">format_paint</i> Room types</a></li>
+            <li class="hoverable"><a class="waves-effect waves-light" href="/admin/attributes/list.php"><i
+                        class="material-icons">bubble_chart</i> Attributes</a></li>
+            <li class="hoverable"><a class="waves-effect waves-light" href="logout.php"><i class="material-icons">power_settings_new</i>
+                    Sign out</a></li>
+
+        </ul>
+    </div>
