@@ -4,6 +4,10 @@
 
 $main-color: #eee;
 
+th, td {
+  padding: 15px;
+}
+
 #inner-content {
   padding: 20px;
 }
@@ -38,7 +42,7 @@ h2 {
   a {
     padding: 10px 5px 10px 15px;
     width: 100%;
-    font-size: 1.3rem;
+    font-size: 1rem;
     text-align: left;
     color: lighten($main-color, 40%);
     font-weight: 100;
