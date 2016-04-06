@@ -1,4 +1,5 @@
 {
+  "minimum-stability": "dev",
   "require": {
     "w51c/crudl": "dev-master"
   }
