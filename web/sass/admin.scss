@@ -2,7 +2,7 @@
   font-family: Raleway;
 }
 
-$main-color: #2fef2f;
+$main-color: #eee;
 
 #inner-content {
   padding: 20px;
@@ -20,10 +20,10 @@ h2 {
     padding: 20px;
   }
   .header {
-    background: #888;
+    background: darken($main-color, 50%);
   }
   .content {
-    background: #eee;
+    background: darken($main-color, 10%);
   }
 }
 
@@ -36,19 +36,15 @@ h2 {
   left: 0px;
 
   a {
-    padding: 5px 5px 5px 15px;
+    padding: 10px 5px 10px 15px;
     width: 100%;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     text-align: left;
     color: lighten($main-color, 40%);
-
+    font-weight: 100;
   }
   a:hover {
-    background: darken($main-color, 0%);
-  }
-  .current {
-    background: darken($main-color, 15%);
-
+    background: darken($main-color, 20%);
   }
 
   .logo-area {

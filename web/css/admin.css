@@ -13,9 +13,9 @@ h2 {
   #reader li div {
     padding: 20px; }
   #reader li .header {
-    background: #888; }
+    background: #6e6e6e; }
   #reader li .content {
-    background: #eee; }
+    background: #d4d4d4; }
 
 #menu {
   padding: 0;
@@ -25,17 +25,16 @@ h2 {
   bottom: 0px;
   left: 0px; }
   #menu a {
-    padding: 5px 5px 5px 15px;
+    padding: 10px 5px 10px 15px;
     width: 100%;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     text-align: left;
-    color: #ecfeec; }
+    color: white;
+    font-weight: 100; }
   #menu a:hover {
-    background: #2fef2f; }
-  #menu .current {
-    background: #0fc30f; }
+    background: #bbbbbb; }
   #menu .logo-area {
-    color: #ecfeec;
+    color: white;
     margin: 35px 5px; }
     #menu .logo-area h1 {
       font-size: 2.5rem;
@@ -51,11 +50,11 @@ h2 {
   padding-right: 0; }
   #content #bread {
     padding: 10px 0 10px 0;
-    background: #ecfeec; }
+    background: white; }
   #content h2 {
     font-size: 2rem; }
   #content i.edit {
-    color: #68f368; }
+    color: white; }
   #content i.delete {
     color: #f44336; }
 
@@ -67,7 +66,7 @@ h2 {
     margin: 30px 0; }
   .login-outer .login-inner .btn {
     margin-top: 30px;
-    background: #0fc30f;
+    background: #c8c8c8;
     width: 100%; }
     .login-outer .login-inner .btn input {
       width: 100%;
@@ -76,10 +75,10 @@ h2 {
     background: #aaa; }
 
 .addbtn {
-  background: #2fef2f; }
+  background: #eeeeee; }
 
 .addbtn:hover {
-  background: #8ef68e; }
+  background: white; }
 
 .input-field label {
   color: black; }
@@ -107,9 +106,9 @@ h2 {
   color: black; }
 
 .btn {
-  background: #0fc30f; }
+  background: #c8c8c8; }
 
 .btn:hover {
-  background: #17ed17; }
+  background: #e1e1e1; }
 
 /*# sourceMappingURL=admin.css.map */

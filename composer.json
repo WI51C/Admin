@@ -1,13 +1,5 @@
 {
-  "psr-4": {
-    "Admin\\": "src/Admin/"
-  },
-  "autoload": {
-    "files": [
-      "functions.php"
-    ]
-  },
   "require": {
-    "joshcam/mysqli-database-class": "dev-master"
+    "wi51c/crudl": "dev-master"
   }
 }

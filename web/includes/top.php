@@ -27,11 +27,17 @@
             <p>Admin Control Panel</p>
         </div>
         <ul>
+            <li class="hoverable">
+                <a class="waves-effect waves-light" href="index.php">Control panel</a>
+            </li>
             <?php foreach (get_tables() as $id => $table): ?>
                 <li class="hoverable">
                     <a class="waves-effect waves-light" href="table.php?table=<?= $id ?>"><?= $table ?></a>
                 </li>
             <?php endforeach ?>
+            <li class="hoverable">
+                <a class="waves-effect waves-light" href="logout.php">Log out</a>
+            </li>
         </ul>
     </div>
     <div id="content" class="col s10 offset-s2">
