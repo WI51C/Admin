@@ -1,6 +1,11 @@
 {
   "minimum-stability": "dev",
   "require": {
-    "w51c/crudl": "dev-master"
+    "joshcam/mysqli-database-class": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Admin\\": "src/"
+    }
   }
 }
