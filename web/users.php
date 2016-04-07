@@ -47,7 +47,7 @@ ini_set('xdebug.var_display_max_data', 1024);
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'table';
 
-$controller = new \CRUDL\CrudController('127.0.0.1', 'root', 'password', 'admin', 'user');
+$controller = new \CRUDL\Controller('127.0.0.1', 'root', 'password', 'admin', 'user');
 $controller->table->map->newOTO(function ($relation) {
     $relation->joinTable('image');
     $relation->joinCondition('UserImage = ImageId');
