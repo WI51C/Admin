@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "55543ac8edc2e3c7d5225947d3fe55a3",
-    "content-hash": "9aa06f327b0deed0e74bf32ad4aab6b4",
+    "hash": "9b58a8dc9a721d703ac6b16db7210064",
+    "content-hash": "dc403d3b7f6ce7393bacc249ea88d249",
     "packages": [
         {
             "name": "joshcam/mysqli-database-class",
@@ -62,7 +62,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WI51C/CRUDL/zipball/e06c8b8f03af373347a4dbfcd13b4a46cad19e27",
+                "url": "https://api.github.com/repos/WI51C/CRUDL/zipball/bee3d38ea1b4cd91f87ff4a5a1c6c9e5d1288753",
                 "reference": "e06c8b8f03af373347a4dbfcd13b4a46cad19e27",
                 "shasum": ""
             },
@@ -93,7 +93,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "w51c/crudl": 20
+        "joshcam/mysqli-database-class": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

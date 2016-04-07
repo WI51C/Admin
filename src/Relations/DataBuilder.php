@@ -1,6 +1,6 @@
 <?php
 
-namespace CRUDL\Relations;
+namespace Admin\Relations;
 
 class DataBuilder
 {

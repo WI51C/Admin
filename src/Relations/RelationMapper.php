@@ -1,12 +1,12 @@
 <?php
 
-namespace CRUDL\Relations;
+namespace Admin\Relations;
 
 use Closure;
-use CRUDL\Controller;
-use CRUDL\Relations\Instances\MTMRelation;
-use CRUDL\Relations\Instances\OTMRelation;
-use CRUDL\Relations\Instances\OTORelation;
+use Admin\Controller;
+use Admin\Relations\Instances\MTMRelation;
+use Admin\Relations\Instances\OTMRelation;
+use Admin\Relations\Instances\OTORelation;
 
 class RelationMapper
 {

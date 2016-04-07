@@ -1,6 +1,6 @@
 <?php
 
-namespace CRUDL\Table;
+namespace Admin\Table;
 
 use DOMDocument;
 

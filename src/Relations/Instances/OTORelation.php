@@ -1,8 +1,8 @@
 <?php
 
-namespace CRUDL\Relations\Instances;
+namespace Admin\Relations\Instances;
 
-use CRUDL\Relations\Relation;
+use Admin\Relations\Relation;
 
 class OTORelation extends Relation
 {

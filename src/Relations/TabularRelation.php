@@ -1,9 +1,9 @@
 <?php
 
-namespace CRUDL\Relations;
+namespace Admin\Relations;
 
 use Closure;
-use CRUDL\Controller;
+use Admin\Controller;
 
 class TabularRelation extends Relation
 {

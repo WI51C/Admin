@@ -1,18 +1,17 @@
 <?php
 
-namespace CRUDL;
+namespace Admin;
 
-use CRUDL\Modules\Create;
-use CRUDL\Modules\Delete;
-use CRUDL\Modules\Read;
-use CRUDL\Modules\Table;
-use CRUDL\Modules\Update;
+use Admin\Modules\Create;
+use Admin\Modules\Delete;
+use Admin\Modules\Read;
+use Admin\Modules\Table;
+use Admin\Modules\Update;
 use Exception;
 use MysqliDb;
 
 class Controller
 {
-
     /**
      * Instance of Create for inserting data into a database.
      *

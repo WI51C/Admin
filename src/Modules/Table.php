@@ -1,9 +1,9 @@
 <?php
 
-namespace CRUDL\Modules;
+namespace Admin\Modules;
 
-use CRUDL\ModuleInterface;
-use CRUDL\Relations\TabularRelation;
+use Admin\ModuleInterface;
+use Admin\Relations\TabularRelation;
 use MysqliDb;
 
 class Table extends TabularRelation implements ModuleInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace CRUDL\Relations\Instances;
+namespace Admin\Relations\Instances;
 
 class MTMRelation extends OTMRelation
 {

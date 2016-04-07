@@ -1,8 +1,8 @@
 <?php
 
-namespace CRUDL\Relations\Instances;
+namespace Admin\Relations\Instances;
 
-use CRUDL\Relations\TabularRelation;
+use Admin\Relations\TabularRelation;
 
 class OTMRelation extends TabularRelation
 {

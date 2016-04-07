@@ -1,8 +1,8 @@
 <?php
 
-namespace CRUDL\Modules;
+namespace Admin\Modules;
 
-use CRUDL\ModuleInterface;
+use Admin\ModuleInterface;
 use MysqliDb;
 
 class Delete implements ModuleInterface

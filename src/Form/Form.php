@@ -1,6 +1,6 @@
 <?php
 
-namespace CRUDL\Form;
+namespace Admin\Form;
 
 class Form
 {
