@@ -58,12 +58,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WI51C/CRUDL.git",
-                "reference": "72cf21377b211b4a7ed5ef681ba5d91e0cda1921"
+                "reference": "6d070398cd77d0bd64778e4cdd6e73f83d7d1a60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WI51C/CRUDL/zipball/72cf21377b211b4a7ed5ef681ba5d91e0cda1921",
-                "reference": "72cf21377b211b4a7ed5ef681ba5d91e0cda1921",
+                "url": "https://api.github.com/repos/WI51C/CRUDL/zipball/6d070398cd77d0bd64778e4cdd6e73f83d7d1a60",
+                "reference": "6d070398cd77d0bd64778e4cdd6e73f83d7d1a60",
                 "shasum": ""
             },
             "require": {
@@ -86,7 +86,7 @@
                 }
             ],
             "description": "Fucking cruds.",
-            "time": "2016-04-07 07:43:42"
+            "time": "2016-04-07 10:33:50"
         }
     ],
     "packages-dev": [],
