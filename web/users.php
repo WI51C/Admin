@@ -1,8 +1,9 @@
 <?php
+
 require '../vendor/autoload.php';
 require 'includes/top.php';
-$action     = isset($_GET['action']) ? $_GET['action'] : 'table';
-$controller = new \Admin\Controller('127.0.0.1', 'root', 'password', 'admin', 'user');
+
+$controller = new Admin\Controller('localhost', 'root', 'password', 'admin');
 $controller->table->map->newOTO(function ($relation) {
     $relation->joinTable('image');
     $relation->joinCondition('UserImage = ImageId');
@@ -12,5 +13,7 @@ $controller->table->noescape(['UserId']);
 $controller->table->closure('UserId', function ($value) {
     return "<a href='users.php?action=update&id=$value'>Update</a>";
 });
-echo $controller->action($action);
+
+echo $controller->action(array_key_exists('action', $_GET) ? $_GET['action'] : 'table');
+
 require 'includes/bottom.php';
