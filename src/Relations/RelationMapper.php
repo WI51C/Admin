@@ -4,9 +4,9 @@ namespace Admin\Relations;
 
 use Closure;
 use Admin\Controller;
-use Admin\Relations\Instances\MTMRelation;
-use Admin\Relations\Instances\OTMRelation;
-use Admin\Relations\Instances\OTORelation;
+use Admin\Relations\Types\MTMRelation;
+use Admin\Relations\Types\OTMRelation;
+use Admin\Relations\Types\OTORelation;
 
 class RelationMapper
 {

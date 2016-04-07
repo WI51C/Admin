@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Relations\Instances;
+namespace Admin\Relations\Types;
 
 class MTMRelation extends OTMRelation
 {
