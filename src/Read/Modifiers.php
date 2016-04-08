@@ -6,24 +6,28 @@ class Modifiers
 {
 
     /**
-     * Map of columns and their callable values.
+     * Map of modifiers and their columns.
      *
      * @var array
      */
-    protected $map;
+    protected $uses = [];
 
     /**
-     * Adds a closure to a column name.
+     * Applies a modifier to a column.
      *
-     * @param array    $columns  the columns to apply to the map.
-     * @param callable $callable the callable of the modifier.
+     * @param array    $columns
+     * @param callable $callable
+     *
+     * The callable will be passed two values:
+     * - The column
+     * - The row
      *
      * @return $this
      */
-    public function add(array $columns, callable $callable)
+    public function apply(array $columns, callable $callable)
     {
         foreach ($columns as $column) {
-            $this->map[$column] = $callable;
+            $this->uses[$column][] = $callable;
         }
 
         return $this;
