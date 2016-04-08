@@ -3,9 +3,8 @@
 namespace Admin\Modules;
 
 use Admin\CRUD;
-use Admin\ModuleInterface;
 
-class Delete implements ModuleInterface
+class Delete implements Contract
 {
 
     /**

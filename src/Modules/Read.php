@@ -5,7 +5,7 @@ namespace Admin\Modules;
 use Admin\ModuleInterface;
 use Admin\Table\CustomizableTable;
 
-class Read extends CustomizableTable implements ModuleInterface
+class Read implements Contract
 {
 
     /**

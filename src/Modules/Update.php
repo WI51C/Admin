@@ -3,9 +3,8 @@
 namespace Admin\Modules;
 
 use Admin\CRUD;
-use Admin\ModuleInterface;
 
-class Update implements ModuleInterface
+class Update implements Contract
 {
 
     /**

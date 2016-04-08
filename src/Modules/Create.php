@@ -3,9 +3,8 @@
 namespace Admin\Modules;
 
 use Admin\CRUD;
-use Admin\ModuleInterface;
 
-class Create implements ModuleInterface
+class Create implements Contract
 {
 
     /**
