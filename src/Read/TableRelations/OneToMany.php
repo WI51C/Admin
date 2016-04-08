@@ -2,7 +2,7 @@
 
 namespace Admin\Read\TableRelations;
 
-class OTM extends TableRelation
+class OneToMany extends TableRelation
 {
 
     /**

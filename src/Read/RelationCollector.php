@@ -112,7 +112,7 @@ class RelationCollector
      *
      * @return array
      */
-    public function getOTMRelations()
+    public function getOneToManyRelations()
     {
         return $this->otm;
     }
@@ -122,7 +122,7 @@ class RelationCollector
      *
      * @return array
      */
-    public function getMTMRelations()
+    public function getManyToManyRelations()
     {
         return $this->mtm;
     }
