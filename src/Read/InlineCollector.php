@@ -4,8 +4,8 @@ namespace Admin\Read;
 
 use Admin\CRUD;
 use Closure;
-use Admin\Read\Inline\MTMTable;
-use Admin\Read\Inline\OTMTable;
+use Admin\Read\Inline\ManyToManyTable;
+use Admin\Read\Inline\OneToManyTable;
 
 class InlineCollector
 {
@@ -39,11 +39,11 @@ class InlineCollector
      *
      * @param Closure $closure closure to modify the table.
      *
-     * @return OTMTable
+     * @return OneToManyTable
      */
     public function otm(Closure $closure)
     {
-        $this->tables[] = call_user_func($closure, new OTMTable($this->CRUD));
+        $this->tables[] = call_user_func($closure, new OneToManyTable($this->CRUD));
 
         return $this;
     }
@@ -53,11 +53,11 @@ class InlineCollector
      *
      * @param Closure $closure closure to modify the table.
      *
-     * @return MTMTable
+     * @return ManyToManyTable
      */
     public function mtm(Closure $closure)
     {
-        $this->tables[] = call_user_func($closure, new MTMTable($this->CRUD));
+        $this->tables[] = call_user_func($closure, new ManyToManyTable($this->CRUD));
 
         return $this;
     }

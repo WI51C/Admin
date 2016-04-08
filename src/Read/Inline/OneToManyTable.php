@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Inline;
 
-class MTMTable extends OTMTable
+class OneToManyTable extends InlineTable
 {
 
 }
