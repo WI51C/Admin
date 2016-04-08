@@ -3,7 +3,6 @@
 namespace Admin\Read;
 
 use Admin\CRUD;
-use Admin\Read\Inline\InlineTable;
 use Admin\Read\Renderer\TableRenderer;
 use Exception;
 
@@ -16,13 +15,6 @@ class Table
      * @var CRUD
      */
     protected $CRUD;
-
-    /**
-     * The array of simple relations
-     *
-     * @var array
-     */
-    protected $oto = [];
 
     /**
      * The table of the table.
@@ -43,7 +35,7 @@ class Table
      *
      * @var int
      */
-    protected $offset;
+    protected $offset = 0;
 
     /**
      * Where statements of the table.
@@ -74,18 +66,11 @@ class Table
     protected $columns = [];
 
     /**
-     * The closures
-     *
-     * @var Modifiers
-     */
-    public $modifiers;
-
-    /**
      * The inline tables of the Table.
      *
-     * @var InlineTable
+     * @var RelationCollector
      */
-    public $inline;
+    public $relations;
 
     /**
      * Table constructor.
@@ -95,8 +80,7 @@ class Table
     public function __construct(CRUD $CRUD)
     {
         $this->CRUD      = $CRUD;
-        $this->modifiers = new Modifiers();
-        $this->inline    = new InlineCollector($this->CRUD);
+        $this->relations = new RelationCollector($this->CRUD, $this);
     }
 
     /**
@@ -224,26 +208,6 @@ class Table
     }
 
     /**
-     * Joins another table.
-     *
-     * @param string $table     the table to join on.
-     * @param string $condition the condition to join on.
-     * @param string $type      the type of join to perform.
-     *
-     * @return $this
-     */
-    public function oto(string $table, string $condition, string $type = 'INNER')
-    {
-        $this->oto[] = [
-            'table'     => $table,
-            'condition' => $condition,
-            'type'      => $type,
-        ];
-
-        return $this;
-    }
-
-    /**
      * Renders the table.
      *
      * @return string
@@ -260,12 +224,57 @@ class Table
     /**
      * Gets the data of the table.
      *
+     * Gets the data from the main table, and any One-To-One relations.
+     *
      * @return array
      */
-    protected function getData()
+    public function getData()
     {
-        foreach ($this->oto as $oto) {
-            $this->CRUD->connection->join($oto['table'], $oto['condition'], $oto['type']);
+        foreach ($this->relations->getOTORelations() as $oto) {
+            $this->CRUD->connection->join($oto[0], $oto[1], $oto[2]);
         }
+
+        foreach ($this->orders as $order) {
+            $this->CRUD->connection->orderBy($order[0], $order[1]);
+        }
+
+        foreach ($this->havings as $having) {
+            $this->CRUD->connection->having($having[0], $having[1], $having[2], $having[3]);
+        }
+
+        foreach ($this->wheres as $where) {
+            $this->CRUD->connection->where($where[0], $where[1], $where[2], $where[3]);
+        }
+
+        if ($this->offset === 0) {
+            return $this->CRUD->connection->get($this->table, $this->limit, $this->getColumns());
+        }
+
+        return $this->CRUD->connection->get($this->table, [$this->offset, $this->limit], $this->getColumns());
+    }
+
+    /**
+     * Gets the column names to select.
+     *
+     * @return array
+     */
+    protected function getColumns()
+    {
+        $return = [];
+        foreach ($this->columns as $key => $value) {
+            $return[] = is_int($key) ? $value : $key;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Returns the name of the table.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->table;
     }
 }

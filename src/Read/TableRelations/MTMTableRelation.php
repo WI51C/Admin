@@ -1,10 +1,10 @@
 <?php
 
-namespace Admin\Read\Inline;
+namespace Admin\Read\TableRelations;
 
 use Exception;
 
-class ManyToManyTable extends OneToManyTable
+class MTMTableRelation extends TableRelation
 {
 
     /**
