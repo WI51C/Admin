@@ -4,7 +4,7 @@ namespace Admin\Table;
 
 use DOMDocument;
 
-class Table
+class TableRenderer
 {
 
     /**
@@ -12,41 +12,69 @@ class Table
      *
      * @var array
      */
-    protected $headers;
+    protected $headers = [];
 
     /**
      * Data to display in the table.
      *
      * @var array
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * Columns to out without escaping.
      *
      * @var array
      */
-    protected $noescape;
+    protected $escape = [];
 
     /**
-     * Instance of DOMDocument.
+     * The dom instance for creating.
      *
      * @var DOMDocument
      */
     protected $dom;
 
     /**
-     * Table constructor.
+     * Sets the headers of the table.
      *
-     * @param array $headers  headers to display in the table.
-     * @param array $data     data to display in the table.
-     * @param array $noescape to avoid escaping.
+     * @param array $headers
+     *
+     * @return $this
      */
-    public function __construct(array $headers = [], array $data = [], array $noescape = [])
+    public function setHeaders(array $headers)
     {
-        $this->headers  = $headers;
-        $this->data     = $data;
-        $this->noescape = $noescape;
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Sets the data of the table.
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Sets the data of the table.
+     *
+     * @param array $escape
+     *
+     * @return $this
+     */
+    public function setEscape(array $escape)
+    {
+        $this->escape = $escape;
+
+        return $this;
     }
 
     /**
@@ -57,7 +85,15 @@ class Table
     public function render()
     {
         $this->dom = new DOMDocument();
-        $this->dom->loadHTML('<table><thead><tr></tr></thead><tbody></tbody></table>');
+        $this->dom->loadHTML(
+            '<table>
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            ');
 
         $this->makeHead();
         $this->makeBody();
@@ -102,53 +138,5 @@ class Table
             }
             $body->appendChild($tr);
         }
-    }
-
-    /**
-     * Gets the headers of the table.
-     *
-     * @return array
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * Sets the headers of the table.
-     *
-     * @param array $headers
-     *
-     * @return $this
-     */
-    public function setHeaders($headers)
-    {
-        $this->headers = $headers;
-
-        return $this;
-    }
-
-    /**
-     * Gets the data of the table.
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Sets the data of the Table.
-     *
-     * @param array $data
-     *
-     * @return $this
-     */
-    public function setData(array $data)
-    {
-        $this->data = $data;
-
-        return $this;
     }
 }

@@ -63,7 +63,7 @@ class Table
      *
      * @var array
      */
-    protected $noescape = [];
+    protected $escape = [];
 
     /**
      * Table constructor.
@@ -134,9 +134,9 @@ class Table
      *
      * @return $this
      */
-    public function noescapes(array $noescape)
+    public function escape(array $noescape)
     {
-        $this->noescape = $noescape;
+        $this->escape = $noescape;
 
         return $this;
     }
@@ -148,9 +148,9 @@ class Table
      *
      * @return $this
      */
-    public function addNoescape(string $column)
+    public function addEscape(string $column)
     {
-        $this->noescape[] = $column;
+        $this->escape[] = $column;
 
         return $this;
     }
