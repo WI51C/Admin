@@ -94,10 +94,6 @@ class Table
      */
     public function table(string $table)
     {
-        if (!$this->CRUD->connection->has($table)) {
-            throw new Exception(sprintf('Table %s doesnt exist in database %s.', $table, $this->CRUD->database));
-        }
-
         $this->table = $table;
 
         return $this;
