@@ -4,8 +4,7 @@ require '../vendor/autoload.php';
 require 'includes/top.php';
 
 $controller = new Admin\CRUD('localhost', 'root', 'password', 'admin', 'user');
-$controller->read->map->oto();
-
+$controller->read->oto('image', 'ImageId = UserImage');
 echo $controller->action(array_key_exists('action', $_GET) ? $_GET['action'] : 'read');
 
 require 'includes/bottom.php';

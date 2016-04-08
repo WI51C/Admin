@@ -82,13 +82,6 @@ class CRUD
     public $database;
 
     /**
-     * The table of the CRUD.
-     *
-     * @var string
-     */
-    public $table;
-
-    /**
      * CRUDL constructor.
      *
      * Creates CRUDElements of the CRUDL instance.
@@ -108,11 +101,10 @@ class CRUD
 
         $this->connection = new MysqliDb($hostname, $username, $password, $database);
 
-        $this->table  = $table;
-        $this->create = new Create($this);
-        $this->read   = new Read($this);
-        $this->update = new Update($this);
-        $this->delete = new Delete($this);
+        $this->create = (new Create($this))->table($table);
+        $this->read   = (new Read($this))->table($table);
+        $this->update = (new Update($this))->table($table);
+        $this->delete = (new Delete($this))->table($table);
     }
 
     /**

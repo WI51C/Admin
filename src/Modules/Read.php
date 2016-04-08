@@ -3,9 +3,9 @@
 namespace Admin\Modules;
 
 use Admin\ModuleInterface;
-use Admin\Table\CustomizableTable;
+use Admin\Read\Table;
 
-class Read implements Contract
+class Read extends Table implements Contract
 {
 
     /**
@@ -13,7 +13,7 @@ class Read implements Contract
      *
      * @return string
      */
-    public function render()
+    function render()
     {
         return 'read';
     }
