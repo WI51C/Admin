@@ -2,31 +2,27 @@
 
 namespace Admin\Modules;
 
+use Admin\CRUD;
 use Admin\ModuleInterface;
-use MysqliDb;
 
 class Create implements ModuleInterface
 {
 
     /**
-     * Database connection instance.
+     * Instance of CRUD.
      *
-     * @var MysqliDb
+     * @var CRUD
      */
-    protected $connection;
+    protected $CRUD;
 
     /**
-     * Sets the connection of the module.
+     * Read constructor.
      *
-     * @param MysqliDb $connection
-     *
-     * @return $this
+     * @param CRUD $CRUD
      */
-    public function setConnection(MysqliDb $connection)
+    public function __construct(CRUD $CRUD)
     {
-        $this->connection = $connection;
-
-        return $this;
+        $this->CRUD = $CRUD;
     }
 
     /**

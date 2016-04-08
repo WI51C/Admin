@@ -5,13 +5,19 @@ namespace Admin;
 use Admin\Modules\Create;
 use Admin\Modules\Delete;
 use Admin\Modules\Read;
-use Admin\Modules\Table;
 use Admin\Modules\Update;
 use Exception;
 use MysqliDb;
 
 class Controller
 {
+    /**
+     * Modules of the Controller.
+     *
+     * @var array
+     */
+    protected $modules;
+
     /**
      * Instance of Create for inserting data into a database.
      *
@@ -39,13 +45,6 @@ class Controller
      * @var Delete
      */
     public $delete;
-
-    /**
-     * Instance of Create for listing data from a database.
-     *
-     * @var Table
-     */
-    public $table;
 
     /**
      * Mysqli database connection.
@@ -83,6 +82,13 @@ class Controller
     public $database;
 
     /**
+     * The table of the CRUD.
+     *
+     * @var string
+     */
+    public $table;
+
+    /**
      * CRUDL constructor.
      *
      * Creates CRUDElements of the CRUDL instance.
@@ -91,8 +97,9 @@ class Controller
      * @param string $username the username of the database connection.
      * @param string $password the password of the database connection.
      * @param string $database the database of the database connection.
+     * @param string $table    the table of the CRUD.
      */
-    public function __construct(string $hostname, string $username, string $password, string $database)
+    public function __construct(string $hostname, string $username, string $password, string $database, string $table)
     {
         $this->hostname = $hostname;
         $this->username = $username;
@@ -101,32 +108,28 @@ class Controller
 
         $this->connection = new MysqliDb($hostname, $username, $password, $database);
 
+        $this->table  = $table;
         $this->create = new Create($this);
         $this->read   = new Read($this);
         $this->update = new Update($this);
         $this->delete = new Delete($this);
-        $this->table  = new Table($this);
     }
 
     /**
-     * Routes the action to take in the CRUDL instance.
+     * Returns the HTML of the module.
      *
-     * @param string $action the action to perform:
-     *                       - create
-     *                       - read
-     *                       - update
-     *                       - delete
-     *                       - list
+     * @param string $action
      *
      * @throws Exception
+     *
+     * @return string
      */
-    public function action(string $action)
+    public function action(string $action = 'read')
     {
-        $allowed = ['create', 'read', 'update', 'delete', 'table'];
-        if (!in_array($action = trim(strtolower($action)), $allowed)) {
-            throw new Exception(sprintf('Unknown action %s.', $action));
+        if (!in_array($action, ['read', 'delete', 'update', 'create'])) {
+            throw new Exception(sprintf('Action %s is invalid. Valid actions are create, read, update and delete.'));
         }
 
-        echo $this->{$action}->render();
+        return $this->{$action}->render();
     }
 }
