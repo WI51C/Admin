@@ -9,10 +9,10 @@ use Admin\Modules\Update;
 use Exception;
 use MysqliDb;
 
-class Controller
+class CRUD
 {
     /**
-     * Modules of the Controller.
+     * Modules of the CRUD.
      *
      * @var array
      */

@@ -3,10 +3,7 @@
 namespace Admin\Relations;
 
 use Closure;
-use Admin\Controller;
-use Admin\Relations\Types\MTMRelation;
-use Admin\Relations\Types\OTMRelation;
-use Admin\Relations\Types\OTORelation;
+use Admin\CRUD;
 
 class RelationMapper
 {
@@ -33,20 +30,20 @@ class RelationMapper
     protected $mtm = [];
 
     /**
-     * Instance of Controller for accessing global information and resources.
+     * Instance of CRUD for accessing global information and resources.
      *
-     * @var Controller
+     * @var CRUD
      */
-    protected $controller;
+    protected $CRUD;
 
     /**
      * RelationMapper constructor.
      *
-     * @param Controller $controller instance of Controller.
+     * @param CRUD $CRUD instance of CRUD.
      */
-    public function __construct(Controller $controller)
+    public function __construct(CRUD $CRUD)
     {
-        $this->controller = $controller;
+        $this->CRUD = $CRUD;
     }
 
     /**
@@ -56,9 +53,9 @@ class RelationMapper
      *
      * @return $this
      */
-    public function newOTO(Closure $closure)
+    public function oto(Closure $closure)
     {
-        $relation = new OTORelation($this->controller);
+        $relation = new OTO($this->CRUD);
         call_user_func($closure, $relation);
         $this->oto[] = $relation;
 
@@ -66,15 +63,15 @@ class RelationMapper
     }
 
     /**
-     * Adds an One-To-One relation to the map.
+     * Adds an One-To-Many relation to the map.
      *
      * @param Closure $closure a closure to interact with the relation with.
      *
      * @return Relation
      */
-    public function newOTM(Closure $closure)
+    public function otm(Closure $closure)
     {
-        $relation = new OTMRelation($this->controller);
+        $relation = new OTM($this->CRUD);
         call_user_func($closure, $relation);
         $this->otm[] = $relation;
 
@@ -82,28 +79,18 @@ class RelationMapper
     }
 
     /**
-     * Adds an One-To-One relation to the map.
+     * Adds an Many-To-Many relation to the map.
      *
      * @param Closure $closure a closure to interact with the relation with.
      *
      * @return Relation
      */
-    public function newMTM(Closure $closure)
+    public function mtm(Closure $closure)
     {
-        $relation = new MTMRelation($this->controller);
+        $relation = new MTM($this->CRUD);
         call_user_func($closure, $relation);
         $this->mtm[] = $relation;
 
         return $this;
-    }
-
-    /**
-     * Gets the data from all the
-     *
-     * @return string
-     */
-    public function getRelationData()
-    {
-        return [];
     }
 }

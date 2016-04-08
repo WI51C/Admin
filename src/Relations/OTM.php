@@ -1,10 +1,10 @@
 <?php
 
-
 namespace Admin\Relations;
 
+use Admin\Table\CustomizableTable;
 
-class OTM
+class OTM extends CustomizableTable
 {
 
 }

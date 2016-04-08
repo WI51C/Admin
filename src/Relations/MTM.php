@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Admin\Relations;
 
-
-class MTM
+class MTM extends OTM
 {
 
 }
