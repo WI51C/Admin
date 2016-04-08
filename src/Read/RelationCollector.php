@@ -78,6 +78,26 @@ class RelationCollector
     }
 
     /**
+     * Joins another table.
+     *
+     * @return $this
+     */
+    public function otm()
+    {
+
+    }
+
+    /**
+     * Joins another table.
+     *
+     * @return $this
+     */
+    public function mtm()
+    {
+
+    }
+
+    /**
      * Gets the One-To-One relations of the collector.
      *
      * @return array
