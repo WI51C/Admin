@@ -9,12 +9,12 @@ class Read extends Table implements Contract
 {
 
     /**
-     * Returns the content to show on create.
+     * Renders the read Module.
      *
      * @return string
      */
-    function render()
+    public function render()
     {
-        return 'read';
+        return parent::render();
     }
 }

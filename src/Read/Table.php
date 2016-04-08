@@ -3,6 +3,8 @@
 namespace Admin\Read;
 
 use Admin\CRUD;
+use Admin\Read\Inline\InlineTable;
+use Admin\Read\Renderer\TableRenderer;
 use Closure;
 use Exception;
 
@@ -57,13 +59,6 @@ class Table
      * @var InlineTable
      */
     public $inline;
-
-    /**
-     * Columns that contains html.
-     *
-     * @var array
-     */
-    protected $escape = [];
 
     /**
      * Table constructor.
@@ -128,20 +123,6 @@ class Table
     }
 
     /**
-     * Sets the noescape property of the object.
-     *
-     * @param array $noescape
-     *
-     * @return $this
-     */
-    public function escape(array $noescape)
-    {
-        $this->escape = $noescape;
-
-        return $this;
-    }
-
-    /**
      * Adds a column to the noescape property of the object.
      *
      * @param string $column
@@ -187,5 +168,22 @@ class Table
         ];
 
         return $this;
+    }
+
+    /**
+     * Renders the table.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $renderer = new TableRenderer();
+        $renderer->setHeaders(['Username', 'Email']);
+        $renderer->setData([
+                               ['Username' => 'Thomas', 'Email' => 'thom-mas@hotmail.com'],
+                               ['Username' => 'Kasper', 'Email' => 'kasp-per@hotmail.com'],
+                           ]);
+
+        return $renderer->render();
     }
 }
