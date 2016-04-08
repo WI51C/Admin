@@ -5,6 +5,7 @@ require 'includes/top.php';
 
 $controller = new Admin\CRUD('localhost', 'root', 'password', 'admin', 'user');
 $controller->read->relations->oto('Image', 'ImageId = UserImage');
+$controller->read->offset(0);
 $controller->read->columns(['UserId'       => 'ID',
                             'UserUsername' => 'Username',
                             'UserPassword' => 'Password',
