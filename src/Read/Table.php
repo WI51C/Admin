@@ -226,7 +226,7 @@ class Table
      */
     public function getData()
     {
-        foreach ($this->relations->getOTORelations() as $oto) {
+        foreach ($this->relations->getOneToOneRelations() as $oto) {
             $this->CRUD->connection->join($oto[0], $oto[1], $oto[2]);
         }
 

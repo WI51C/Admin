@@ -102,7 +102,7 @@ class RelationCollector
      *
      * @return array
      */
-    public function getOTORelations()
+    public function getOneToOneRelations()
     {
         return $this->oto;
     }
