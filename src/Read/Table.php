@@ -35,9 +35,37 @@ class Table
     /**
      * Limit of the table.
      *
-     * @var null|Closure
+     * @var null|int
      */
-    protected $limitation = null;
+    protected $limit = null;
+
+    /**
+     * Offset of the table.
+     *
+     * @var int
+     */
+    protected $offset;
+
+    /**
+     * Where statements of the table.
+     *
+     * @var array
+     */
+    protected $wheres = [];
+
+    /**
+     * Having statements of the table.
+     *
+     * @var array
+     */
+    protected $havings = [];
+
+    /**
+     * Order by clauses of the table.
+     *
+     * @var array
+     */
+    protected $orders = [];
 
     /**
      * Columns of the table.
@@ -93,6 +121,96 @@ class Table
     }
 
     /**
+     * Sets the limit of the table.
+     *
+     * @param int $limit
+     *
+     * @return $this
+     */
+    public function limit(int $limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * Sets the offset of the table.
+     *
+     * @param int $offset
+     *
+     * @return $this
+     */
+    public function offset(int $offset)
+    {
+        $this->offset = $offset;
+
+        return $this;
+    }
+
+    /**
+     * Defines a where clause of the table.
+     *
+     * @param string $column
+     * @param mixed  $value
+     * @param string $operator
+     * @param string $condition
+     *
+     * @return $this
+     */
+    public function where(string $column, $value, $operator = '=', $condition = 'AND')
+    {
+        $this->where[] = [
+            $column,
+            $value,
+            $operator,
+            $condition,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Defines a having clause of the table.
+     *
+     * @param string $column
+     * @param mixed  $value
+     * @param string $operator
+     * @param string $condition
+     *
+     * @return $this
+     */
+    public function having(string $column, $value, $operator = '=', $condition = 'AND')
+    {
+        $this->havings[] = [
+            $column,
+            $value,
+            $operator,
+            $condition,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Adds an ORDER BY clause to the table.
+     *
+     * @param string $column
+     * @param string $direction
+     *
+     * @return $this
+     */
+    public function order(string $column, $direction = 'DESC')
+    {
+        $this->orders[] = [
+            $column,
+            $direction,
+        ];
+
+        return $this;
+    }
+
+    /**
      * Sets the columns property of the object.
      *
      * @param array $columns
@@ -102,50 +220,6 @@ class Table
     public function columns(array $columns)
     {
         $this->columns = $columns;
-
-        return $this;
-    }
-
-    /**
-     * Adds a column to the table.
-     *
-     * @param string      $column
-     * @param string|null $alias
-     *
-     * @return $this
-     */
-    public function addColumn(string $column, string $alias = null)
-    {
-        $column        = $alias === null ? [$column] : [$alias => $column];
-        $this->columns = array_merge($this->columns, $column);
-
-        return $this;
-    }
-
-    /**
-     * Adds a column to the noescape property of the object.
-     *
-     * @param string $column
-     *
-     * @return $this
-     */
-    public function addEscape(string $column)
-    {
-        $this->escape[] = $column;
-
-        return $this;
-    }
-
-    /**
-     * Limit of the table.
-     *
-     * @param Closure $closure
-     *
-     * @return $this
-     */
-    public function limitation(Closure $closure)
-    {
-        $this->limitation = $closure;
 
         return $this;
     }
@@ -178,12 +252,25 @@ class Table
     public function render()
     {
         $renderer = new TableRenderer();
-        $renderer->setHeaders(['Username', 'Email']);
-        $renderer->setData([
-                               ['Username' => 'Thomas', 'Email' => 'thom-mas@hotmail.com'],
-                               ['Username' => 'Kasper', 'Email' => 'kasp-per@hotmail.com'],
-                           ]);
+        $renderer->setHeaders(array_values($this->columns));
+        $renderer->setData($this->getData());
 
         return $renderer->render();
+    }
+
+    /**
+     * Gets the data of the table.
+     *
+     * @return array
+     */
+    protected function getData()
+    {
+        if (is_callable($this->limitation)) {
+            call_user_func($this->limitation, $this->CRUD->connection);
+        }
+
+        foreach ($this->oto as $oto) {
+            $this->CRUD->connection->join($oto['table'], $oto['condition'], $oto['type']);
+        }
     }
 }
