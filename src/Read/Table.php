@@ -5,7 +5,6 @@ namespace Admin\Read;
 use Admin\CRUD;
 use Admin\Read\Inline\InlineTable;
 use Admin\Read\Renderer\TableRenderer;
-use Closure;
 use Exception;
 
 class Table
@@ -160,7 +159,7 @@ class Table
      */
     public function where(string $column, $value, $operator = '=', $condition = 'AND')
     {
-        $this->where[] = [
+        $this->wheres[] = [
             $column,
             $value,
             $operator,
@@ -265,10 +264,6 @@ class Table
      */
     protected function getData()
     {
-        if (is_callable($this->limitation)) {
-            call_user_func($this->limitation, $this->CRUD->connection);
-        }
-
         foreach ($this->oto as $oto) {
             $this->CRUD->connection->join($oto['table'], $oto['condition'], $oto['type']);
         }
