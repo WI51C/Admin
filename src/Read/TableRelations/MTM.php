@@ -4,7 +4,7 @@ namespace Admin\Read\TableRelations;
 
 use Exception;
 
-class MTMTableRelation extends TableRelation
+class MTM extends OTM
 {
 
     /**
