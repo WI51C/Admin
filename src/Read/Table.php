@@ -317,7 +317,6 @@ class Table
      */
     protected function autoColumns()
     {
-
         if (empty($this->columns)) {
             $query = clone $this->CRUD->connection;
             $query->where('table_schema', $this->CRUD->database);
