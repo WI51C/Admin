@@ -211,7 +211,9 @@ class Table
     public function render()
     {
         $renderer = new TableRenderer();
-        $renderer->setHeaders(array_values($this->columns));
+        var_dump($this->getHeaders());
+        var_dump($this->getColumns());
+        $renderer->setHeaders($this->getHeaders());
         $renderer->setData($this->getData());
 
         return $renderer->render();
@@ -226,23 +228,25 @@ class Table
      */
     public function getData()
     {
+        $query = clone $this->CRUD->connection;
+
         foreach ($this->relations->getOneToOneRelations() as $oto) {
-            $this->CRUD->connection->join($oto[0], $oto[1], $oto[2]);
+            $query->join($oto[0], $oto[1], $oto[2]);
         }
 
         foreach ($this->orders as $order) {
-            $this->CRUD->connection->orderBy($order[0], $order[1]);
+            $query->orderBy($order[0], $order[1]);
         }
 
         foreach ($this->havings as $having) {
-            $this->CRUD->connection->having($having[0], $having[1], $having[2], $having[3]);
+            $query->having($having[0], $having[1], $having[2], $having[3]);
         }
 
         foreach ($this->wheres as $where) {
-            $this->CRUD->connection->where($where[0], $where[1], $where[2], $where[3]);
+            $query->where($where[0], $where[1], $where[2], $where[3]);
         }
 
-        return $this->CRUD->connection->get($this->table, [$this->offset, $this->limit], $this->getColumns());
+        return $query->get($this->table, [$this->offset, $this->limit], $this->getColumns());
     }
 
     /**
@@ -252,12 +256,36 @@ class Table
      */
     protected function getColumns()
     {
+        if (empty($this->columns)) {
+            $query = clone $this->CRUD->connection;
+            $query->where('table_schema', $this->CRUD->database);
+            $tables = [$this->table];
+            foreach ($this->relations->getOneToOneRelations() as $oto) {
+                $tables[] = $oto[0];
+            }
+
+            $query->where('table_name', ['IN' => $tables]);
+            $this->columns = array_map(function ($value) {
+                return $value['column_name'];
+            }, $query->get('information_schema.columns', null, ['column_name']));
+        }
+
         $return = [];
         foreach ($this->columns as $key => $value) {
             $return[] = is_int($key) ? $value : $key;
         }
 
         return $return;
+    }
+
+    /**
+     * Gets the header names to display.
+     *
+     * @return array
+     */
+    protected function getHeaders()
+    {
+        return array_values($this->getColumns());
     }
 
     /**
