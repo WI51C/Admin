@@ -286,6 +286,10 @@ class Table
 
     /**
      * If no columns were specified, all will be found.
+     *
+     * Sets the columns property of the instance.
+     *
+     * @return array
      */
     protected function autoColumns()
     {
@@ -303,6 +307,8 @@ class Table
                 return $value['column_name'];
             }, $query->get('information_schema.columns', null, ['column_name']));
         }
+
+        return $this->columns;
     }
 
     /**
