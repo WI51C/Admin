@@ -262,19 +262,7 @@ class Table
      */
     protected function getColumns()
     {
-        if (empty($this->columns)) {
-            $query = clone $this->CRUD->connection;
-            $query->where('table_schema', $this->CRUD->database);
-            $tables = [$this->table];
-            foreach ($this->relations->getOneToOneRelations() as $oto) {
-                $tables[] = $oto[0];
-            }
-
-            $query->where('table_name', ['IN' => $tables]);
-            $this->columns = array_map(function ($value) {
-                return $value['column_name'];
-            }, $query->get('information_schema.columns', null, ['column_name']));
-        }
+        $this->autoColumns();
 
         $return = [];
         foreach ($this->columns as $key => $value) {
@@ -291,7 +279,30 @@ class Table
      */
     protected function getHeaders()
     {
-        return array_values($this->getColumns());
+        $this->autoColumns();
+
+        return array_values($this->columns);
+    }
+
+    /**
+     * If no columns were specified, all will be found.
+     */
+    protected function autoColumns()
+    {
+
+        if (empty($this->columns)) {
+            $query = clone $this->CRUD->connection;
+            $query->where('table_schema', $this->CRUD->database);
+            $tables = [$this->table];
+            foreach ($this->relations->getOneToOneRelations() as $oto) {
+                $tables[] = $oto[0];
+            }
+
+            $query->where('table_name', ['IN' => $tables]);
+            $this->columns = array_map(function ($value) {
+                return $value['column_name'];
+            }, $query->get('information_schema.columns', null, ['column_name']));
+        }
     }
 
     /**
