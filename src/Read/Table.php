@@ -244,7 +244,15 @@ class Table
             $query->where($where[0], $where[1], $where[2], $where[3]);
         }
 
-        return $query->get($this->table, [$this->offset, $this->limit], $this->getColumns());
+        $data    = $query->get($this->table, [$this->offset, $this->limit]);
+        $columns = $this->getColumns();
+        foreach ($data as $position => $row) {
+            $data[$position] = array_filter($row, function ($column) use ($columns) {
+                return in_array($column, $columns);
+            }, ARRAY_FILTER_USE_KEY);
+        }
+
+        return $data;
     }
 
     /**
