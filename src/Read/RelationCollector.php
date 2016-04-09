@@ -3,9 +3,8 @@
 namespace Admin\Read;
 
 use Admin\CRUD;
-use Closure;
-use Admin\Read\Inline\ManyToManyTable;
-use Admin\Read\Inline\OneToManyTable;
+use Admin\Read\Relations\ManyToManyTable;
+use Admin\Read\Relations\OneToManyTable;
 
 class RelationCollector
 {

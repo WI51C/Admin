@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\TableRelations;
+namespace Admin\Read\Relations;
 
 class OneToMany extends TableRelation
 {
