@@ -5,6 +5,7 @@ namespace Admin\Read;
 use Admin\CRUD;
 use Admin\Read\Relations\ManyToManyTable;
 use Admin\Read\Relations\OneToManyTable;
+use Closure;
 
 class RelationCollector
 {
@@ -79,11 +80,23 @@ class RelationCollector
     /**
      * Joins another table.
      *
+     * @param string  $table     the table to join on.
+     * @param string  $condition the condition to join on.
+     * @param string  $type      the type of join to perform.
+     * @param Closure $closure   |null   a closure to change the relation.
+     *
      * @return $this
      */
-    public function otm()
+    public function otm(string $table, string $condition, string $type = 'INNER', Closure $closure = null)
     {
+        $relation = new OneToManyTable($table, $condition, $type);
+        if ($closure !== null) {
+            call_user_func($closure, $relation);
+        }
 
+        $this->otm[] = $relation;
+
+        return $this;
     }
 
     /**

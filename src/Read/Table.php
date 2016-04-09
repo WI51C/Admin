@@ -252,7 +252,23 @@ class Table
             }, ARRAY_FILTER_USE_KEY);
         }
 
+        $this->mergeManyToOne($data);
+
         return $data;
+    }
+
+    /**
+     * Merges an array with content from Many-To-One relations.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function mergeManyToOne(array $data)
+    {
+        foreach ($this->relations->getOneToManyRelations() as $otm) {
+            $where = array_map('trim', explode('=', $otm->))
+        }
     }
 
     /**
