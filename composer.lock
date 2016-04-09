@@ -51,47 +51,6 @@
             ],
             "description": "PHP MySQL Wrapper and object mapper which utilizes MySQLi and prepared statements",
             "time": "2016-03-13 16:30:17"
-        },
-        {
-            "name": "w51c/crudl",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/WI51C/CRUDL.git",
-                "reference": "6d070398cd77d0bd64778e4cdd6e73f83d7d1a60"
-            },
-            "dist": {
-                "type": "zip",
-<<<<<<< HEAD
-                "url": "https://api.github.com/repos/WI51C/CRUDL/zipball/bee3d38ea1b4cd91f87ff4a5a1c6c9e5d1288753",
-                "reference": "e06c8b8f03af373347a4dbfcd13b4a46cad19e27",
-=======
-                "url": "https://api.github.com/repos/WI51C/CRUDL/zipball/6d070398cd77d0bd64778e4cdd6e73f83d7d1a60",
-                "reference": "6d070398cd77d0bd64778e4cdd6e73f83d7d1a60",
->>>>>>> 402594fe37a118004bd41b31c73b7b45e7e2cc39
-                "shasum": ""
-            },
-            "require": {
-                "joshcam/mysqli-database-class": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "CRUDL\\": "src/CRUDL/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "W51C Experts",
-                    "email": "admin@w51c.com"
-                }
-            ],
-            "description": "Fucking cruds.",
-            "time": "2016-04-07 10:33:50"
         }
     ],
     "packages-dev": [],

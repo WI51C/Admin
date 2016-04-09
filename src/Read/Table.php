@@ -28,7 +28,7 @@ class Table
      *
      * @var null|int
      */
-    protected $limit = 18446744073709551610;
+    protected $limit = 2147483647;
 
     /**
      * Offset of the table.
@@ -242,11 +242,7 @@ class Table
             $this->CRUD->connection->where($where[0], $where[1], $where[2], $where[3]);
         }
 
-        if ($this->offset === 0) { //fix limit
-            return $this->CRUD->connection->get($this->table, $this->limit, $this->getColumns());
-        }
-
-        return $this->CRUD->connection->get($this->table, $this->offset === 0 ? $this->limit : [500, 0], $this->getColumns());
+        return $this->CRUD->connection->get($this->table, [$this->offset, $this->limit], $this->getColumns());
     }
 
     /**
