@@ -1,11 +1,10 @@
 <?php
 
-namespace Admin\Modules;
+namespace Admin\Read;
 
 use Admin\ModuleInterface;
-use Admin\Read\Table;
 
-class Read extends Table implements Contract
+class Read extends Table implements ModuleInterface
 {
 
     /**

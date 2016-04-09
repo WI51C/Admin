@@ -1,8 +1,8 @@
 <?php
 
-namespace Admin\Modules;
+namespace Admin;
 
-interface Contract
+interface ModuleInterface
 {
 
     /**

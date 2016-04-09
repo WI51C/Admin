@@ -2,49 +2,19 @@
 
 namespace Admin;
 
-use Admin\Modules\Create;
-use Admin\Modules\Delete;
-use Admin\Modules\Read;
-use Admin\Modules\Update;
+use Admin\Read\Read;
 use Exception;
 use MysqliDb;
 
-class CRUD
+class Crud
 {
-    /**
-     * Modules of the CRUD.
-     *
-     * @var array
-     */
-    protected $modules;
 
     /**
-     * Instance of Create for inserting data into a database.
+     * Instance of Read for displaying tabular data.
      *
-     * @var Create
-     */
-    public $create;
-
-    /**
-     * Instance of Create for reading data from a database.
-     *
-     * @var Read
+     * @var $this
      */
     public $read;
-
-    /**
-     * Instance of Create for updating data in a database.
-     *
-     * @var Update
-     */
-    public $update;
-
-    /**
-     * Instance of Create for deleting data from a database.
-     *
-     * @var Delete
-     */
-    public $delete;
 
     /**
      * Mysqli database connection.
@@ -101,10 +71,7 @@ class CRUD
 
         $this->connection = new MysqliDb($hostname, $username, $password, $database);
 
-        $this->create = (new Create($this))->table($table);
-        $this->read   = (new Read($this))->table($table);
-        $this->update = (new Update($this))->table($table);
-        $this->delete = (new Delete($this))->table($table);
+        $this->read = (new Read($this))->table($table);
     }
 
     /**
