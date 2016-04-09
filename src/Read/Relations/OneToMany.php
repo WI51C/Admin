@@ -2,6 +2,8 @@
 
 namespace Admin\Read\Relations;
 
+use Admin\CRUD;
+
 class OneToMany extends TableRelation
 {
 
@@ -32,6 +34,16 @@ class OneToMany extends TableRelation
      * @var string
      */
     protected $alias;
+
+    public function __construct(CRUD $CRUD, string $joinTable, string $alias, string $joinCondition, string $joinType = 'INNER')
+    {
+        parent::__construct($CRUD);
+        $this->table($joinTable);
+        $this->alias($alias);
+        $this->joinTable($joinTable);
+        $this->joinCondition($joinCondition);
+        $this->joinType($joinType);
+    }
 
     /**
      * Sets the alias of the table.
@@ -87,6 +99,36 @@ class OneToMany extends TableRelation
         $this->joinType = $type;
 
         return $this;
+    }
+
+    /**
+     * Gets the primary table of the One-To-Many relation.
+     *
+     * @return string
+     */
+    public function getJoinTable()
+    {
+        return $this->joinTable;
+    }
+
+    /**
+     * Gets the join condition of the One-To-Many relation.
+     *
+     * @return string
+     */
+    public function getJoinCondition()
+    {
+        return $this->joinCondition;
+    }
+
+    /**
+     * Gets the join type of the One-To-Many relation.
+     *
+     * @return string
+     */
+    public function getJoinType()
+    {
+        return $this->joinType;
     }
 
     /**

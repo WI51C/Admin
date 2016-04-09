@@ -210,9 +210,10 @@ class Table
      */
     public function render()
     {
+        $this->autoColumns();
         $renderer = new TableRenderer();
         $renderer->setHeaders($this->getHeaders());
-        $renderer->setData($this->getData());
+        $renderer->setData($this->getFilteredData());
 
         return $renderer->render();
     }
@@ -244,15 +245,26 @@ class Table
             $query->where($where[0], $where[1], $where[2], $where[3]);
         }
 
-        $data    = $query->get($this->table, [$this->offset, $this->limit]);
+        $data = $query->get($this->table, [$this->offset, $this->limit]);
+        $this->mergeManyToOne($data);
+
+        return $data;
+    }
+
+    /**
+     * Gets the filtered data of the table.
+     *
+     * @return array
+     */
+    protected function getFilteredData()
+    {
+        $data    = $this->getData();
         $columns = $this->getColumns();
         foreach ($data as $position => $row) {
             $data[$position] = array_filter($row, function ($column) use ($columns) {
                 return in_array($column, $columns);
             }, ARRAY_FILTER_USE_KEY);
         }
-
-        $this->mergeManyToOne($data);
 
         return $data;
     }
@@ -267,7 +279,7 @@ class Table
     protected function mergeManyToOne(array $data)
     {
         foreach ($this->relations->getOneToManyRelations() as $otm) {
-            $where = array_map('trim', explode('=', $otm->))
+            $where = array_map('trim', explode('=', $otm->getJoinCondition()));
         }
     }
 
@@ -278,8 +290,6 @@ class Table
      */
     protected function getColumns()
     {
-        $this->autoColumns();
-
         $return = [];
         foreach ($this->columns as $key => $value) {
             $return[] = is_int($key) ? $value : $key;
@@ -295,8 +305,6 @@ class Table
      */
     protected function getHeaders()
     {
-        $this->autoColumns();
-
         return array_values($this->columns);
     }
 

@@ -3,9 +3,10 @@
 namespace Admin\Read;
 
 use Admin\CRUD;
-use Admin\Read\Relations\ManyToManyTable;
-use Admin\Read\Relations\OneToManyTable;
+use Admin\Read\Relations\OneToMany;
 use Closure;
+use Exception;
+use InvalidArgumentException;
 
 class RelationCollector
 {
@@ -80,16 +81,25 @@ class RelationCollector
     /**
      * Joins another table.
      *
-     * @param string  $table     the table to join on.
+     * @param array   $table     the table to join on, and its optional alias.
      * @param string  $condition the condition to join on.
      * @param string  $type      the type of join to perform.
      * @param Closure $closure   |null   a closure to change the relation.
      *
+     * @throws Exception if the $table array was malformed
+     *
      * @return $this
      */
-    public function otm(string $table, string $condition, string $type = 'INNER', Closure $closure = null)
+    public function otm(array $table, string $condition, string $type = 'INNER', Closure $closure = null)
     {
-        $relation = new OneToManyTable($table, $condition, $type);
+        if (empty($table)) {
+            throw new InvalidArgumentException('The joinTable array cannot be empty.');
+        }
+
+        $tableName = is_int($key = array_keys($table)[0]) ? array_values($table)[0] : $key;
+        $alias     = array_values($table)[0];
+
+        $relation = new OneToMany($this->CRUD, $tableName, $alias, $condition, $type);
         if ($closure !== null) {
             call_user_func($closure, $relation);
         }
