@@ -211,8 +211,6 @@ class Table
     public function render()
     {
         $renderer = new TableRenderer();
-        var_dump($this->getHeaders());
-        var_dump($this->getColumns());
         $renderer->setHeaders($this->getHeaders());
         $renderer->setData($this->getData());
 
