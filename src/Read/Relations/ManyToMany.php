@@ -39,7 +39,7 @@ class ManyToMany extends OneToMany
      */
     public function junction(string $table)
     {
-        if (!$this->CRUD->has($table)) {
+        if (!$this->crud->has($table)) {
             throw new Exception(sprintf('The table %s could not be used as a junction.'));
         }
 

@@ -2,7 +2,7 @@
 
 namespace Admin\Read;
 
-use Admin\CRUD;
+use Admin\Crud;
 use Admin\Read\Relations\OneToMany;
 use Closure;
 use Exception;
@@ -35,9 +35,9 @@ class RelationCollector
     /**
      * Instance of CRUD.
      *
-     * @var CRUD
+     * @var Crud
      */
-    protected $CRUD;
+    protected $crud;
 
     /**
      * The table of the InlineCollector.
@@ -49,12 +49,12 @@ class RelationCollector
     /**
      * InlineCollector constructor.
      *
-     * @param CRUD  $CRUD
+     * @param Crud  $crud
      * @param Table $table
      */
-    public function __construct(CRUD $CRUD, Table $table)
+    public function __construct(Crud $crud, Table $table)
     {
-        $this->CRUD  = $CRUD;
+        $this->crud  = $crud;
         $this->table = $table;
     }
 
@@ -99,7 +99,7 @@ class RelationCollector
         $tableName = is_int($key = array_keys($table)[0]) ? array_values($table)[0] : $key;
         $alias     = array_values($table)[0];
 
-        $relation = new OneToMany($this->CRUD, $tableName, $alias, $condition, $type);
+        $relation = new OneToMany($this->crud, $tableName, $alias, $condition, $type);
         if ($closure !== null) {
             call_user_func($closure, $relation);
         }

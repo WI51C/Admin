@@ -2,7 +2,7 @@
 
 namespace Admin\Read;
 
-use Admin\CRUD;
+use Admin\Crud;
 use Admin\Read\Renderer\TableRenderer;
 use Exception;
 
@@ -12,9 +12,9 @@ class Table
     /**
      * Instance of CRUD.
      *
-     * @var CRUD
+     * @var Crud
      */
-    protected $CRUD;
+    protected $crud;
 
     /**
      * The table of the table.
@@ -75,12 +75,12 @@ class Table
     /**
      * Table constructor.
      *
-     * @param CRUD $CRUD
+     * @param Crud $crud
      */
-    public function __construct(CRUD $CRUD)
+    public function __construct(Crud $crud)
     {
-        $this->CRUD      = $CRUD;
-        $this->relations = new RelationCollector($this->CRUD, $this);
+        $this->crud      = $crud;
+        $this->relations = new RelationCollector($this->crud, $this);
     }
 
     /**
@@ -227,7 +227,7 @@ class Table
      */
     public function getData()
     {
-        $query = clone $this->CRUD->connection;
+        $query = clone $this->crud->connection;
 
         foreach ($this->relations->getOneToOneRelations() as $oto) {
             $query->join($oto[0], $oto[1], $oto[2]);
@@ -318,8 +318,8 @@ class Table
     protected function autoColumns()
     {
         if (empty($this->columns)) {
-            $query = clone $this->CRUD->connection;
-            $query->where('table_schema', $this->CRUD->database);
+            $query = clone $this->crud->connection;
+            $query->where('table_schema', $this->crud->database);
             $tables = [$this->table];
             foreach ($this->relations->getOneToOneRelations() as $oto) {
                 $tables[] = $oto[0];

@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Relations;
 
-use Admin\CRUD;
+use Admin\Crud;
 
 class OneToMany extends TableRelation
 {
@@ -35,9 +35,9 @@ class OneToMany extends TableRelation
      */
     protected $alias;
 
-    public function __construct(CRUD $CRUD, string $joinTable, string $alias, string $joinCondition, string $joinType = 'INNER')
+    public function __construct(Crud $crud, string $joinTable, string $alias, string $joinCondition, string $joinType = 'INNER')
     {
-        parent::__construct($CRUD);
+        parent::__construct($crud);
         $this->table($joinTable);
         $this->alias($alias);
         $this->joinTable($joinTable);
