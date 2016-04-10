@@ -4,7 +4,7 @@ namespace Admin\Read\Tables;
 
 use Admin\Crud;
 
-class OTMTable extends InlineTable
+class OneToMany extends InlineTable
 {
 
     /**
