@@ -4,6 +4,7 @@ namespace Admin\Read;
 
 use Admin\Crud;
 use Admin\Read\Renderer\TableRenderer;
+use Admin\Read\TableBuilder\TableBuilder;
 use Exception;
 
 class Table
@@ -21,49 +22,49 @@ class Table
      *
      * @var string
      */
-    protected $table = '';
+    public $table = '';
 
     /**
      * Limit of the table.
      *
      * @var null|int
      */
-    protected $limit = 2147483647;
+    public $limit = 2147483647;
 
     /**
      * Offset of the table.
      *
      * @var int
      */
-    protected $offset = 0;
+    public $offset = 0;
 
     /**
      * Where statements of the table.
      *
      * @var array
      */
-    protected $wheres = [];
+    public $wheres = [];
 
     /**
      * Having statements of the table.
      *
      * @var array
      */
-    protected $havings = [];
+    public $havings = [];
 
     /**
      * Order by clauses of the table.
      *
      * @var array
      */
-    protected $orders = [];
+    public $orders = [];
 
     /**
      * Columns of the table.
      *
      * @var array
      */
-    protected $columns = [];
+    public $columns = [];
 
     /**
      * The inline tables of the Table.
@@ -210,128 +211,14 @@ class Table
      */
     public function render()
     {
-        $this->autoColumns();
+        $builder   = new TableBuilder($this->crud, $this);
+        $structure = $builder->build();
+
         $renderer = new TableRenderer();
-        $renderer->setHeaders($this->getHeaders());
-        $renderer->setData($this->getFilteredData());
+        $renderer->setHeaders($structure['headers']);
+        $renderer->setData($structure['data']);
 
         return $renderer->render();
-    }
-
-    /**
-     * Gets the data of the table.
-     *
-     * Gets the data from the main table, and any One-To-One relations.
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        $query = clone $this->crud->connection;
-
-        foreach ($this->relations->getOneToOneRelations() as $oto) {
-            $query->join($oto[0], $oto[1], $oto[2]);
-        }
-
-        foreach ($this->orders as $order) {
-            $query->orderBy($order[0], $order[1]);
-        }
-
-        foreach ($this->havings as $having) {
-            $query->having($having[0], $having[1], $having[2], $having[3]);
-        }
-
-        foreach ($this->wheres as $where) {
-            $query->where($where[0], $where[1], $where[2], $where[3]);
-        }
-
-        $data = $query->get($this->table, [$this->offset, $this->limit]);
-        $this->mergeManyToOne($data);
-
-        return $data;
-    }
-
-    /**
-     * Gets the filtered data of the table.
-     *
-     * @return array
-     */
-    protected function getFilteredData()
-    {
-        $data    = $this->getData();
-        $columns = $this->getColumns();
-        foreach ($data as $position => $row) {
-            $data[$position] = array_filter($row, function ($column) use ($columns) {
-                return in_array($column, $columns);
-            }, ARRAY_FILTER_USE_KEY);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Merges an array with content from Many-To-One relations.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function mergeManyToOne(array $data)
-    {
-        foreach ($this->relations->getOneToManyRelations() as $otm) {
-            $where = array_map('trim', explode('=', $otm->getJoinCondition()));
-        }
-    }
-
-    /**
-     * Gets the column names to select.
-     *
-     * @return array
-     */
-    protected function getColumns()
-    {
-        $return = [];
-        foreach ($this->columns as $key => $value) {
-            $return[] = is_int($key) ? $value : $key;
-        }
-
-        return $return;
-    }
-
-    /**
-     * Gets the header names to display.
-     *
-     * @return array
-     */
-    protected function getHeaders()
-    {
-        return array_values($this->columns);
-    }
-
-    /**
-     * If no columns were specified, all will be found.
-     *
-     * Sets the columns property of the instance.
-     *
-     * @return array
-     */
-    protected function autoColumns()
-    {
-        if (empty($this->columns)) {
-            $query = clone $this->crud->connection;
-            $query->where('table_schema', $this->crud->database);
-            $tables = [$this->table];
-            foreach ($this->relations->getOneToOneRelations() as $oto) {
-                $tables[] = $oto[0];
-            }
-
-            $query->where('table_name', ['IN' => $tables]);
-            $this->columns = array_map(function ($value) {
-                return $value['column_name'];
-            }, $query->get('information_schema.columns', null, ['column_name']));
-        }
-
-        return $this->columns;
     }
 
     /**
