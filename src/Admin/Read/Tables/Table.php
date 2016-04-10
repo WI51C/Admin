@@ -3,6 +3,8 @@
 namespace Admin\Read\Tables;
 
 use Admin\Crud;
+use Admin\Read\Process\Extractor;
+use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationBinder;
 
 class Table
@@ -27,7 +29,7 @@ class Table
      *
      * @var Presentation
      */
-    public $presentation;
+    public $presenter;
 
     /**
      * Configuration of the SQL of the Table.
@@ -43,13 +45,13 @@ class Table
      */
     public function __construct(Crud $crud)
     {
-        $this->crud         = $crud;
-        $this->html         = new Html();
-        $this->presentation = new Presentation();
-        $this->sql          = new SQL(new RelationBinder(
-                                          $this->crud,
-                                          $this
-                                      ));
+        $this->crud      = $crud;
+        $this->html      = new Html();
+        $this->presenter = new Presenter();
+        $this->sql       = new SQL(new RelationBinder(
+                                       $this->crud,
+                                       $this
+                                   ));
     }
 
     /**
@@ -59,6 +61,10 @@ class Table
      */
     public function render()
     {
-        return 'table';
+        $extractor = new Extractor($this->crud, $this);
+        $data      = $extractor->extract();
+        $renderer  = new Renderer($this->presenter, $data);
+
+        return $renderer->render();
     }
 }

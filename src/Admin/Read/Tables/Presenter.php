@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-class Presentation
+class Presenter
 {
 
     /**
@@ -42,7 +42,9 @@ class Presentation
      */
     public function columns(array $columns)
     {
-        $this->columns = $columns;
+        foreach ($columns as $column => $alias) {
+            $this->columns[is_int($column) ? $alias : $column] = $alias;
+        }
 
         return $this;
     }

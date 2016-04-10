@@ -3,7 +3,6 @@
 namespace Admin;
 
 use Admin\Read\Read;
-use Exception;
 use MysqliDb;
 
 class Crud
@@ -73,5 +72,15 @@ class Crud
 
         $this->read = new Read($this);
         $this->read->sql->table($table);
+    }
+
+    /**
+     * Clones the connection of the Crud instance.
+     *
+     * @return MysqliDb
+     */
+    public function query()
+    {
+        return clone $this->connection;
     }
 }

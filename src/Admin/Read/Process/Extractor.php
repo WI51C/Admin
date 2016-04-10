@@ -23,6 +23,13 @@ class Extractor
     private $table;
 
     /**
+     * Accumulated data.
+     *
+     * @var array
+     */
+    protected $data;
+
+    /**
      * Extractor constructor.
      *
      * @param Crud  $crud
@@ -39,6 +46,23 @@ class Extractor
      */
     public function extract()
     {
+        $this->getPrimaryData();
 
+        return $this->data;
+    }
+
+    /**
+     * Gets the primary data of the table.
+     *
+     * @return void
+     */
+    protected function getPrimaryData()
+    {
+        $query = $this->crud->query();
+        foreach ($this->table->sql->relations->getOneToOneRelations() as $oto) {
+            $query->join($oto->table, $oto->condition, $oto->type);
+        }
+
+        $this->data = $query->get($this->table->sql->table, [$this->table->sql->offset, $this->table->sql->limit]);
     }
 }

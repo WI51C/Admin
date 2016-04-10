@@ -1,16 +1,16 @@
 <table>
     <thead>
     <tr>
-        <?php foreach ($this->headers as $header): ?>
+        <?php foreach ($this->presenter->columns as $column => $header): ?>
             <th><?= $header ?></th>
         <?php endforeach ?>
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($this->data as $row): ?>
+    <?php foreach ($this->data as $key => $row): ?>
         <tr>
-            <?php foreach ($row as $value): ?>
-                <td><?= $value ?></td>
+            <?php foreach ($this->presenter->columns as $column => $header): ?>
+                <td><?= $row[$column] ?></td>
             <?php endforeach ?>
         </tr>
     <?php endforeach ?>
