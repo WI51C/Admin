@@ -3,7 +3,7 @@
 namespace Admin\Read\Relations;
 
 use Admin\Crud;
-use Admin\Read\Tables\OneToMany;
+use Admin\Read\Tables\Otm;
 use Closure;
 use Exception;
 use InvalidArgumentException;
@@ -100,7 +100,7 @@ class RelationCollector
         $tableName = is_int($key = array_keys($table)[0]) ? array_values($table)[0] : $key;
         $alias     = array_values($table)[0];
 
-        $relation = new OneToMany($this->crud, $tableName, $alias, $condition, $type);
+        $relation = new Otm($this->crud, $tableName, $alias, $condition, $type);
 
         if ($closure !== null) {
             call_user_func($closure, $relation);
@@ -126,7 +126,7 @@ class RelationCollector
      *
      * @return array
      */
-    public function getOneToManyRelations()
+    public function getOtmRelations()
     {
         return $this->otm;
     }
@@ -136,7 +136,7 @@ class RelationCollector
      *
      * @return array
      */
-    public function getManyToManyRelations()
+    public function getMtmRelations()
     {
         return $this->mtm;
     }

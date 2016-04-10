@@ -4,11 +4,11 @@ namespace Admin\Read\Tables;
 
 use Exception;
 
-class ManyToMany extends OneToMany
+class Mtm extends Otm
 {
 
     /**
-     * The junction table of the ManyToMany table.
+     * The junction table of the Mtm table.
      *
      * @var string
      */
@@ -29,7 +29,7 @@ class ManyToMany extends OneToMany
     protected $type = 'INNER';
 
     /**
-     * Sets the junction of the ManyToMany table.
+     * Sets the junction of the Mtm table.
      *
      * @param string $table the table to set as the junction.
      *
