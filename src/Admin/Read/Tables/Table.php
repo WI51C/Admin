@@ -3,6 +3,7 @@
 namespace Admin\Read\Tables;
 
 use Admin\Crud;
+use Admin\Read\Relations\RelationBinder;
 
 class Table
 {
@@ -45,7 +46,10 @@ class Table
         $this->crud         = $crud;
         $this->html         = new Html();
         $this->presentation = new Presentation();
-        $this->sql          = new SQL();
+        $this->sql          = new SQL(new RelationBinder(
+                                          $this->crud,
+                                          $this
+                                      ));
     }
 
     /**

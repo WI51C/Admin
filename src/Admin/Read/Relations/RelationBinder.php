@@ -2,12 +2,28 @@
 
 namespace Admin\Read\Relations;
 
+use Admin\Crud;
+use Admin\Read\Tables\Table;
 use Closure;
 use Exception;
 use InvalidArgumentException;
 
 class RelationBinder
 {
+
+    /**
+     * The instance of the RelationBinder.
+     *
+     * @var Crud
+     */
+    protected $crud;
+
+    /**
+     * The table instance of the RelationBinder.
+     *
+     * @var Table
+     */
+    protected $parent;
 
     /**
      * The defined One-To-One relations of the collector.
@@ -29,6 +45,18 @@ class RelationBinder
      * @var array
      */
     protected $mtm = [];
+
+    /**
+     * RelationBinder constructor.
+     *
+     * @param Crud  $crud
+     * @param Table $parent
+     */
+    public function __construct(Crud $crud, Table $parent)
+    {
+        $this->crud   = $crud;
+        $this->parent = $parent;
+    }
 
     /**
      * Joins another table.
@@ -60,7 +88,7 @@ class RelationBinder
      */
     public function otm(string $table, string $condition, string $type = 'INNER', Closure $closure = null)
     {
-        $relation    = new OTM($table, $condition, $type);
+        $relation    = new OTM($this->crud, $table, $condition, $type);
         $this->otm[] = $relation;
 
         if ($closure !== null) {

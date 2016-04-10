@@ -65,10 +65,12 @@ class SQL
 
     /**
      * SQL constructor.
+     *
+     * @param RelationBinder $relationBinder
      */
-    public function __construct()
+    public function __construct(RelationBinder $relationBinder)
     {
-        $this->relations = new RelationBinder();
+        $this->relations = $relationBinder;
     }
 
     /**
