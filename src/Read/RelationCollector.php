@@ -3,7 +3,7 @@
 namespace Admin\Read;
 
 use Admin\Crud;
-use Admin\Read\Relations\OneToMany;
+use Admin\Read\Inline\OneToMany;
 use Closure;
 use Exception;
 use InvalidArgumentException;

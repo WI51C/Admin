@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\Relations;
+namespace Admin\Read\Inline;
 
 use Exception;
 
