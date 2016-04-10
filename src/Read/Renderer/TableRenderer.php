@@ -2,17 +2,8 @@
 
 namespace Admin\Read\Renderer;
 
-use Exception;
-
 class TableRenderer
 {
-
-    /**
-     * The template to use to build the table.
-     *
-     * @var string
-     */
-    protected $template = '../templates/table.template.php';
 
     /**
      * Headers to display in the table.
@@ -22,31 +13,18 @@ class TableRenderer
     protected $headers = [];
 
     /**
+     * Columns to display in the table.
+     *
+     * @var array
+     */
+    protected $columns = [];
+
+    /**
      * Data to display in the table.
      *
      * @var array
      */
     protected $data = [];
-
-    /**
-     * Sets the template to use in the rendering.
-     *
-     * @param string $template
-     *
-     * @throws Exception if the template could not be located.
-     *
-     * @return $this
-     */
-    public function template(string $template)
-    {
-        if (!file_exists($template)) {
-            throw new Exception(sprintf('Template %s could not be found.', $template));
-        }
-
-        $this->template = $template;
-
-        return $this;
-    }
 
     /**
      * Constructs and returns the html for the table.
@@ -55,7 +33,7 @@ class TableRenderer
      */
     public function render()
     {
-        return require($this->template);
+        return require('../templates/table.template.php');
     }
 
     /**
@@ -68,6 +46,20 @@ class TableRenderer
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Sets the columns to display in the table.
+     *
+     * @param array $columns
+     *
+     * @return $this
+     */
+    public function setColumns(array $columns)
+    {
+        $this->columns = $columns;
 
         return $this;
     }
