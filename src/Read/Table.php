@@ -4,7 +4,7 @@ namespace Admin\Read;
 
 use Admin\Crud;
 use Admin\Read\Renderer\TableRenderer;
-use Admin\Read\TableBuilder\TableBuilder;
+use Admin\Read\Builder\TableBuilder;
 use Exception;
 
 class Table

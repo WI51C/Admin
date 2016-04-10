@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\TableBuilder;
+namespace Admin\Read\Builder;
 
 use Admin\Crud;
 use Admin\Read\Table;
@@ -78,7 +78,7 @@ class TableBuilder
             }, $query->get('information_schema.columns', null, ['column_name']));
         }
 
-        return $this->columns;
+        return $this->table->columns;
     }
 
     /**
@@ -151,7 +151,7 @@ class TableBuilder
             $query->where($where[0], $where[1], $where[2], $where[3]);
         }
 
-        $data = $query->get($this->table, [$this->offset, $this->limit]);
+        $data = $query->get($this->table->table, [$this->table->offset, $this->table->limit]);
 
         return $data;
     }
