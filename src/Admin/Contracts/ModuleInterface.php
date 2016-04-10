@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin;
+namespace Admin\Contracts;
 
 interface ModuleInterface
 {

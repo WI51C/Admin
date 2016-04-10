@@ -2,14 +2,11 @@
 
 namespace Admin\Read\Relations;
 
-use Admin\Crud;
-use Admin\Read\Tables\Otm;
 use Closure;
 use Exception;
 use InvalidArgumentException;
-use Admin\Read\Tables\Table;
 
-class RelationCollector
+class RelationBinder
 {
 
     /**
@@ -34,32 +31,6 @@ class RelationCollector
     protected $mtm = [];
 
     /**
-     * Instance of CRUD.
-     *
-     * @var Crud
-     */
-    protected $crud;
-
-    /**
-     * The table of the InlineCollector.
-     *
-     * @var Table
-     */
-    protected $table;
-
-    /**
-     * InlineCollector constructor.
-     *
-     * @param Crud  $crud
-     * @param Table $table
-     */
-    public function __construct(Crud $crud, Table $table)
-    {
-        $this->crud  = $crud;
-        $this->table = $table;
-    }
-
-    /**
      * Joins another table.
      *
      * @param string $table     the table to join on.
@@ -70,11 +41,7 @@ class RelationCollector
      */
     public function oto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = [
-            $table,
-            $condition,
-            $type,
-        ];
+        $this->oto[] = new OTO($table, $condition, $type);
 
         return $this;
     }
@@ -82,7 +49,7 @@ class RelationCollector
     /**
      * Joins another table.
      *
-     * @param array   $table     the table to join on, and its optional alias.
+     * @param string  $table     the table to join on, and its optional alias.
      * @param string  $condition the condition to join on.
      * @param string  $type      the type of join to perform.
      * @param Closure $closure   |null   a closure to change the relation.
@@ -91,22 +58,14 @@ class RelationCollector
      *
      * @return $this
      */
-    public function otm(array $table, string $condition, string $type = 'INNER', Closure $closure = null)
+    public function otm(string $table, string $condition, string $type = 'INNER', Closure $closure = null)
     {
-        if (empty($table)) {
-            throw new InvalidArgumentException('The table array cannot be empty.');
-        }
-
-        $tableName = is_int($key = array_keys($table)[0]) ? array_values($table)[0] : $key;
-        $alias     = array_values($table)[0];
-
-        $relation = new Otm($this->crud, $tableName, $alias, $condition, $type);
+        $relation    = new OTM($table, $condition, $type);
+        $this->otm[] = $relation;
 
         if ($closure !== null) {
             call_user_func($closure, $relation);
         }
-
-        $this->otm[] = $relation;
 
         return $this;
     }

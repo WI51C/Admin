@@ -47,4 +47,14 @@ class Table
         $this->presentation = new Presentation();
         $this->sql          = new SQL();
     }
+
+    /**
+     * Renders the table as HTML.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        return 'table';
+    }
 }

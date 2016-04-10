@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-use Admin\Read\Relations\RelationCollector;
+use Admin\Read\Relations\RelationBinder;
 
 class SQL
 {
@@ -68,7 +68,7 @@ class SQL
      */
     public function __construct()
     {
-        $this->relations = new RelationCollector();
+        $this->relations = new RelationBinder();
     }
 
     /**

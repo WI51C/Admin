@@ -1,6 +1,6 @@
 <?php
 
-namespace Read\Relations;
+namespace Admin\Read\Relations;
 
 class OTO extends Relation
 {
