@@ -250,4 +250,14 @@ class Table
 
         return $query->get($this->table, [$this->offset, $this->limit]);
     }
+
+    /**
+     * Renders the table into an HTML table tag.
+     *
+     * @return string
+     */
+    public function render()
+    {
+
+    }
 }

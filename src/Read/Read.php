@@ -16,20 +16,6 @@ class Read extends Table implements ModuleInterface
      */
     public function render()
     {
-        $renderer = new TableRenderer();
-        $renderer->setHeaders(['Username', 'Email']);
-        $renderer->setColumns(['Username', 'Email']);
-        $renderer->setData([
-                               [
-                                   'Username' => 'Thomas',
-                                   'Email'    => 'thom-mas@hotmail.com',
-                               ],
-                               [
-                                   'Username' => 'Kasper',
-                                   'Email'    => 'kasp-mas@hotmail.com',
-                               ],
-                           ]);
-
-        return $renderer->render();
+        return parent::render();
     }
 }

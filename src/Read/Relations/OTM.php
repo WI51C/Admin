@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Read\Relations;
 
-
-class OTM
+class OTM extends OTO
 {
 
 }
