@@ -3,7 +3,7 @@
 namespace Admin\Read;
 
 use Admin\Crud;
-use Admin\Read\Inline\OneToMany;
+use Admin\Read\Tables\OTMTable;
 use Closure;
 use Exception;
 use InvalidArgumentException;
@@ -93,13 +93,14 @@ class RelationCollector
     public function otm(array $table, string $condition, string $type = 'INNER', Closure $closure = null)
     {
         if (empty($table)) {
-            throw new InvalidArgumentException('The joinTable array cannot be empty.');
+            throw new InvalidArgumentException('The table array cannot be empty.');
         }
 
         $tableName = is_int($key = array_keys($table)[0]) ? array_values($table)[0] : $key;
         $alias     = array_values($table)[0];
 
-        $relation = new OneToMany($this->crud, $tableName, $alias, $condition, $type);
+        $relation = new OTMTable($this->crud, $tableName, $alias, $condition, $type);
+
         if ($closure !== null) {
             call_user_func($closure, $relation);
         }
@@ -107,16 +108,6 @@ class RelationCollector
         $this->otm[] = $relation;
 
         return $this;
-    }
-
-    /**
-     * Joins another table.
-     *
-     * @return $this
-     */
-    public function mtm()
-    {
-
     }
 
     /**
