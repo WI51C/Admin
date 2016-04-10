@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Process;
 
-class Builder
+class Extractor
 {
 
 }
