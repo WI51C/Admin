@@ -1,10 +1,10 @@
 <?php
 
-namespace Admin\Read\Inline;
+namespace Admin\Read\Tables;
 
 use Admin\Crud;
 
-class OneToMany extends TableRelation
+class OTMTable extends InlineTable
 {
 
     /**

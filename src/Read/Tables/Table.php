@@ -3,8 +3,6 @@
 namespace Admin\Read;
 
 use Admin\Crud;
-use Admin\Read\Renderer\TableRenderer;
-use Admin\Read\Builder\TableBuilder;
 use Exception;
 
 class Table
@@ -58,6 +56,13 @@ class Table
      * @var array
      */
     public $orders = [];
+
+    /**
+     * Group by clauses.
+     *
+     * @var array
+     */
+    public $group = null;
 
     /**
      * Columns of the table.
@@ -191,6 +196,20 @@ class Table
     }
 
     /**
+     * Sets the column to group by.
+     *
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function group(string $column)
+    {
+        $this->group = $column;
+
+        return $this;
+    }
+
+    /**
      * Sets the columns property of the object.
      *
      * @param array $columns
@@ -205,29 +224,29 @@ class Table
     }
 
     /**
-     * Renders the table.
+     * Gets primary table data, and One-To-One relational data.
      *
-     * @return string
+     * @return array
      */
-    public function render()
+    public function getData()
     {
-        $builder   = new TableBuilder($this->crud, $this);
-        $structure = $builder->build();
+        $query = clone $this->crud->connection;
 
-        $renderer = new TableRenderer();
-        $renderer->setHeaders($structure['headers']);
-        $renderer->setData($structure['data']);
+        foreach ($this->relations->getOneToOneRelations() as $oto)
+            $query->join($oto[0], $oto[1], $oto[2]);
 
-        return $renderer->render();
-    }
+        foreach ($this->orders as $order)
+            $query->orderBy($order[0], $order[1]);
 
-    /**
-     * Returns the name of the table.
-     *
-     * @return string
-     */
-    public function getTable()
-    {
-        return $this->table;
+        foreach ($this->havings as $having)
+            $query->having($having[0], $having[1], $having[2], $having[3]);
+
+        foreach ($this->wheres as $where)
+            $query->where($where[0], $where[1], $where[2], $where[3]);
+
+        if ($this->group !== null)
+            $query->orderBy($this->group);
+
+        return $query->get($this->table, [$this->offset, $this->limit]);
     }
 }
