@@ -1,12 +1,13 @@
 <?php
 
-namespace Admin\Read;
+namespace Admin\Read\Relations;
 
 use Admin\Crud;
 use Admin\Read\Tables\OTMTable;
 use Closure;
 use Exception;
 use InvalidArgumentException;
+use Admin\Read\Tables\Table;
 
 class RelationCollector
 {

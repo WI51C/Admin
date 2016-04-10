@@ -3,6 +3,7 @@
 namespace Admin\Read;
 
 use Admin\ModuleInterface;
+use Admin\Read\Tables\Table;
 
 class Read extends Table implements ModuleInterface
 {

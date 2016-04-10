@@ -1,9 +1,10 @@
 <?php
 
-namespace Admin\Read;
+namespace Admin\Read\Tables;
 
 use Admin\Crud;
 use Exception;
+use Admin\Read\Relations\RelationCollector;
 
 class Table
 {

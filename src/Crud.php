@@ -73,22 +73,4 @@ class Crud
 
         $this->read = (new Read($this))->table($table);
     }
-
-    /**
-     * Returns the HTML of the module.
-     *
-     * @param string $action
-     *
-     * @throws Exception
-     *
-     * @return string
-     */
-    public function action(string $action = 'read')
-    {
-        if (!in_array($action, ['read', 'delete', 'update', 'create'])) {
-            throw new Exception(sprintf('Action %s is invalid. Valid actions are create, read, update and delete.'));
-        }
-
-        return $this->{$action}->render();
-    }
 }
