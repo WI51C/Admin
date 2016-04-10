@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-class InlineTable
+class InlineTable extends Table
 {
 
 }
