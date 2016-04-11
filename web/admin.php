@@ -17,8 +17,3 @@ $controller->read->select->relations->otm('attributes', 'UserId', 'AttributeUser
 echo $controller->read->render();
 
 require 'includes/bottom.php';
-
-$tal1 = 1;
-$tal2 = 2;
-$sum  = $tal1 + $tal2;
-$tal1 = 5;

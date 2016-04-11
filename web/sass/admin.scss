@@ -2,14 +2,14 @@ $main-color: #eee;
 
 * {
   font-family: Raleway;
+  font-weight: 300;
 }
 
 table {
   border-collapse: collapse;
   caption {
-    background: darken($main-color, 75%);
+    background: darken($main-color, 50%);
     font-size: 2rem;
-    font-weight: bold;
     padding: 10px 15px;
     text-align: left;
     color: lighten($main-color, 0%);
@@ -29,17 +29,24 @@ table {
     font-size: 1rem;
   }
   table {
+    background: rgba(0, 0, 0, .1);
     max-height: 200px;
     overflow-y: auto;
     display: block;
+    height: 100%;
     thead {
       background: none;
       color: darken($main-color, 80%);
     }
+    tr:nth-last-of-type(even) {
+      background: none
+    }
+    th {
+      font-weight: bold;
+    }
     td, th {
-      font-size: 10px;
+      font-size: .8rem;
       padding: 10px;
-      border: none;
     }
   }
 }
@@ -73,7 +80,7 @@ h2 {
 
 #menu {
   padding: 0;
-  background: darken($main-color, 80%);
+  background: darken($main-color, 60%);
   position: fixed;
   top: 0px;
   bottom: 0px;
