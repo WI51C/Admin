@@ -1,4 +1,7 @@
 <table>
+    <?php if ($this->presenter->caption !== null): ?>
+        <caption><?= $this->presenter->caption ?></caption>
+    <?php endif ?>
     <thead>
     <tr>
         <?php foreach ($this->presenter->columns as $column => $header): ?>

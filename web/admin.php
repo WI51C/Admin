@@ -5,9 +5,10 @@ require 'includes/top.php';
 
 $controller = new Admin\CRUD('localhost', 'root', 'password', 'admin', 'user');
 $controller->read->presenter->columns(['UserUsername' => 'Username', 'UserPassword' => 'Password', 'ImageText' => 'Best']);
+$controller->read->presenter->caption('Users');
 $controller->read->sql->relations->oto('Image', 'ImageId = UserImage');
 $controller->read->sql->relations->otm('attributes', 'UserId', 'AttributeUserId', 'INNER', function ($table) {
-    $table->presenter->alias('Attributes');
+    $table->alias('Attributes');
     $table->presenter->columns([
                                    'AttributeText' => 'Denne person er:',
                                ]);

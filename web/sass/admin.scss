@@ -10,6 +10,12 @@ td:has(table) {
 
 table {
   border-collapse: collapse;
+  caption {
+    background: darken($main-color, 20%);
+    font-size: 2rem;
+    padding: 10px 15px;
+    text-align: left;
+  }
   thead {
     background: darken($main-color, 20%);
     border: none;
@@ -18,7 +24,7 @@ table {
     border-radius: 0;
   }
   td {
-    font-size: 12px;
+    font-size: 1rem;
     border: 1px solid darken($main-color, 20%);
   }
   table {

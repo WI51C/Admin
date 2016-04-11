@@ -20,13 +20,6 @@ class Presenter
     public $columns = [];
 
     /**
-     * The alias of the table.
-     *
-     * @var string
-     */
-    public $alias;
-
-    /**
      * Sets the caption of the table.
      *
      * @param string $caption
@@ -67,20 +60,6 @@ class Presenter
     public function addColumn(string $column, string $alias = null)
     {
         $this->columns[$column] = $alias ?? $column;
-
-        return $this;
-    }
-
-    /**
-     * Sets the alias of the table.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function alias(string $name)
-    {
-        $this->alias = $name;
 
         return $this;
     }
