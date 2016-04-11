@@ -7,6 +7,7 @@ $controller = new Admin\CRUD('localhost', 'root', 'password', 'admin', 'user');
 $controller->read->presentation->caption('Users');
 $controller->read->database->relations->oto('Image', 'ImageId = UserImage');
 $controller->read->modifiers->add('UserUsername', 'ucwords');
+$controller->read->presentation->attribute('class', 'html-class');
 $controller->read->presentation->columns([
                                              'UserUsername' => 'Username',
                                              'UserPassword' => 'Password',

@@ -1,4 +1,4 @@
-<table>
+<table <?= $this->table->presentation->getAttributes() ?>>
     <?php if ($this->table->presentation->getCaption() !== null): ?>
         <caption><?= $this->table->presentation->getCaption() ?></caption>
     <?php endif ?>

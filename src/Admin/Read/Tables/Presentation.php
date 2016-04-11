@@ -6,6 +6,13 @@ class Presentation
 {
 
     /**
+     * Attributes to add to the table.
+     *
+     * @var array
+     */
+    protected $attributes = [];
+
+    /**
      * Caption of the html table.
      *
      * @var string|null
@@ -25,6 +32,21 @@ class Presentation
      * @var bool
      */
     protected $head = true;
+
+    /**
+     * Adds an attribute to the table.
+     *
+     * @param string $attribute
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function attribute(string $attribute, string $value)
+    {
+        $this->attributes[$attribute] = $value;
+
+        return $this;
+    }
 
     /**
      * Sets the caption of the table.
@@ -83,6 +105,21 @@ class Presentation
         $this->head = $setting;
 
         return $this;
+    }
+
+    /**
+     * Gets the attributes of the table tag.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        $string = '';
+        foreach ($this->attributes as $name => $value) {
+            $string .= sprintf('%s="%s" ', $name, $value);
+        }
+
+        return $string;
     }
 
     /**
