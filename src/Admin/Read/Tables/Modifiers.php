@@ -10,7 +10,7 @@ class Modifiers
      *
      * @var array
      */
-    public $map = [];
+    protected $map = [];
 
     /**
      * Adds a column and a callable resource to the map.
@@ -25,5 +25,15 @@ class Modifiers
         $this->map[$column][] = $callable;
 
         return $this;
+    }
+
+    /**
+     * Gets the map of modifiers and their columns.
+     *
+     * @return array
+     */
+    public function getMap()
+    {
+        return $this->map;
     }
 }

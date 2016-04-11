@@ -36,12 +36,16 @@ class Modifier
 
     /**
      * Modifies an array using the
+     *
+     * @throws Exception if the exception
+     *
+     * @return array
      */
     public function modify()
     {
         foreach ($this->data as $position => $row) {
             foreach ($row as $key => $value) {
-                foreach ($this->table->modifiers->map[$key] ?? [] as $modifier) {
+                foreach ($this->table->modifiers->getMap()[$key] ?? [] as $modifier) {
                     if (!is_callable($modifier)) {
                         throw new Exception(sprintf('Modifier could not be applied to row %s.', $key));
                     }
@@ -56,10 +60,10 @@ class Modifier
     /**
      * Calls a php callable value.
      *
-     * @param callable $modifier
-     * @param mixed    $value
-     * @param array    $row
-     * @param string   $key
+     * @param callable $modifier the callable value to apply to the value of the data.
+     * @param mixed    $value    the value to pass to the callable.
+     * @param array    $row      the row the the value to pass to the callable.
+     * @param string   $key      the key of the value to pass to the callable.
      *
      * @return mixed
      */
