@@ -70,8 +70,8 @@ class Crud
 
         $this->connection = new MysqliDb($hostname, $username, $password, $database);
 
-        $this->read = new Read($this, $table);
-        $this->read->select->table($table);
+        $this->read = new Read($this);
+        $this->read->database->table($table);
     }
 
     /**

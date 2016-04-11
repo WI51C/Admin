@@ -39,7 +39,7 @@ class Extractor
      */
     public function extract()
     {
-        foreach ($this->table->select->relations->getOtmRelations() as $otm) {
+        foreach ($this->table->database->relations->getOtmRelations() as $otm) {
             $otmData = $otm->getData();
             foreach ($this->data as $key => $value) {
                 $subData = [];
@@ -51,10 +51,10 @@ class Extractor
 
                 $renderer = new Renderer($otm, $subData);
                 $this->table->presentation->addColumn(
-                    sprintf('_%s_', $otm->select->table),
-                    $otm->alias ?? $otm->select->table
+                    sprintf('_%s_', $otm->database->table),
+                    $otm->alias ?? $otm->database->table
                 );
-                $this->data[$key][sprintf('_%s_', $otm->select->table)] = $renderer->render();
+                $this->data[$key][sprintf('_%s_', $otm->database->table)] = $renderer->render();
             }
         }
 

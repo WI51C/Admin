@@ -35,9 +35,9 @@ class Table
     /**
      * Instance of select for limiting the SQL-query.
      *
-     * @var Select
+     * @var Database
      */
-    public $select;
+    public $database;
 
     /**
      * Modifiers instance for defining modifiers for data columns.
@@ -56,10 +56,10 @@ class Table
         $this->crud         = $crud;
         $this->presentation = new Presentation();
         $this->modifiers    = new Modifiers();
-        $this->select       = new Select(new RelationBinder(
-                                             $this->crud,
-                                             $this
-                                         ));
+        $this->database     = new Database(new RelationBinder(
+                                               $this->crud,
+                                               $this
+                                           ));
     }
 
     /**
@@ -87,14 +87,14 @@ class Table
     public function getData()
     {
         $query = $this->crud->query();
-        foreach ($this->select->relations->getOneToOneRelations() as $oto) {
+        foreach ($this->database->relations->getOneToOneRelations() as $oto) {
             $query->join($oto->table, $oto->condition, $oto->type);
         }
 
-        if ($this->select->offset !== 0) {
-            return $query->get($this->select->table, $this->select->limit);
+        if ($this->database->offset !== 0) {
+            return $query->get($this->database->table, $this->database->limit);
         }
 
-        return $query->get($this->select->table, [$this->select->offset, $this->select->limit]);
+        return $query->get($this->database->table, [$this->database->offset, $this->database->limit]);
     }
 }

@@ -4,7 +4,7 @@ namespace Admin\Read\Relations;
 
 use Admin\Crud;
 
-class MTM extends OTM
+class ManyMany extends OneMany
 {
 
     /**
@@ -29,7 +29,7 @@ class MTM extends OTM
     public $middleJoinType;
 
     /**
-     * MTM constructor.
+     * ManyMany constructor.
      *
      * @param Crud   $crud                instance of Crud for getting global variables.
      * @param string $table               the table to (primary) display.

@@ -5,7 +5,7 @@ namespace Admin\Read\Relations;
 use Admin\Crud;
 use Admin\Read\Tables\Table;
 
-class OTM extends Table
+class OneMany extends Table
 {
 
     /**
@@ -30,7 +30,7 @@ class OTM extends Table
     public $childColumn;
 
     /**
-     * OTO constructor.
+     * OneOne constructor.
      *
      * @param Crud   $crud
      * @param string $table
@@ -40,7 +40,7 @@ class OTM extends Table
     public function __construct(Crud $crud, string $table, string $parentColumn, string $childColumn)
     {
         parent::__construct($crud);
-        $this->select->table = $table;
+        $this->database->table = $table;
         $this->parentColumn  = $parentColumn;
         $this->childColumn   = $childColumn;
     }

@@ -68,7 +68,7 @@ class RelationBinder
      */
     public function oto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = new OTO($table, $condition, $type);
+        $this->oto[] = new OneOne($table, $condition, $type);
 
         return $this;
     }
@@ -87,9 +87,48 @@ class RelationBinder
      */
     public function otm(string $table, string $parentColumn, string $childColumn, Closure $closure = null)
     {
-        $relation    = new OTM($this->crud, $table, $parentColumn, $childColumn);
+        $relation    = new OneMany($this->crud, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
+        if ($closure !== null) {
+            call_user_func($closure, $relation);
+        }
 
+        return $this;
+    }
+
+    /**
+     * Creates a new Many-To-Many relation to the table.
+     *
+     * @param string       $table
+     * @param string       $parentColumn
+     * @param string       $childColumn
+     * @param string       $middleTable
+     * @param string       $middleJoinCondition
+     * @param string       $middleJoinType
+     * @param Closure|null $closure
+     *
+     * @return $this
+     */
+    public function mtm(
+        string $table,
+        string $parentColumn,
+        string $childColumn,
+        string $middleTable,
+        string $middleJoinCondition,
+        string $middleJoinType = 'INNER',
+        Closure $closure = null
+    ) {
+        $relation = new ManyMany(
+            $this->crud,
+            $table,
+            $parentColumn,
+            $childColumn,
+            $middleTable,
+            $middleJoinCondition,
+            $middleJoinType
+        );
+
+        $this->mtm[] = $relation;
         if ($closure !== null) {
             call_user_func($closure, $relation);
         }

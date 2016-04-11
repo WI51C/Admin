@@ -3,9 +3,11 @@ $main-color: #eee;
 * {
   font-family: Raleway;
   font-weight: 300;
+  line-height: 1.5;
 }
 
 table {
+  table-layout: auto;
   border-collapse: collapse;
   caption {
     background: darken($main-color, 50%);
@@ -26,7 +28,8 @@ table {
     border-radius: 0;
   }
   td {
-    font-size: 1rem;
+    font-size: .9rem;
+    word-break: break-all;
   }
   table {
     background: rgba(0, 0, 0, .05);
@@ -34,14 +37,14 @@ table {
     overflow-y: auto;
     display: block;
     height: 100%;
-    thead {
-      background: none;
-      color: darken($main-color, 80%);
-    }
     tr:nth-last-of-type(even) {
       background: none
     }
+    thead {
+      background: none;
+    }
     th {
+      color: darken($main-color, 75%);
       font-weight: bold;
     }
     td, th {
