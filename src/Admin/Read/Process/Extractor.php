@@ -52,7 +52,7 @@ class Extractor
                 $renderer = new Renderer($otm, $subData);
                 $this->table->presentation->addColumn(
                     sprintf('_%s_', $otm->select->table),
-                    $otm->presentation->alias ?? $otm->select->table
+                    $otm->alias ?? $otm->select->table
                 );
                 $this->data[$key][sprintf('_%s_', $otm->select->table)] = $renderer->render();
             }
