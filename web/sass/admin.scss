@@ -4,33 +4,37 @@ $main-color: #eee;
   font-family: Raleway;
 }
 
-td:has(table) {
-  padding: 0 !important;
-}
-
 table {
   border-collapse: collapse;
   caption {
-    background: darken($main-color, 20%);
+    background: darken($main-color, 75%);
     font-size: 2rem;
     font-weight: bold;
     padding: 10px 15px;
     text-align: left;
+    color: lighten($main-color, 0%);
+  }
+  tr:nth-last-of-type(even) {
+    background: darken($main-color, 10%);
   }
   thead {
-    background: darken($main-color, 20%);
+    background: darken($main-color, 75%);
     border: none;
+    color: lighten($main-color, 0%);
   }
   th {
     border-radius: 0;
   }
   td {
     font-size: 1rem;
-    border: 1px solid darken($main-color, 20%);
   }
   table {
+    max-height: 200px;
+    overflow-y: auto;
+    display: block;
     thead {
       background: none;
+      color: darken($main-color, 80%);
     }
     td, th {
       font-size: 10px;
@@ -69,7 +73,7 @@ h2 {
 
 #menu {
   padding: 0;
-  background: #212121;
+  background: darken($main-color, 80%);
   position: fixed;
   top: 0px;
   bottom: 0px;
@@ -84,7 +88,7 @@ h2 {
     font-weight: 100;
   }
   a:hover {
-    background: darken($main-color, 20%);
+    background: darken($main-color, 50%);
   }
 
   .logo-area {
