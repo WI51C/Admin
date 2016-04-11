@@ -8,7 +8,7 @@ $controller->read->presentation->columns(['UserUsername' => 'Username', 'UserPas
 $controller->read->presentation->caption('Users');
 $controller->read->select->relations->oto('Image', 'ImageId = UserImage');
 $controller->read->modifiers->add('UserUsername', 'ucwords');
-$controller->read->select->relations->otm('attributes', 'UserId', 'AttributeUserId', 'INNER', function ($table) {
+$controller->read->select->relations->otm('attributes', 'UserId', 'AttributeUserId', function ($table) {
     $table->alias('Attributes');
     $table->presentation->columns([
                                       'AttributeText' => 'Denne person er:',

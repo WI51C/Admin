@@ -30,26 +30,17 @@ class OTM extends Table
     public $childColumn;
 
     /**
-     * The type of join to perform.
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
      * OTO constructor.
      *
      * @param Crud   $crud
      * @param string $table
      * @param string $parentColumn
      * @param string $childColumn
-     * @param string $type
      */
-    public function __construct(Crud $crud, string $table, string $parentColumn, string $childColumn, string $type = 'INNER')
+    public function __construct(Crud $crud, string $table, string $parentColumn, string $childColumn)
     {
         parent::__construct($crud);
         $this->select->table = $table;
-        $this->type          = $type;
         $this->parentColumn  = $parentColumn;
         $this->childColumn   = $childColumn;
     }

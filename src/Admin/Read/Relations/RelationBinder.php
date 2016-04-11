@@ -79,16 +79,15 @@ class RelationBinder
      * @param string  $table        the table to join on, and its optional alias.
      * @param string  $parentColumn the foreign (parent) column to join on.
      * @param string  $childColumn  the local (child) column to join on.
-     * @param string  $type         the type of join to perform.
      * @param Closure $closure      |null   a closure to change the relation.
      *
      * @throws Exception if the $table array was malformed
      *
      * @return $this
      */
-    public function otm(string $table, string $parentColumn, string $childColumn, string $type = 'INNER', Closure $closure = null)
+    public function otm(string $table, string $parentColumn, string $childColumn, Closure $closure = null)
     {
-        $relation    = new OTM($this->crud, $table, $parentColumn, $childColumn, $type);
+        $relation    = new OTM($this->crud, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
 
         if ($closure !== null) {
