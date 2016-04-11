@@ -5,38 +5,25 @@ namespace Admin\Read\Tables;
 class Modifiers
 {
 
-    public function link()
+    /**
+     * Map over callbacks and their column names.
+     *
+     * @var array
+     */
+    public $map = [];
+
+    /**
+     * Adds a column and a callable resource to the map.
+     *
+     * @param string   $column
+     * @param callable $callable
+     *
+     * @return $this
+     */
+    public function add(string $column, callable $callable)
     {
+        $this->map[$column][] = $callable;
 
-    }
-
-    public function image()
-    {
-
-    }
-
-    public function date()
-    {
-
-    }
-
-    public function htmlentities()
-    {
-
-    }
-
-    public function lowercase()
-    {
-
-    }
-
-    public function uppercase()
-    {
-
-    }
-
-    public function ucfirst()
-    {
-
+        return $this;
     }
 }

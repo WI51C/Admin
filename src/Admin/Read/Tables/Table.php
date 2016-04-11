@@ -4,6 +4,7 @@ namespace Admin\Read\Tables;
 
 use Admin\Crud;
 use Admin\Read\Process\Extractor;
+use Admin\Read\Process\Modifier;
 use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationBinder;
 
@@ -39,6 +40,13 @@ class Table
     public $select;
 
     /**
+     * Modifiers instance for defining modifiers for data columns.
+     *
+     * @var Modifiers
+     */
+    public $modifiers;
+
+    /**
      * Table constructor.
      *
      * @param Crud $crud
@@ -47,6 +55,7 @@ class Table
     {
         $this->crud         = $crud;
         $this->presentation = new Presentation();
+        $this->modifiers    = new Modifiers();
         $this->select       = new Select(new RelationBinder(
                                              $this->crud,
                                              $this
@@ -63,6 +72,8 @@ class Table
         $data      = $this->getData();
         $extractor = new Extractor($this, $data);
         $data      = $extractor->extract();
+        $modifier  = new Modifier($this, $data);
+        $data      = $modifier->modify();
         $renderer  = new Renderer($this, $data);
 
         return $renderer->render();
