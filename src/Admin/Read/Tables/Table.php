@@ -3,6 +3,7 @@
 namespace Admin\Read\Tables;
 
 use Admin\Crud;
+use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationBinder;
 
@@ -59,25 +60,10 @@ class Table
      */
     public function render()
     {
-        $data = $this->getData();
-
-        foreach ($this->select->relations->getOtmRelations() as $otm) {
-            $otmData = $otm->getData();
-            foreach ($data as $key => $value) {
-                $subData = [];
-                foreach ($otmData as $otmKey => $otmRow) {
-                    if ($value[$otm->parentColumn] == $otmRow[$otm->childColumn]) {
-                        $subData[] = $otmRow;
-                    }
-                }
-
-                $subRenderer = new Renderer($otm, $subData);
-                $this->presentation->addColumn(sprintf('_%s_', $otm->select->table), $otm->presentation->alias ?? $otm->select->table);
-                $data[$key][sprintf('_%s_', $otm->select->table)] = $subRenderer->render();
-            }
-        }
-
-        $renderer = new Renderer($this, $data);
+        $data      = $this->getData();
+        $extractor = new Extractor($this, $data);
+        $data      = $extractor->extract();
+        $renderer  = new Renderer($this, $data);
 
         return $renderer->render();
     }
