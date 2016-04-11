@@ -2,25 +2,25 @@
 
 namespace Admin\Read\Relations;
 
-use Admin\Read\Tables\Table;
 use Admin\Crud;
+use Admin\Read\Tables\Table;
 
 class OTM extends Table
 {
 
     /**
-     * The table of the join.
+     * The parent columns name of the join.
      *
      * @var string
      */
-    public $table;
+    public $parentColumn;
 
     /**
-     * The condition of the join.
+     * Local column name of the join.
      *
-     * @var string
+     * @var
      */
-    public $condition;
+    public $childColumn;
 
     /**
      * The type of join to perform.
@@ -34,14 +34,16 @@ class OTM extends Table
      *
      * @param Crud   $crud
      * @param string $table
-     * @param string $condition
+     * @param string $parentColumn
+     * @param string $childColumn
      * @param string $type
      */
-    public function __construct(Crud $crud, string $table, string $condition, string $type = 'INNER')
+    public function __construct(Crud $crud, string $table, string $parentColumn, string $childColumn, string $type = 'INNER')
     {
         parent::__construct($crud);
-        $this->table     = $table;
-        $this->condition = $condition;
-        $this->type      = $type;
+        $this->sql->table   = $table;
+        $this->type         = $type;
+        $this->parentColumn = $parentColumn;
+        $this->childColumn  = $childColumn;
     }
 }

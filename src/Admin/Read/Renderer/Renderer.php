@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\Process;
+namespace Admin\Read\Renderer;
 
 use Admin\Read\Tables\Presenter;
 
@@ -40,6 +40,9 @@ class Renderer
      */
     public function render()
     {
-        return include '../templates/table.template.php';
+        ob_start();
+        require '../templates/table.template.php';
+
+        return ob_get_clean();
     }
 }
