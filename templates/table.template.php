@@ -1,18 +1,20 @@
 <table>
-    <?php if ($this->table->presentation->caption !== null): ?>
-        <caption><?= $this->table->presentation->caption ?></caption>
+    <?php if ($this->table->presentation->getCaption() !== null): ?>
+        <caption><?= $this->table->presentation->getCaption() ?></caption>
     <?php endif ?>
-    <thead>
-    <tr>
-        <?php foreach ($this->table->presentation->columns as $column => $header): ?>
-            <th><?= $header ?></th>
-        <?php endforeach ?>
-    </tr>
-    </thead>
+    <?php if ($this->table->presentation->getHead()): ?>
+        <thead>
+        <tr>
+            <?php foreach ($this->table->presentation->getColumns() as $column => $header): ?>
+                <th><?= $header ?></th>
+            <?php endforeach ?>
+        </tr>
+        </thead>
+    <?php endif ?>
     <tbody>
     <?php foreach ($this->data as $key => $row): ?>
         <tr>
-            <?php foreach ($this->table->presentation->columns as $column => $header): ?>
+            <?php foreach ($this->table->presentation->getColumns() as $column => $header): ?>
                 <td><?= $row[$column] ?></td>
             <?php endforeach ?>
         </tr>
