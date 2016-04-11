@@ -48,10 +48,10 @@ class OTM extends Table
     public function __construct(Crud $crud, string $table, string $parentColumn, string $childColumn, string $type = 'INNER')
     {
         parent::__construct($crud);
-        $this->sql->table   = $table;
-        $this->type         = $type;
-        $this->parentColumn = $parentColumn;
-        $this->childColumn  = $childColumn;
+        $this->select->table = $table;
+        $this->type          = $type;
+        $this->parentColumn  = $parentColumn;
+        $this->childColumn   = $childColumn;
     }
 
     /**

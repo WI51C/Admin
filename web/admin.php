@@ -4,14 +4,14 @@ require '../vendor/autoload.php';
 require 'includes/top.php';
 
 $controller = new Admin\CRUD('localhost', 'root', 'password', 'admin', 'user');
-$controller->read->presenter->columns(['UserUsername' => 'Username', 'UserPassword' => 'Password', 'ImageText' => 'Best']);
-$controller->read->presenter->caption('Users');
-$controller->read->sql->relations->oto('Image', 'ImageId = UserImage');
-$controller->read->sql->relations->otm('attributes', 'UserId', 'AttributeUserId', 'INNER', function ($table) {
+$controller->read->presentation->columns(['UserUsername' => 'Username', 'UserPassword' => 'Password', 'ImageText' => 'Best']);
+$controller->read->presentation->caption('Users');
+$controller->read->select->relations->oto('Image', 'ImageId = UserImage');
+$controller->read->select->relations->otm('attributes', 'UserId', 'AttributeUserId', 'INNER', function ($table) {
     $table->alias('Attributes');
-    $table->presenter->columns([
-                                   'AttributeText' => 'Denne person er:',
-                               ]);
+    $table->presentation->columns([
+                                      'AttributeText' => 'Denne person er:',
+                                  ]);
 });
 echo $controller->read->render();
 

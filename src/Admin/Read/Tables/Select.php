@@ -4,7 +4,7 @@ namespace Admin\Read\Tables;
 
 use Admin\Read\Relations\RelationBinder;
 
-class SQL
+class Select
 {
 
     /**

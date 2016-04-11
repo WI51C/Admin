@@ -3,8 +3,8 @@
 namespace Admin\Read\Tables;
 
 use Admin\Crud;
+use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationBinder;
-use Admin\Read\Renderer\Renderer;
 
 class Table
 {
@@ -24,18 +24,18 @@ class Table
     protected $crud;
 
     /**
-     * Configuration of the HTML of the Table.
-     *
-     * @var Html
-     */
-    public $html;
-
-    /**
      * Configuration of the presentation of the Table.
      *
      * @var Presentation
      */
-    public $presenter;
+    public $presentation;
+
+    /**
+     * Instance of select for limiting the SQL-query.
+     *
+     * @var Select
+     */
+    public $select;
 
     /**
      * Table constructor.
@@ -44,13 +44,12 @@ class Table
      */
     public function __construct(Crud $crud)
     {
-        $this->crud      = $crud;
-        $this->html      = new Html();
-        $this->presenter = new Presenter();
-        $this->sql       = new SQL(new RelationBinder(
-                                       $this->crud,
-                                       $this
-                                   ));
+        $this->crud         = $crud;
+        $this->presentation = new Presentation();
+        $this->select       = new Select(new RelationBinder(
+                                             $this->crud,
+                                             $this
+                                         ));
     }
 
     /**
@@ -62,7 +61,7 @@ class Table
     {
         $data = $this->getData();
 
-        foreach ($this->sql->relations->getOtmRelations() as $otm) {
+        foreach ($this->select->relations->getOtmRelations() as $otm) {
             $otmData = $otm->getData();
             foreach ($data as $key => $value) {
                 $subData = [];
@@ -72,13 +71,13 @@ class Table
                     }
                 }
 
-                $subRenderer = new Renderer($otm->presenter, $subData);
-                $this->presenter->addColumn(sprintf('_%s_', $otm->sql->table), $otm->presenter->alias ?? $otm->sql->table);
-                $data[$key][sprintf('_%s_', $otm->sql->table)] = $subRenderer->render();
+                $subRenderer = new Renderer($otm, $subData);
+                $this->presentation->addColumn(sprintf('_%s_', $otm->select->table), $otm->presentation->alias ?? $otm->select->table);
+                $data[$key][sprintf('_%s_', $otm->select->table)] = $subRenderer->render();
             }
         }
 
-        $renderer = new Renderer($this->presenter, $data);
+        $renderer = new Renderer($this, $data);
 
         return $renderer->render();
     }
@@ -91,14 +90,14 @@ class Table
     public function getData()
     {
         $query = $this->crud->query();
-        foreach ($this->sql->relations->getOneToOneRelations() as $oto) {
+        foreach ($this->select->relations->getOneToOneRelations() as $oto) {
             $query->join($oto->table, $oto->condition, $oto->type);
         }
 
-        if ($this->sql->offset !== 0) {
-            return $query->get($this->sql->table, $this->sql->limit);
+        if ($this->select->offset !== 0) {
+            return $query->get($this->select->table, $this->select->limit);
         }
 
-        return $query->get($this->sql->table, [$this->sql->offset, $this->sql->limit]);
+        return $query->get($this->select->table, [$this->select->offset, $this->select->limit]);
     }
 }
