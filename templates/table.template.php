@@ -11,13 +11,15 @@
         </tr>
         </thead>
     <?php endif ?>
-    <tbody>
-    <?php foreach ($this->data as $key => $row): ?>
-        <tr>
-            <?php foreach ($this->table->presentation->getColumns() as $column => $header): ?>
-                <td><?= $row[$column] ?></td>
-            <?php endforeach ?>
-        </tr>
-    <?php endforeach ?>
-    </tbody>
+    <?php if (!empty($this->data)): ?>
+        <tbody>
+        <?php foreach ($this->data as $key => $row): ?>
+            <tr>
+                <?php foreach ($this->table->presentation->getColumns() as $column => $header): ?>
+                    <td><?= $row[$column] ?></td>
+                <?php endforeach ?>
+            </tr>
+        <?php endforeach ?>
+        </tbody>
+    <?php endif ?>
 </table>
