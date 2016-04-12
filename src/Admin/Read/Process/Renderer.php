@@ -14,7 +14,7 @@ class Renderer
      *
      * @var string
      */
-    protected $template = '../templates/table.template.php';
+    protected $template = '../templates/tables/table.template.php';
 
     /**
      * Table to render.
@@ -61,14 +61,13 @@ class Renderer
     public function render()
     {
         if (!file_exists($this->template)) {
-            throw new Exception();
+            throw new Exception(sprintf('Template file %s does not exist.', $this->template));
         }
 
         ob_start();
-        require $this->template;
-        $content = ob_get_clean();
+        require($this->template);
 
-        return $content;
+        return ob_get_clean();
     }
 
     /**

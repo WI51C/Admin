@@ -1,4 +1,4 @@
-<table>
+<table class="striped">
     <?php if ($this->table->getCaption() !== null): ?>
         <caption><?= $this->table->getCaption() ?></caption>
     <?php endif ?>

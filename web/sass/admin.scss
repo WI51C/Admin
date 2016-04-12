@@ -7,8 +7,6 @@ $main-color: #eee;
 }
 
 table {
-  table-layout: auto;
-  border-collapse: collapse;
   caption {
     background: darken($main-color, 60%);
     font-size: 2rem;
@@ -17,7 +15,7 @@ table {
     color: lighten($main-color, 0%);
   }
   tr:nth-last-of-type(even) {
-    background: darken($main-color, 10%);
+    background: darken($main-color, 5%);
   }
   thead {
     background: darken($main-color, 75%);
@@ -32,22 +30,7 @@ table {
     word-break: break-all;
   }
   table {
-    max-height: 200px;
-    overflow-y: scroll;
-    display: block;
-    height: 100%;
-    tr {
-      background: none !important;
-    }
-    thead {
-      width: 100%;
-      display: block;
-      background: darken($main-color, 50%);
-    }
-    th, td {
-      font-size: .8rem;
-      padding: 10px;
-    }
+    display: none;
   }
 }
 
