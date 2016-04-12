@@ -69,6 +69,8 @@ class Table
      */
     public function render()
     {
+        $this->autoColumns();
+
         $data      = $this->getData();
         $extractor = new Extractor($this, $data);
         $data      = $extractor->extract();
