@@ -16,7 +16,7 @@ class Table
      *
      * @var string
      */
-    public $table;
+    protected $table;
 
     /**
      * Instance of CRUD.
@@ -26,25 +26,81 @@ class Table
     protected $crud;
 
     /**
-     * Configuration of the presentation of the Table.
+     * Attributes to add to the table.
      *
-     * @var Presentation
+     * @var array
      */
-    public $presentation;
+    protected $attributes = [];
 
     /**
-     * Instance of select for limiting the SQL-query.
+     * Caption of the html table.
      *
-     * @var Database
+     * @var string|null
      */
-    public $database;
+    protected $caption;
 
     /**
-     * Modifiers instance for defining modifiers for data columns.
+     * Columns of the table.
      *
-     * @var Modifiers
+     * @var array
      */
-    public $modifiers;
+    protected $columns = [];
+
+    /**
+     * Setting to show the head of the table.
+     *
+     * @var bool
+     */
+    protected $head = true;
+
+    /**
+     * Limit of the table.
+     *
+     * @var null|int
+     */
+    protected $limit = 2147483647;
+
+    /**
+     * Offset of the table.
+     *
+     * @var int
+     */
+    protected $offset = 0;
+
+    /**
+     * Where statements of the table.
+     *
+     * @var array
+     */
+    protected $wheres = [];
+
+    /**
+     * Having statements of the table.
+     *
+     * @var array
+     */
+    protected $havings = [];
+
+    /**
+     * Order by clauses of the table.
+     *
+     * @var array
+     */
+    protected $orders = [];
+
+    /**
+     * Group by clauses.
+     *
+     * @var array
+     */
+    protected $group = null;
+
+    /**
+     * The inline tables of the Table.
+     *
+     * @var RelationBinder
+     */
+    protected $relations;
 
     /**
      * Table constructor.
@@ -53,13 +109,82 @@ class Table
      */
     public function __construct(Crud $crud)
     {
-        $this->crud         = $crud;
-        $this->presentation = new Presentation();
-        $this->modifiers    = new Modifiers();
-        $this->database     = new Database(new RelationBinder(
-                                               $this->crud,
-                                               $this
-                                           ));
+        $this->crud      = $crud;
+        $this->relations = new RelationBinder($this->crud, $this);
+    }
+
+    /**
+     * Adds an attribute to the table.
+     *
+     * @param string $attribute
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function attribute(string $attribute, string $value)
+    {
+        $this->attributes[$attribute] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Sets the caption of the table.
+     *
+     * @param string $caption
+     *
+     * @return $this
+     */
+    public function caption(string $caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * Sets the columns property of the object.
+     *
+     * @param array $columns
+     *
+     * @return $this
+     */
+    public function columns(array $columns)
+    {
+        foreach ($columns as $column => $alias) {
+            $this->columns[is_int($column) ? $alias : $column] = $alias;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Inserts a new column and optionally an alias.
+     *
+     * @param string      $column
+     * @param string|null $alias
+     *
+     * @return $this
+     */
+    public function addColumn(string $column, string $alias = null)
+    {
+        $this->columns[$column] = $alias ?? $column;
+
+        return $this;
+    }
+
+    /**
+     * Sets whether or not to display the head of the table.
+     *
+     * @param bool $setting
+     *
+     * @return $this
+     */
+    public function head(bool $setting)
+    {
+        $this->head = $setting;
+
+        return $this;
     }
 
     /**
@@ -69,8 +194,6 @@ class Table
      */
     public function render()
     {
-        $this->autoColumns();
-
         $data      = $this->getData();
         $extractor = new Extractor($this, $data);
         $data      = $extractor->extract();
@@ -89,14 +212,142 @@ class Table
     public function getData()
     {
         $query = $this->crud->query();
-        foreach ($this->database->relations->getOneToOneRelations() as $oto) {
+        foreach ($this->relations->getOneToOneRelations() as $oto) {
             $query->join($oto->table, $oto->condition, $oto->type);
         }
 
-        if ($this->database->offset !== 0) {
-            return $query->get($this->database->table, $this->database->limit);
+        if ($this->offset !== 0) {
+            return $query->get($this->table, $this->limit);
         }
 
-        return $query->get($this->database->table, [$this->database->offset, $this->database->limit]);
+        return $query->get($this->table, [$this->offset, $this->limit]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * Gets the instance of Crud of the table.
+     *
+     * @return Crud
+     */
+    public function getCrud()
+    {
+        return $this->crud;
+    }
+
+    /**
+     * Gets the attributes of the table.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Gets the caption of the table.
+     *
+     * @return null|string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * Gets the columns to display in the table.
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * Gets the head setting of the table.
+     *
+     * @return boolean
+     */
+    public function getHead()
+    {
+        return $this->head;
+    }
+
+    /**
+     * Gets the LIMIT clauses of the table.
+     *
+     * @return int|null
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * Gets the OFFSET of the table.
+     *
+     * @return int
+     */
+    public function getOffset()
+    {
+        return $this->offset;
+    }
+
+    /**
+     * Gets the WHERE clauses of the table.
+     *
+     * @return array
+     */
+    public function getWheres()
+    {
+        return $this->wheres;
+    }
+
+    /**
+     * Gets the HAVING clauses of the table.
+     *
+     * @return array
+     */
+    public function getHavings()
+    {
+        return $this->havings;
+    }
+
+    /**
+     * Gets the ORDER BY clauses of the table.
+     *
+     * @return array
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * Gets the GROUP BY clauses of the table.
+     *
+     * @return array
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * Gets the relation of the table.
+     *
+     * @return RelationBinder
+     */
+    public function getRelations()
+    {
+        return $this->relations;
     }
 }

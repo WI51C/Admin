@@ -3,17 +3,10 @@
 namespace Admin\Read\Relations;
 
 use Admin\Crud;
-use Admin\Read\Tables\Table;
+use Admin\Read\Tables\InlineTable;
 
-class OneMany extends Table
+class OneMany extends InlineTable
 {
-
-    /**
-     * The alias of the table.
-     *
-     * @var string
-     */
-    public $alias;
 
     /**
      * The parent columns name of the join.
@@ -41,21 +34,7 @@ class OneMany extends Table
     {
         parent::__construct($crud);
         $this->database->table = $table;
-        $this->parentColumn  = $parentColumn;
-        $this->childColumn   = $childColumn;
-    }
-
-    /**
-     * Sets the alias of the table.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function alias(string $name)
-    {
-        $this->alias = $name;
-
-        return $this;
+        $this->parentColumn    = $parentColumn;
+        $this->childColumn     = $childColumn;
     }
 }
