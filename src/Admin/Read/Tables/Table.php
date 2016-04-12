@@ -110,7 +110,7 @@ class Table
     public function __construct(Crud $crud)
     {
         $this->crud      = $crud;
-        $this->relations = new RelationBinder($this->crud, $this);
+        $this->relations = new TableRelations($this->crud, $this);
     }
 
     /**
