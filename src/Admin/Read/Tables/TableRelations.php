@@ -3,9 +3,9 @@
 namespace Admin\Read\Tables;
 
 use Admin\Connection;
-use Admin\Read\Relations\ManyMany;
-use Admin\Read\Relations\OneMany;
-use Admin\Read\Relations\OneOne;
+use Admin\Read\Relations\MTM;
+use Admin\Read\Relations\OTM;
+use Admin\Read\Relations\OTO;
 use Exception;
 
 class TableRelations
@@ -69,7 +69,7 @@ class TableRelations
      */
     public function oto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = new OneOne($table, $condition, $type);
+        $this->oto[] = new OTO($table, $condition, $type);
 
         return $this;
     }
@@ -88,7 +88,7 @@ class TableRelations
      */
     public function otm(string $table, string $parentColumn, string $childColumn, callable $callable = null)
     {
-        $relation    = new OneMany($this->connection, $table, $parentColumn, $childColumn);
+        $relation    = new OTM($this->connection, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
         if ($callable !== null) {
             call_user_func($callable, $relation);
@@ -119,7 +119,7 @@ class TableRelations
         string $middleJoinType = 'INNER',
         callable $callable = null
     ) {
-        $relation = new ManyMany(
+        $relation = new MTM(
             $this->connection,
             $table,
             $parentColumn,

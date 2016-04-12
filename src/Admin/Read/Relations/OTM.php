@@ -5,7 +5,7 @@ namespace Admin\Read\Relations;
 use Admin\Connection;
 use Admin\Read\Tables\InlineTable;
 
-class OneMany extends InlineTable
+class OTM extends InlineTable
 {
 
     /**
@@ -23,7 +23,7 @@ class OneMany extends InlineTable
     public $childColumn;
 
     /**
-     * OneOne constructor.
+     * OTO constructor.
      *
      * @param Connection $connection
      * @param string     $table

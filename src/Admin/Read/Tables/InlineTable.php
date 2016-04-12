@@ -19,7 +19,7 @@ class InlineTable extends Table
      *
      * @var string
      */
-    protected $message = 'Display';
+    protected $message = 'SHOW';
 
     /**
      * Sets the message property of the table.

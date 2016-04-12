@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Relations;
 
-class OneOne extends Relation
+class OTO extends Relation
 {
 
     /**

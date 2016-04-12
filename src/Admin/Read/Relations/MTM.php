@@ -4,7 +4,7 @@ namespace Admin\Read\Relations;
 
 use Admin\Connection;
 
-class ManyMany extends OneMany
+class MTM extends OTM
 {
 
     /**
@@ -29,7 +29,7 @@ class ManyMany extends OneMany
     public $middleJoinType;
 
     /**
-     * ManyMany constructor.
+     * MTM constructor.
      *
      * @param Connection $connection          instance of Connection for getting global variables.
      * @param string     $table               the table to (primary) display.

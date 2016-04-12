@@ -68,7 +68,7 @@ class RelationBinder
      */
     public function oto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = new OneOne($table, $condition, $type);
+        $this->oto[] = new OTO($table, $condition, $type);
 
         return $this;
     }
@@ -87,7 +87,7 @@ class RelationBinder
      */
     public function otm(string $table, string $parentColumn, string $childColumn, Closure $closure = null)
     {
-        $relation    = new OneMany($this->connection, $table, $parentColumn, $childColumn);
+        $relation    = new OTM($this->connection, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
         if ($closure !== null) {
             call_user_func($closure, $relation);
@@ -118,7 +118,7 @@ class RelationBinder
         string $middleJoinType = 'INNER',
         Closure $closure = null
     ) {
-        $relation = new ManyMany(
+        $relation = new MTM(
             $this->connection,
             $table,
             $parentColumn,
