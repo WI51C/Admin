@@ -2,18 +2,10 @@
 
 namespace Admin;
 
-use Admin\Read\Read;
 use MysqliDb;
 
 class Connection
 {
-
-    /**
-     * Instance of Read for displaying tabular data.
-     *
-     * @var $this
-     */
-    public $read;
 
     /**
      * Mysqli database connection.
@@ -59,9 +51,8 @@ class Connection
      * @param string $username the username of the database connection.
      * @param string $password the password of the database connection.
      * @param string $database the database of the database connection.
-     * @param string $table    the table of the Connection.
      */
-    public function __construct(string $hostname, string $username, string $password, string $database, string $table)
+    public function __construct(string $hostname, string $username, string $password, string $database)
     {
         $this->hostname = $hostname;
         $this->username = $username;
@@ -69,9 +60,6 @@ class Connection
         $this->database = $database;
 
         $this->connection = new MysqliDb($hostname, $username, $password, $database);
-
-        $this->read = new Read($this);
-        $this->read->database->table($table);
     }
 
     /**
