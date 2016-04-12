@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-use Admin\Crud;
+use Admin\Connection;
 use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Modifier;
 use Admin\Read\Process\Renderer;
@@ -19,11 +19,11 @@ class Table
     protected $table;
 
     /**
-     * Instance of CRUD.
+     * Instance of Connection.
      *
-     * @var Crud
+     * @var Connection
      */
-    protected $crud;
+    protected $connection;
 
     /**
      * Attributes to add to the table.
@@ -105,12 +105,12 @@ class Table
     /**
      * Table constructor.
      *
-     * @param Crud $crud
+     * @param Connection $connection
      */
-    public function __construct(Crud $crud)
+    public function __construct(Connection $connection)
     {
-        $this->crud      = $crud;
-        $this->relations = new TableRelations($this->crud, $this);
+        $this->connection      = $connection;
+        $this->relations = new TableRelations($this->connection, $this);
     }
 
     /**
@@ -211,7 +211,7 @@ class Table
      */
     public function getData()
     {
-        $query = $this->crud->query();
+        $query = $this->connection->query();
         foreach ($this->relations->getOneToOneRelations() as $oto) {
             $query->join($oto->table, $oto->condition, $oto->type);
         }
@@ -232,13 +232,13 @@ class Table
     }
 
     /**
-     * Gets the instance of Crud of the table.
+     * Gets the instance of Connection of the table.
      *
-     * @return Crud
+     * @return Connection
      */
-    public function getCrud()
+    public function getConnection()
     {
-        return $this->crud;
+        return $this->connection;
     }
 
     /**

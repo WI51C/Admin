@@ -3,7 +3,7 @@
 require '../vendor/autoload.php';
 require 'includes/top.php';
 
-$controller = new Admin\CRUD('localhost', 'root', 'password', 'admin', 'user');
+$controller = new Admin\Connection('localhost', 'root', 'password', 'admin', 'user');
 $controller->read->presentation->caption('Users');
 $controller->read->database->relations->oto('Image', 'ImageId = UserImage');
 $controller->read->database->relations->mtm('roles', 'UserID', 'UserId', 'roles_user_relation', 'roles.RoleID = roles_user_relation.RoleID', 'INNER', function ($table) {

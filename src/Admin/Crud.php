@@ -5,7 +5,7 @@ namespace Admin;
 use Admin\Read\Read;
 use MysqliDb;
 
-class Crud
+class Connection
 {
 
     /**
@@ -51,15 +51,15 @@ class Crud
     public $database;
 
     /**
-     * CRUDL constructor.
+     * ConnectionL constructor.
      *
-     * Creates CRUDElements of the CRUDL instance.
+     * Creates ConnectionElements of the ConnectionL instance.
      *
      * @param string $hostname the hostname of the database connection.
      * @param string $username the username of the database connection.
      * @param string $password the password of the database connection.
      * @param string $database the database of the database connection.
-     * @param string $table    the table of the CRUD.
+     * @param string $table    the table of the Connection.
      */
     public function __construct(string $hostname, string $username, string $password, string $database, string $table)
     {
@@ -75,7 +75,7 @@ class Crud
     }
 
     /**
-     * Clones the connection of the Crud instance.
+     * Clones the connection of the Connection instance.
      *
      * @return MysqliDb
      */

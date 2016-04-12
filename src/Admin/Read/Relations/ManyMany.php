@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Relations;
 
-use Admin\Crud;
+use Admin\Connection;
 
 class ManyMany extends OneMany
 {
@@ -31,7 +31,7 @@ class ManyMany extends OneMany
     /**
      * ManyMany constructor.
      *
-     * @param Crud   $crud                instance of Crud for getting global variables.
+     * @param Connection   $connection                instance of Connection for getting global variables.
      * @param string $table               the table to (primary) display.
      * @param string $parentColumn        the parent column to join on.
      * @param string $childColumn         the child column to join on.
@@ -40,7 +40,7 @@ class ManyMany extends OneMany
      * @param string $middleJoinType      the type of join to perform between to middle and primary table.
      */
     public function __construct(
-        Crud $crud,
+        Connection $connection,
         string $table,
         string $parentColumn,
         string $childColumn,
@@ -48,7 +48,7 @@ class ManyMany extends OneMany
         string $middleJoinCondition,
         string $middleJoinType = 'INNER'
     ) {
-        parent::__construct($crud, $table, $parentColumn, $childColumn);
+        parent::__construct($connection, $table, $parentColumn, $childColumn);
         $this->middleJoinTable     = $middleTable;
         $this->middleJoinCondition = $middleJoinCondition;
         $this->middleJoinType      = $middleJoinType;
@@ -61,7 +61,7 @@ class ManyMany extends OneMany
      */
     public function getData()
     {
-        $query = $this->crud->query();
+        $query = $this->connection->query();
         $query->join($this->middleJoinTable, $this->middleJoinCondition, $this->middleJoinType);
         foreach ($this->database->relations->getOneToOneRelations() as $oto) {
             $query->join($oto->table, $oto->condition, $oto->type);

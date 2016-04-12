@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-use Admin\Crud;
+use Admin\Connection;
 use Closure;
 use Exception;
 
@@ -12,9 +12,9 @@ class TableRelations
     /**
      * The instance of the RelationBinder.
      *
-     * @var Crud
+     * @var Connection
      */
-    protected $crud;
+    protected $connection;
 
     /**
      * The table instance of the RelationBinder.
@@ -47,12 +47,12 @@ class TableRelations
     /**
      * RelationBinder constructor.
      *
-     * @param Crud  $crud
+     * @param Connection  $connection
      * @param Table $parent
      */
-    public function __construct(Crud $crud, Table $parent)
+    public function __construct(Connection $connection, Table $parent)
     {
-        $this->crud   = $crud;
+        $this->connection   = $connection;
         $this->parent = $parent;
     }
 
@@ -86,7 +86,7 @@ class TableRelations
      */
     public function otm(string $table, string $parentColumn, string $childColumn, Closure $closure = null)
     {
-        $relation    = new OneMany($this->crud, $table, $parentColumn, $childColumn);
+        $relation    = new OneMany($this->connection, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
         if ($closure !== null) {
             call_user_func($closure, $relation);
@@ -118,7 +118,7 @@ class TableRelations
         Closure $closure = null
     ) {
         $relation = new ManyMany(
-            $this->crud,
+            $this->connection,
             $table,
             $parentColumn,
             $childColumn,

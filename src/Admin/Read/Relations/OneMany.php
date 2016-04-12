@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Relations;
 
-use Admin\Crud;
+use Admin\Connection;
 use Admin\Read\Tables\InlineTable;
 
 class OneMany extends InlineTable
@@ -25,14 +25,14 @@ class OneMany extends InlineTable
     /**
      * OneOne constructor.
      *
-     * @param Crud   $crud
+     * @param Connection   $connection
      * @param string $table
      * @param string $parentColumn
      * @param string $childColumn
      */
-    public function __construct(Crud $crud, string $table, string $parentColumn, string $childColumn)
+    public function __construct(Connection $connection, string $table, string $parentColumn, string $childColumn)
     {
-        parent::__construct($crud);
+        parent::__construct($connection);
         $this->database->table = $table;
         $this->parentColumn    = $parentColumn;
         $this->childColumn     = $childColumn;
