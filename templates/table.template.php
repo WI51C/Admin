@@ -1,11 +1,11 @@
-<table <?= $this->table->presentation->getAttributes() ?>>
-    <?php if ($this->table->presentation->getCaption() !== null): ?>
-        <caption><?= $this->table->presentation->getCaption() ?></caption>
+<table>
+    <?php if ($this->table->getCaption() !== null): ?>
+        <caption><?= $this->table->getCaption() ?></caption>
     <?php endif ?>
-    <?php if ($this->table->presentation->getHead()): ?>
+    <?php if ($this->table->getHead()): ?>
         <thead>
         <tr>
-            <?php foreach ($this->table->presentation->getColumns() as $column => $header): ?>
+            <?php foreach ($this->table->getColumns() as $column => $header): ?>
                 <th><?= $header ?></th>
             <?php endforeach ?>
         </tr>
@@ -15,7 +15,7 @@
         <tbody>
         <?php foreach ($this->data as $key => $row): ?>
             <tr>
-                <?php foreach ($this->table->presentation->getColumns() as $column => $header): ?>
+                <?php foreach ($this->table->getColumns() as $column => $header): ?>
                     <td><?= $row[$column] ?></td>
                 <?php endforeach ?>
             </tr>

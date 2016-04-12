@@ -3,6 +3,7 @@
 namespace Admin\Read\Process;
 
 use Admin\Read\Tables\Table;
+use Exception;
 
 class Extractor
 {
@@ -19,45 +20,83 @@ class Extractor
      *
      * @var array
      */
-    protected $data;
+    protected $data = [];
+
+    /**
+     * Headers to display.
+     *
+     * @var array
+     */
+    protected $columns = [];
+
+    /**
+     * Used hashes of the unique names.
+     *
+     * @var array
+     */
+    protected $usedHashes = [];
 
     /**
      * Extractor constructor.
      *
-     * @param Table $table
+     * @param Table $table the table to extract data from.
      */
-    public function __construct(Table $table, array $data)
+    public function __construct(Table $table)
     {
-        $this->table = $table;
-        $this->data  = $data;
+        $this->table   = $table;
+        $this->data    = $table->getData();
+        $this->columns = $table->getColumns();
+
+        $this->extract();
     }
 
     /**
      * Extracts data from the defined relations into the base property.
      *
+     * @throws Exception
+     *
      * @return array
      */
     public function extract()
     {
-        foreach (array_merge($this->table->database->relations->getOtmRelations(), $this->table->database->relations->getMtmRelations()) as $table) {
-            $tableData = $table->getData();
+        foreach (array_merge($this->table->relations->getOneToManyRelations(), $this->table->relations->getManyToManyRelations()) as $relation) {
+            $relationData = $relation->getData();
             foreach ($this->data as $key => $value) {
                 $subData = [];
-                foreach ($tableData as $tableKey => $tableRow) {
-                    if ($value[$table->parentColumn] == $tableRow[$table->childColumn]) {
+                foreach ($relationData as $tableKey => $tableRow) {
+                    if ($value[$relation->parentColumn] == $tableRow[$relation->childColumn]) {
                         $subData[] = $tableRow;
                     }
                 }
-
-                $renderer = new Renderer($table, $subData);
-                $this->table->presentation->addColumn(
-                    sprintf('_%s_', $table->database->table),
-                    $table->alias ?? $table->database->table
+                $renderer = new Renderer($relation, $subData, $relation->getColumns());
+                $this->table->column(
+                    sprintf('table:%s', $relation->getTable()),
+                    $relation->getAlias() ?? $relation->getTable()
                 );
-                $this->data[$key][sprintf('_%s_', $table->database->table)] = $renderer->render();
+                $this->data[$key][sprintf('table:%s', $relation->getTable())] = $renderer->render();
             }
         }
 
         return $this->data;
+    }
+
+    /**
+     * Gets the data of the Extractor.
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * Gets the headers of the Extractor.
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->columns;
     }
 }

@@ -31,15 +31,24 @@ class Renderer
     protected $data;
 
     /**
+     * The columns to display in the table.
+     *
+     * @var array
+     */
+    protected $headers;
+
+    /**
      * Renderer constructor.
      *
      * @param Table $table
      * @param array $data
+     * @param array $columns
      */
-    public function __construct(Table $table, array $data)
+    public function __construct(Table $table, array $data, array $columns)
     {
-        $this->table = $table;
-        $this->data  = $data;
+        $this->table   = $table;
+        $this->data    = $data;
+        $this->columns = $columns;
     }
 
     /**

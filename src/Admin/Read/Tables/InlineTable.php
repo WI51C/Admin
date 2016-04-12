@@ -25,4 +25,14 @@ class InlineTable extends Table
 
         return $this;
     }
+
+    /**
+     * Gets the alias of the table.
+     *
+     * @return $this
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
 }

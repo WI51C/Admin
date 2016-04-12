@@ -4,7 +4,6 @@ namespace Admin\Read\Tables;
 
 use Admin\Connection;
 use Admin\Read\Process\Extractor;
-use Admin\Read\Process\Modifier;
 use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationBinder;
 
@@ -24,13 +23,6 @@ class Table
      * @var Connection
      */
     protected $connection;
-
-    /**
-     * Attributes to add to the table.
-     *
-     * @var array
-     */
-    protected $attributes = [];
 
     /**
      * Caption of the html table.
@@ -128,21 +120,6 @@ class Table
     }
 
     /**
-     * Adds an attribute to the table.
-     *
-     * @param string $attribute
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function attribute(string $attribute, string $value)
-    {
-        $this->attributes[$attribute] = $value;
-
-        return $this;
-    }
-
-    /**
      * Sets the caption of the table.
      *
      * @param string $caption
@@ -180,7 +157,7 @@ class Table
      *
      * @return $this
      */
-    public function addColumn(string $column, string $alias = null)
+    public function column(string $column, string $alias = null)
     {
         $this->columns[$column] = $alias ?? $column;
 
@@ -208,12 +185,10 @@ class Table
      */
     public function render()
     {
-        $data      = $this->getData();
-        $extractor = new Extractor($this, $data);
-        $data      = $extractor->extract();
-        $modifier  = new Modifier($this, $data);
-        $data      = $modifier->modify();
-        $renderer  = new Renderer($this, $data);
+        $extractor = new Extractor($this);
+        $data      = $extractor->getData();
+        $columns   = $extractor->getColumns();
+        $renderer  = new Renderer($this, $data, $columns);
 
         return $renderer->render();
     }
@@ -227,14 +202,46 @@ class Table
     {
         $query = $this->connection->query();
         foreach ($this->relations->getOneToOneRelations() as $oto) {
-            $query->join($oto->table, $oto->condition, $oto->type);
+            $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
         }
 
-        if ($this->offset !== 0) {
-            return $query->get($this->table, $this->limit);
+        $columns = [];
+        foreach ($this->generateColumns() as $column => $header) {
+            $columns[] = sprintf('%s "%s"', $column, $column);
         }
 
-        return $query->get($this->table, [$this->offset, $this->limit]);
+        return $query->get($this->table, [$this->offset, $this->limit], $columns);
+    }
+
+    /**
+     * Automatically generates the columns to get from the information_schema database.
+     *
+     * @return array
+     */
+    protected function generateColumns()
+    {
+        $tables = [$this->getTable()];
+        foreach ($this->relations->getOneToOneRelations() as $oto) {
+            $tables[] = $oto->getTable();
+        }
+
+        $query = $this->connection->query();
+        $query->where('TABLE_SCHEMA', $this->connection->database);
+        $query->where('TABLE_NAME', ['IN' => $tables]);
+        $columns = $query->get('information_schema.columns', null, ['COLUMN_NAME', 'TABLE_NAME', 'ORDINAL_POSITION']);
+
+        usort($columns, function ($a, $b) use ($tables) {
+            return $a['TABLE_NAME'] === $b['TABLE_NAME'] ?
+                $a['ORDINAL_POSITION'] - $b['ORDINAL_POSITION'] :
+                array_search($a['TABLE_NAME'], $tables) - array_search($b['TABLE_NAME'], $tables);
+        });
+
+        $return = [];
+        foreach ($columns as $column) {
+            $return[$column['TABLE_NAME'] . '.' . $column['COLUMN_NAME']] = $column['COLUMN_NAME'];
+        }
+
+        return $return;
     }
 
     /**
@@ -243,6 +250,20 @@ class Table
     public function getTable()
     {
         return $this->table;
+    }
+
+    /**
+     * Gets the columns to select from the database.
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        if (empty($this->columns)) {
+            $this->columns = $this->generateColumns();
+        }
+
+        return $this->columns;
     }
 
     /**
@@ -256,16 +277,6 @@ class Table
     }
 
     /**
-     * Gets the attributes of the table.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
      * Gets the caption of the table.
      *
      * @return null|string
@@ -273,16 +284,6 @@ class Table
     public function getCaption()
     {
         return $this->caption;
-    }
-
-    /**
-     * Gets the columns to display in the table.
-     *
-     * @return array
-     */
-    public function getColumns()
-    {
-        return $this->columns;
     }
 
     /**
