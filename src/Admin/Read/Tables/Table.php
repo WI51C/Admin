@@ -100,7 +100,7 @@ class Table
      *
      * @var RelationBinder
      */
-    protected $relations;
+    public $relations;
 
     /**
      * Table constructor.
@@ -109,8 +109,22 @@ class Table
      */
     public function __construct(Connection $connection)
     {
-        $this->connection      = $connection;
-        $this->relations = new TableRelations($this->connection, $this);
+        $this->connection = $connection;
+        $this->relations  = new TableRelations($this->connection, $this);
+    }
+
+    /**
+     * Sets the primary table.
+     *
+     * @param string $table the table to set.
+     *
+     * @return $this
+     */
+    public function table(string $table)
+    {
+        $this->table = $table;
+
+        return $this;
     }
 
     /**

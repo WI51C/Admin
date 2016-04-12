@@ -25,16 +25,16 @@ class OneMany extends InlineTable
     /**
      * OneOne constructor.
      *
-     * @param Connection   $connection
-     * @param string $table
-     * @param string $parentColumn
-     * @param string $childColumn
+     * @param Connection $connection
+     * @param string     $table
+     * @param string     $parentColumn
+     * @param string     $childColumn
      */
     public function __construct(Connection $connection, string $table, string $parentColumn, string $childColumn)
     {
         parent::__construct($connection);
-        $this->database->table = $table;
-        $this->parentColumn    = $parentColumn;
-        $this->childColumn     = $childColumn;
+        $this->table        = $table;
+        $this->parentColumn = $parentColumn;
+        $this->childColumn  = $childColumn;
     }
 }

@@ -3,7 +3,9 @@
 namespace Admin\Read\Tables;
 
 use Admin\Connection;
-use Closure;
+use Admin\Read\Relations\ManyMany;
+use Admin\Read\Relations\OneMany;
+use Admin\Read\Relations\OneOne;
 use Exception;
 
 class TableRelations
@@ -47,13 +49,13 @@ class TableRelations
     /**
      * RelationBinder constructor.
      *
-     * @param Connection  $connection
-     * @param Table $parent
+     * @param Connection $connection
+     * @param Table      $parent
      */
     public function __construct(Connection $connection, Table $parent)
     {
-        $this->connection   = $connection;
-        $this->parent = $parent;
+        $this->connection = $connection;
+        $this->parent     = $parent;
     }
 
     /**
@@ -75,21 +77,21 @@ class TableRelations
     /**
      * Joins another table.
      *
-     * @param string  $table        the table to join on, and its optional alias.
-     * @param string  $parentColumn the foreign (parent) column to join on.
-     * @param string  $childColumn  the local (child) column to join on.
-     * @param Closure $closure      |null   a closure to change the relation.
+     * @param string        $table        the table to join on, and its optional alias.
+     * @param string        $parentColumn the foreign (parent) column to join on.
+     * @param string        $childColumn  the local (child) column to join on.
+     * @param callable|null $callable     a closure to change the relation.
      *
      * @throws Exception if the $table array was malformed
      *
      * @return $this
      */
-    public function otm(string $table, string $parentColumn, string $childColumn, Closure $closure = null)
+    public function otm(string $table, string $parentColumn, string $childColumn, callable $callable = null)
     {
         $relation    = new OneMany($this->connection, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
-        if ($closure !== null) {
-            call_user_func($closure, $relation);
+        if ($callable !== null) {
+            call_user_func($callable, $relation);
         }
 
         return $this;
@@ -98,13 +100,13 @@ class TableRelations
     /**
      * Creates a new Many-To-Many relation to the table.
      *
-     * @param string       $table
-     * @param string       $parentColumn
-     * @param string       $childColumn
-     * @param string       $middleTable
-     * @param string       $middleJoinCondition
-     * @param string       $middleJoinType
-     * @param Closure|null $closure
+     * @param string        $table
+     * @param string        $parentColumn
+     * @param string        $childColumn
+     * @param string        $middleTable
+     * @param string        $middleJoinCondition
+     * @param string        $middleJoinType
+     * @param callable|null $callable
      *
      * @return $this
      */
@@ -115,7 +117,7 @@ class TableRelations
         string $middleTable,
         string $middleJoinCondition,
         string $middleJoinType = 'INNER',
-        Closure $closure = null
+        callable $callable = null
     ) {
         $relation = new ManyMany(
             $this->connection,
@@ -128,8 +130,8 @@ class TableRelations
         );
 
         $this->mtm[] = $relation;
-        if ($closure !== null) {
-            call_user_func($closure, $relation);
+        if ($callable !== null) {
+            call_user_func($callable, $relation);
         }
 
         return $this;
@@ -150,7 +152,7 @@ class TableRelations
      *
      * @return array
      */
-    public function getOtmRelations()
+    public function getOneToManyRelations()
     {
         return $this->otm;
     }
@@ -160,7 +162,7 @@ class TableRelations
      *
      * @return array
      */
-    public function getMtmRelations()
+    public function getManyToManyRelations()
     {
         return $this->mtm;
     }

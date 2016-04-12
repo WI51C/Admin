@@ -31,13 +31,13 @@ class ManyMany extends OneMany
     /**
      * ManyMany constructor.
      *
-     * @param Connection   $connection                instance of Connection for getting global variables.
-     * @param string $table               the table to (primary) display.
-     * @param string $parentColumn        the parent column to join on.
-     * @param string $childColumn         the child column to join on.
-     * @param string $middleTable         the table to join the primary table on.
-     * @param string $middleJoinCondition the condition to join the middle and primary table on.
-     * @param string $middleJoinType      the type of join to perform between to middle and primary table.
+     * @param Connection $connection          instance of Connection for getting global variables.
+     * @param string     $table               the table to (primary) display.
+     * @param string     $parentColumn        the parent column to join on.
+     * @param string     $childColumn         the child column to join on.
+     * @param string     $middleTable         the table to join the primary table on.
+     * @param string     $middleJoinCondition the condition to join the middle and primary table on.
+     * @param string     $middleJoinType      the type of join to perform between to middle and primary table.
      */
     public function __construct(
         Connection $connection,
