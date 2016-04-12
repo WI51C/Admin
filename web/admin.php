@@ -10,6 +10,7 @@ $read->caption('Users');
 $read->relations->oto('image', 'image.ImageId = user.UserImage');
 $read->relations->otm('attributes', 'user.UserId', 'attributes.AttributeUserId', function ($table) {
     $table->alias('Attributes');
+    $table->caption('Attributes');
 });
 
 echo $read->render();

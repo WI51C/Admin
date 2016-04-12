@@ -68,7 +68,7 @@ class Extractor
                         $subData[] = $tableRow;
                     }
                 }
-                $renderer = new InlineRenderer($relation, $subData, $relation->getColumns());
+                $renderer = new Renderer($relation, $subData, $relation->getColumns());
                 $this->table->column(
                     sprintf('table:%s', $relation->getTable()),
                     $relation->getAlias() ?? $relation->getTable()

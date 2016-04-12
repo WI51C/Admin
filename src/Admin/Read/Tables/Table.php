@@ -10,6 +10,8 @@ use Admin\Read\Relations\RelationBinder;
 class Table
 {
 
+    protected $inline = false;
+
     /**
      * Name of table to select from.
      *
@@ -364,5 +366,15 @@ class Table
     public function getRelations()
     {
         return $this->relations;
+    }
+
+    /**
+     * Returns whether or not the table is inline.
+     *
+     * @return bool
+     */
+    public function isInline()
+    {
+        return $this->inline;
     }
 }

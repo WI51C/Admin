@@ -14,7 +14,7 @@ class Renderer
      *
      * @var string
      */
-    protected $template = '../templates/tables/table.template.php';
+    protected $template = '../templates/table.template.php';
 
     /**
      * Table to render.
