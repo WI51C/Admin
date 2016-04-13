@@ -12,14 +12,14 @@ class TableRelations
 {
 
     /**
-     * The instance of the RelationBinder.
+     * The instance of the TableRelations.
      *
      * @var Connection
      */
     protected $connection;
 
     /**
-     * The table instance of the RelationBinder.
+     * The table instance of the TableRelations.
      *
      * @var Table
      */
@@ -47,7 +47,7 @@ class TableRelations
     protected $mtm = [];
 
     /**
-     * RelationBinder constructor.
+     * TableRelations constructor.
      *
      * @param Connection $connection
      * @param Table      $parent
@@ -65,7 +65,7 @@ class TableRelations
      * @param string $condition the condition to join on.
      * @param string $type      the type of join to perform.
      *
-     * @return $this
+     * @return OTO
      */
     public function oto(string $table, string $condition, string $type = 'INNER')
     {
@@ -77,38 +77,33 @@ class TableRelations
     /**
      * Joins another table.
      *
-     * @param string        $table        the table to join on, and its optional alias.
-     * @param string        $parentColumn the foreign (parent) column to join on.
-     * @param string        $childColumn  the local (child) column to join on.
-     * @param callable|null $callable     a closure to change the relation.
+     * @param string $table        the table to join on, and its optional alias.
+     * @param string $parentColumn the foreign (parent) column to join on.
+     * @param string $childColumn  the local (child) column to join on.
      *
      * @throws Exception if the $table array was malformed
      *
-     * @return $this
+     * @return Table
      */
-    public function otm(string $table, string $parentColumn, string $childColumn, callable $callable = null)
+    public function otm(string $table, string $parentColumn, string $childColumn)
     {
         $relation    = new OTM($this->connection, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
-        if ($callable !== null) {
-            call_user_func($callable, $relation);
-        }
 
-        return $this;
+        return $relation;
     }
 
     /**
      * Creates a new Many-To-Many relation to the table.
      *
-     * @param string        $table
-     * @param string        $parentColumn
-     * @param string        $childColumn
-     * @param string        $middleTable
-     * @param string        $middleJoinCondition
-     * @param string        $middleJoinType
-     * @param callable|null $callable
+     * @param string $table
+     * @param string $parentColumn
+     * @param string $childColumn
+     * @param string $middleTable
+     * @param string $middleJoinCondition
+     * @param string $middleJoinType
      *
-     * @return $this
+     * @return Table
      */
     public function mtm(
         string $table,
@@ -116,8 +111,7 @@ class TableRelations
         string $childColumn,
         string $middleTable,
         string $middleJoinCondition,
-        string $middleJoinType = 'INNER',
-        callable $callable = null
+        string $middleJoinType = 'INNER'
     ) {
         $relation = new MTM(
             $this->connection,
@@ -130,11 +124,8 @@ class TableRelations
         );
 
         $this->mtm[] = $relation;
-        if ($callable !== null) {
-            call_user_func($callable, $relation);
-        }
 
-        return $this;
+        return $relation;
     }
 
     /**
