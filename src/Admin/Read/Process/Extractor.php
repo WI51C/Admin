@@ -60,7 +60,9 @@ class Extractor
     public function extract()
     {
         foreach (array_merge($this->table->relations->getOneToManyRelations(), $this->table->relations->getManyToManyRelations()) as $relation) {
-            $relationData = $relation->getData();
+            $extractor    = new Extractor($relation);
+            $relationData = $extractor->getData();
+            $columns      = $extractor->getColumns();
             foreach ($this->data as $key => $value) {
                 $subData = [];
                 foreach ($relationData as $tableKey => $tableRow) {
@@ -68,7 +70,7 @@ class Extractor
                         $subData[] = $tableRow;
                     }
                 }
-                $renderer = new Renderer($relation, $subData, $relation->getColumns());
+                $renderer = new Renderer($relation, $subData, $columns);
                 $this->table->column(
                     sprintf('table:%s', $relation->getTable()),
                     $relation->getAlias() ?? $relation->getTable()
