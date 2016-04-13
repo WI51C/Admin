@@ -49,7 +49,7 @@ class MTM extends OTM
         string $middleJoinType = 'INNER'
     ) {
         parent::__construct($connection, $table, $parentColumn, $childColumn);
-        $this->relations->oto($middleTable, $middleJoinCondition, $middleJoinType);
+        $this->relations->newOTO($middleTable, $middleJoinCondition, $middleJoinType);
     }
 
     /**
@@ -65,8 +65,9 @@ class MTM extends OTM
         }
 
         $columns = [];
-        foreach ($this->generateColumns() as $column => $header) {
-            $columns[] = sprintf('%s "%s"', $column, $column);
+        foreach ($this->columns->getColumns() as $column) {
+            $name      = $column->getName();
+            $columns[] = sprintf('%s "%s"', $name, $name);
         }
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);

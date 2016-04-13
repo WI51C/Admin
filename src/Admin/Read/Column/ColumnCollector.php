@@ -2,8 +2,18 @@
 
 namespace Admin\Read\Column;
 
+use Admin\Read\Tables\Table;
+use InvalidArgumentException;
+
 class ColumnCollector
 {
+
+    /**
+     * The table instance.
+     *
+     * @var Table
+     */
+    protected $table;
 
     /**
      * The defined columns.
@@ -13,24 +23,94 @@ class ColumnCollector
     protected $columns = [];
 
     /**
+     * ColumnCollector constructor.
+     *
+     * @param Table $table table instance.
+     */
+    public function __construct(Table $table)
+    {
+        $this->table = $table;
+    }
+
+    /**
+     * Sets the columns to show.
+     *
+     * @param array $columns the columns to show.
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return $this
+     */
+    public function setColumns(array $columns)
+    {
+        foreach ($columns as $position => $column) {
+            if (count($column) < 3)
+                throw new InvalidArgumentException(sprintf('Array given to setColumns.'));
+            $this->columns[$column[0]] = new Column($column[0], $column[1], $position);
+        }
+
+        return $this;
+    }
+
+    /**
      * Adds a column to the collector.
      *
      * @param string $name     the name of the column.
      * @param string $alias    the alias of the column.
      * @param int    $position the position of the column.
+     *
+     * @return $this
      */
     public function addColumn(string $name, string $alias, int $position = 1)
     {
         $this->columns[$name] = new Column($name, $alias, $position);
+
+        return $this;
     }
 
     /**
      * Adds a custom column to the collector.
      *
+     * @param string   $name     the name of the column.
+     * @param string   $alias    the alias of the column.
+     * @param int      $position the position of the column.
+     * @param callable $callable the callable that create the content of the column.
      *
+     * @return $this
      */
-    public function addCustom()
+    public function addCustom(string $name, string $alias, int $position = 1, callable $callable)
     {
+        $this->columns[$name] = new CustomColumn($name, $alias, $position, $callable);
 
+        return $this;
+    }
+
+    /**
+     * Automatically resolves the columns to select from the table.
+     *
+     * @return $this
+     */
+    public function autoResolve()
+    {
+        $resolver = new ColumnResolver($this->table);
+        $resolver->select();
+        $resolver->sort();
+        $this->columns = $resolver->return();
+
+        return $this;
+    }
+
+    /**
+     * Gets the columns
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        if (empty($this->columns)) {
+            $this->autoResolve();
+        }
+
+        return $this->columns;
     }
 }

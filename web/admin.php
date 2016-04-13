@@ -5,18 +5,15 @@ require 'includes/top.php';
 
 $connection = new \Admin\Connection('localhost', 'root', 'password', 'admin');
 $read       = new \Admin\Read\Read($connection);
-$read->table('user');
-$read->caption('USERS');
-$read->relations->oto('image', 'image.ImageId = user.UserImage');
-$read->relations->mtm('roles', 'user.UserId', 'roles_user_relation.UserID', 'roles_user_relation', 'roles.RoleID = roles_user_relation.RoleID', 'INNER')
-                ->caption('Roles')
-                ->alias('Roles');
-$read->relations->otm('attributes', 'user.UserId', 'attributes.AttributeUserId')
-                ->alias('Attributes')
-                ->caption('Attributes')
-    ->relations->otm('SomeRelation', 'attributes.Some', 'somerelation.SomeRelationFK')
-               ->table('SomeRelation')
-               ->caption('SomeRelation');
+$read->setTable('user');
+$read->setCaption('USERS');
+$read->relations->newOTO('image', 'image.ImageId = user.UserImage');
+$read->relations->newMTM('roles', 'user.UserId', 'roles_user_relation.UserID', 'roles_user_relation', 'roles.RoleID = roles_user_relation.RoleID', 'INNER')
+                ->setCaption('Roles')
+                ->setAlias('Roles');
+$read->relations->newOTM('attributes', 'user.UserId', 'attributes.AttributeUserId')
+                ->setAlias('Attributes')
+                ->setCaption('Attributes');
 
 echo $read->render();
 

@@ -104,7 +104,7 @@ class Column extends AttributeCollector
      */
     public function getAlias()
     {
-        return $this->alias;
+        return $this->alias ?? $this->name;
     }
 
     /**

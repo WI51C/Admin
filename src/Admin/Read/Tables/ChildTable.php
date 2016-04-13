@@ -24,7 +24,7 @@ class ChildTable extends Table
      *
      * @var string
      */
-    protected $message = 'SHOW';
+    protected $button = 'SHOW';
 
     /**
      * Sets the message property of the table.
@@ -33,9 +33,9 @@ class ChildTable extends Table
      *
      * @return $this
      */
-    public function message(string $message)
+    public function setButton(string $message)
     {
-        $this->message = $message;
+        $this->button = $message;
 
         return $this;
     }
@@ -47,7 +47,7 @@ class ChildTable extends Table
      *
      * @return $this
      */
-    public function alias(string $alias)
+    public function setAlias(string $alias)
     {
         $this->alias = $alias;
 
@@ -55,13 +55,13 @@ class ChildTable extends Table
     }
 
     /**
-     * Gets the message of the inline table.
+     * Gets the button message of the inline table.
      *
      * @return string
      */
-    public function getMessage()
+    public function getButton()
     {
-        return $this->message;
+        return $this->button;
     }
 
     /**

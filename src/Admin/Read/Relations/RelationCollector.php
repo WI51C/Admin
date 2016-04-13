@@ -47,12 +47,11 @@ class RelationCollector
     /**
      * TableRelations constructor.
      *
-     * @param Connection $connection
-     * @param Table      $parent
+     * @param Table $parent the parent of the relations.
      */
-    public function __construct(Connection $connection, Table $parent)
+    public function __construct(Table $parent)
     {
-        $this->connection = $connection;
+        $this->connection = $parent->getConnection();
         $this->parent     = $parent;
     }
 
@@ -65,7 +64,7 @@ class RelationCollector
      *
      * @return OTO
      */
-    public function oto(string $table, string $condition, string $type = 'INNER')
+    public function newOTO(string $table, string $condition, string $type = 'INNER')
     {
         $this->oto[] = new OTO($table, $condition, $type);
 
@@ -83,7 +82,7 @@ class RelationCollector
      *
      * @return Table
      */
-    public function otm(string $table, string $parentColumn, string $childColumn)
+    public function newOTM(string $table, string $parentColumn, string $childColumn)
     {
         $relation    = new OTM($this->connection, $table, $parentColumn, $childColumn);
         $this->otm[] = $relation;
@@ -103,7 +102,7 @@ class RelationCollector
      *
      * @return Table
      */
-    public function mtm(
+    public function newMTM(
         string $table,
         string $parentColumn,
         string $childColumn,

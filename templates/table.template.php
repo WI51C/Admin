@@ -1,5 +1,5 @@
 <?php if ($this->table->isInline()): ?>
-    <a class="waves-effect waves-light btn-large btn-medium red table-inspect-trigger"><?= $this->table->getMessage() ?></a>
+    <a class="waves-effect waves-light btn-large btn-medium red table-inspect-trigger"><?= $this->table->getbutton() ?></a>
 <?php endif ?>
 <div class="table-container">
     <?php if ($this->table->isInline()): ?>
@@ -14,8 +14,8 @@
         <?php if ($this->table->getHead()): ?>
             <thead>
             <tr>
-                <?php foreach ($this->table->getColumns() as $column => $header): ?>
-                    <th><?= $header ?></th>
+                <?php foreach ($this->table->columns->getColumns() as $column): ?>
+                    <th><?= $column->getAlias() ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>
@@ -24,8 +24,8 @@
             <tbody>
             <?php foreach ($this->data as $key => $row): ?>
                 <tr>
-                    <?php foreach ($this->table->getColumns() as $column => $header): ?>
-                        <td><?= $row[$column] ?></td>
+                    <?php foreach ($this->table->columns->getColumns() as $column): ?>
+                        <td><?= $row[$column->getName()] ?></td>
                     <?php endforeach ?>
                 </tr>
             <?php endforeach ?>

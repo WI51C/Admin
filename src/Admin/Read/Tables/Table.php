@@ -4,9 +4,12 @@ namespace Admin\Read\Tables;
 
 use Admin\Connection;
 use Admin\Read\AttributeCollector;
+use Admin\Read\Column\Column;
+use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationCollector;
+use Admin\Read\Relations\OTO;
 
 class Table extends AttributeCollector
 {
@@ -42,9 +45,9 @@ class Table extends AttributeCollector
     /**
      * Columns of the table.
      *
-     * @var array
+     * @var ColumnCollector
      */
-    protected $columns = [];
+    public $columns;
 
     /**
      * Setting to show the head of the table.
@@ -98,7 +101,7 @@ class Table extends AttributeCollector
     /**
      * The inline tables of the Table.
      *
-     * @var RelationBinder
+     * @var RelationCollector
      */
     public $relations;
 
@@ -110,84 +113,8 @@ class Table extends AttributeCollector
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->relations  = new RelationCollector($this->connection, $this);
-    }
-
-    /**
-     * Sets the primary table.
-     *
-     * @param string $table the table to set.
-     *
-     * @return $this
-     */
-    public function table(string $table)
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-    /**
-     * Sets the caption of the table.
-     *
-     * @param string $caption the caption to display above the table.
-     *
-     * @return $this
-     */
-    public function caption(string $caption)
-    {
-        $this->caption = $caption;
-
-        return $this;
-    }
-
-    /**
-     * Sets the columns property of the object.
-     *
-     * @param array $columns    the columns to add in the pattern:
-     *                          [
-     *                          'users.username',
-     *                          'users.password' => 'alias',
-     *                          ],
-     *
-     * @return $this
-     */
-    public function columns(array $columns)
-    {
-        foreach ($columns as $column => $alias) {
-            $this->columns[is_int($column) ? $alias : $column] = $alias;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Inserts a new column and optionally an alias.
-     *
-     * @param string      $column the column to add.
-     * @param string|null $alias  the header (alias) of the column in the table.
-     *
-     * @return $this
-     */
-    public function column(string $column, string $alias = null)
-    {
-        $this->columns[$column] = $alias ?? $column;
-
-        return $this;
-    }
-
-    /**
-     * Sets whether or not to display the head of the table.
-     *
-     * @param bool $setting
-     *
-     * @return $this
-     */
-    public function head(bool $setting)
-    {
-        $this->head = $setting;
-
-        return $this;
+        $this->relations  = new RelationCollector($this);
+        $this->columns    = new ColumnCollector($this);
     }
 
     /**
@@ -213,47 +140,92 @@ class Table extends AttributeCollector
     public function getData()
     {
         $query = $this->connection->query();
-        foreach ($this->relations->getOneToOneRelations() as $oto) {
+        array_map(function (OTO $oto) use ($query) {
             $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
-        }
+        }, $this->relations->getOneToOneRelations());
 
-        $columns = [];
-        foreach ($this->generateColumns() as $column => $header) {
-            $columns[] = sprintf('%s "%s"', $column, $column);
-        }
+        $columns = array_map(function (Column $column) {
+            return sprintf('%s "%s"', $column->getName(), $column->getName());
+        }, $this->columns->getColumns());
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);
     }
 
     /**
-     * Automatically generates the columns to get from the information_schema database.
+     * Sets the primary table.
      *
-     * @return array
+     * @param string $table the table to set.
+     *
+     * @return $this
      */
-    protected function generateColumns()
+    public function setTable(string $table)
     {
-        $tables = [$this->getTable()];
-        foreach ($this->relations->getOneToOneRelations() as $oto) {
-            $tables[] = $oto->getTable();
+        $this->table = $table;
+
+        return $this;
+    }
+
+    /**
+     * Sets the caption of the table.
+     *
+     * @param string $caption the caption to display above the table.
+     *
+     * @return $this
+     */
+    public function setCaption(string $caption)
+    {
+        $this->caption = $caption;
+
+        return $this;
+    }
+
+    /**
+     * Sets the columns property of the object.
+     *
+     * @param array $columns    the columns to add in the pattern:
+     *                          [
+     *                          'users.username',
+     *                          'users.password' => 'alias',
+     *                          ],
+     *
+     * @return $this
+     */
+    public function setColumns(array $columns)
+    {
+        foreach ($columns as $column => $alias) {
+            $this->columns[is_int($column) ? $alias : $column] = $alias;
         }
 
-        $query = $this->connection->query();
-        $query->where('TABLE_SCHEMA', $this->connection->database);
-        $query->where('TABLE_NAME', ['IN' => $tables]);
-        $columns = $query->get('information_schema.columns', null, ['COLUMN_NAME', 'TABLE_NAME', 'ORDINAL_POSITION']);
+        return $this;
+    }
 
-        usort($columns, function ($a, $b) use ($tables) {
-            return $a['TABLE_NAME'] === $b['TABLE_NAME'] ?
-                $a['ORDINAL_POSITION'] - $b['ORDINAL_POSITION'] :
-                array_search($a['TABLE_NAME'], $tables) - array_search($b['TABLE_NAME'], $tables);
-        });
+    /**
+     * Inserts a new column and optionally an alias.
+     *
+     * @param string      $column the column to add.
+     * @param string|null $alias  the header (alias) of the column in the table.
+     *
+     * @return $this
+     */
+    public function addColumn(string $column, string $alias = null)
+    {
+        $this->columns[$column] = $alias ?? $column;
 
-        $return = [];
-        foreach ($columns as $column) {
-            $return[$column['TABLE_NAME'] . '.' . $column['COLUMN_NAME']] = $column['COLUMN_NAME'];
-        }
+        return $this;
+    }
 
-        return $return;
+    /**
+     * Sets whether or not to display the head of the table.
+     *
+     * @param bool $setting
+     *
+     * @return $this
+     */
+    public function showHead(bool $setting)
+    {
+        $this->head = $setting;
+
+        return $this;
     }
 
     /**
@@ -262,20 +234,6 @@ class Table extends AttributeCollector
     public function getTable()
     {
         return $this->table;
-    }
-
-    /**
-     * Gets the columns to select from the database.
-     *
-     * @return array
-     */
-    public function getColumns()
-    {
-        if (empty($this->columns)) {
-            $this->columns = $this->generateColumns();
-        }
-
-        return $this->columns;
     }
 
     /**
@@ -371,7 +329,7 @@ class Table extends AttributeCollector
     /**
      * Gets the relation of the table.
      *
-     * @return RelationBinder
+     * @return RelationCollector
      */
     public function getRelations()
     {
