@@ -138,7 +138,7 @@ class Table
     /**
      * Sets the caption of the table.
      *
-     * @param string $caption
+     * @param string $caption the caption to display above the table.
      *
      * @return $this
      */
@@ -152,7 +152,11 @@ class Table
     /**
      * Sets the columns property of the object.
      *
-     * @param array $columns
+     * @param array $columns    the columns to add in the pattern:
+     *                          [
+     *                          'users.username',
+     *                          'users.password' => 'alias',
+     *                          ],
      *
      * @return $this
      */
@@ -168,8 +172,8 @@ class Table
     /**
      * Inserts a new column and optionally an alias.
      *
-     * @param string      $column
-     * @param string|null $alias
+     * @param string      $column the column to add.
+     * @param string|null $alias  the header (alias) of the column in the table.
      *
      * @return $this
      */
@@ -263,8 +267,8 @@ class Table
     /**
      * Defines a new attribute name and value.
      *
-     * @param string $attributeName
-     * @param string $value
+     * @param string $attributeName the attribute to set.
+     * @param string $value         the value of the attribute.
      *
      * @return $this
      */

@@ -5,6 +5,11 @@ namespace Admin\Read\Tables;
 class InlineTable extends Table
 {
 
+    /**
+     * Whether or not the table is inline.
+     *
+     * @var bool
+     */
     protected $inline = true;
 
     /**
