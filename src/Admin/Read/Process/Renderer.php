@@ -2,6 +2,7 @@
 
 namespace Admin\Read\Process;
 
+use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Tables\Table;
 use Exception;
 use InvalidArgumentException;
@@ -35,19 +36,19 @@ class Renderer
      *
      * @var array
      */
-    protected $headers;
+    protected $columns;
 
     /**
      * Renderer constructor.
      *
-     * @param Table $table
-     * @param array $data
-     * @param array $columns
+     * @param Table           $table   the table to render.
+     * @param array           $data    the data to render in the table.
+     * @param ColumnCollector $columns the columns to display in the table.
      */
-    public function __construct(Table $table, array $data, array $columns)
+    public function __construct(Table $table, array $data, ColumnCollector $columns)
     {
-        $this->table   = $table;
         $this->data    = $data;
+        $this->table   = $table;
         $this->columns = $columns;
     }
 
@@ -65,9 +66,10 @@ class Renderer
         }
 
         ob_start();
-        require($this->template);
+        include($this->template);
+        $output = ob_get_clean();
 
-        return ob_get_clean();
+        return $output;
     }
 
     /**
@@ -79,10 +81,6 @@ class Renderer
      */
     public function setTemplate(string $template)
     {
-        if (!file_exists($template)) {
-            throw new InvalidArgumentException(sprintf('The template %s does not exist.', $template));
-        }
-
         $this->template = $template;
 
         return $this;
@@ -140,5 +138,29 @@ class Renderer
     public function setData(array $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * Sets the columns of the Renderer.
+     *
+     * @param ColumnCollector $columns the columns to display in the table.
+     *
+     * @return $this
+     */
+    public function setColumns(ColumnCollector $columns)
+    {
+        $this->columns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Gets the columns of the renderer.
+     *
+     * @return ColumnCollector
+     */
+    public function getColumns()
+    {
+        return $this->columns;
     }
 }

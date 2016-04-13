@@ -2,6 +2,7 @@
 
 namespace Admin\Read\Process;
 
+use Admin\Read\Relations\OTM;
 use Admin\Read\Tables\Table;
 use Exception;
 
@@ -62,7 +63,7 @@ class Extractor
      */
     public function extract(array $relations)
     {
-        foreach ($relations as $relation) {
+        array_walk($relations, function (OTM $relation) {
             $extractor    = new Extractor($relation);
             $relationData = $extractor->getData();
             $columns      = $extractor->getColumns();
@@ -81,7 +82,7 @@ class Extractor
 
                 $this->data[$key][sprintf('table.%s', $relation->getTable())] = $renderer->render();
             }
-        }
+        });
 
         return $this->data;
     }
@@ -103,6 +104,6 @@ class Extractor
      */
     public function getColumns()
     {
-        return $this->columns->getColumns();
+        return $this->columns;
     }
 }
