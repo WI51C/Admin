@@ -29,6 +29,23 @@ class Column extends AttributeCollector
     protected $position = 1;
 
     /**
+     * Modifiers of the column. The array consists of callable values.
+     * The callable will be passed the current value and row of the data.
+     *
+     * The return value of the callable will then be inserted instead.
+     *
+     * @var array
+     */
+    protected $modifiers = [];
+
+    /**
+     * Whether or not the column is custom.
+     *
+     * @var bool
+     */
+    protected $custom = false;
+
+    /**
      * Column constructor.
      *
      * @param string $name     the name of the column in the database.
@@ -112,5 +129,29 @@ class Column extends AttributeCollector
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * Adds a modifier to the column.
+     *
+     * @param callable $callable the modifier callable.
+     *
+     * @return $this
+     */
+    public function addModifier(callable $callable)
+    {
+        $this->modifiers[] = $callable;
+
+        return $this;
+    }
+
+    /**
+     * Returns whether or not the column is custom.
+     *
+     * @return bool
+     */
+    public function isCustom()
+    {
+        return $this->custom;
     }
 }
