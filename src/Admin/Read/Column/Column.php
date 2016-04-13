@@ -26,7 +26,7 @@ class Column extends AttributeCollector
      *
      * @var int
      */
-    protected $position = 1;
+    protected $position = 100;
 
     /**
      * Modifiers of the column. The array consists of callable values.
