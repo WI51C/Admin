@@ -7,79 +7,6 @@ $main-color: #eee;
   -webkit-font-smoothing: antialiased;
 }
 
-html, body, .row, table {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-table {
-  height: 100%;
-  caption {
-    font-size: 2rem;
-    padding: 10px 15px;
-    text-align: left;
-    background: lighten($main-color, 5%);
-  }
-  thead {
-    background: lighten($main-color, 5%);
-    th {
-      font-weight: bold;
-      border-radius: 0;
-    }
-  }
-  div.inspect-active {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block !important;
-    z-index: 100;
-    table {
-      background: lighten($main-color, 5%);
-      -webkit-box-shadow: 0px 13px 30px 0px rgba(50, 50, 50, 0.75);
-      -moz-box-shadow: 0px 13px 30px 0px rgba(50, 50, 50, 0.75);
-      box-shadow: 0px 13px 30px 0px rgba(50, 50, 50, 0.75);
-    }
-  }
-  div.table-container {
-    display: none;
-    .inline-controls {
-      top: 10px;
-      right: 10px;
-      position: fixed;
-      * {
-        float: right;
-        margin-left: 10px;
-      }
-    }
-  }
-}
-
-.btn-medium {
-  height: 44px !important;
-  line-height: 46px !important;
-}
-
-h2 {
-  font-size: 30px;
-  margin-top: 0;
-}
-
-#reader li {
-  margin-bottom: 20px;
-
-  div {
-    padding: 20px;
-  }
-  .header {
-    background: darken($main-color, 50%);
-  }
-  .content {
-    background: darken($main-color, 10%);
-  }
-}
-
 #menu {
   padding: 0;
   background: darken($main-color, 70%);
@@ -120,93 +47,50 @@ h2 {
   padding-left: 0;
   padding-right: 0;
   position: relative;
-  #bread {
-    padding: 10px 0 10px 0;
-
-    background: lighten($main-color, 40%);
-  }
-
-  h2 {
-    font-size: 2rem;
-  }
-
-  i.edit {
-    color: lighten($main-color, 12%);
-  }
-  i.delete {
-    color: #f44336;
-  }
 }
 
-.login-outer {
-  .login-inner {
-    margin-top: 200px;
-    background: #fff;
-    padding: 40px 10px;
-
-    .input-field {
-      margin: 30px 0;
+table {
+  caption {
+    font-size: 2rem;
+    padding: 10px 15px;
+    text-align: left;
+    background: lighten($main-color, 5%);
+  }
+  thead {
+    background: lighten($main-color, 5%);
+    th {
+      font-weight: bold;
+      border-radius: 0;
     }
-    .btn {
-      margin-top: 30px;
-      background: darken($main-color, 15);
-
-      width: 100%;
-      input {
-        width: 100%;
-        height: 100%;
+  }
+  td {
+    padding: 10px;
+  }
+  div.inspect-active {
+    background: lighten($main-color, 5%);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block !important;
+    z-index: 100;
+  }
+  div.table-container {
+    display: none;
+    .inline-controls {
+      top: 10px;
+      right: 10px;
+      position: fixed;
+      * {
+        float: right;
+        margin-left: 10px;
       }
     }
-    .toast {
-      background: #aaa;
-    }
   }
 }
 
-//Utillity classes
-.addbtn {
-  background: darken($main-color, 0%);
-}
-
-.addbtn:hover {
-  background: lighten($main-color, 20%);
-}
-
-.input-field label {
-  color: darken($main-color, 100);
-}
-
-/* valid color */
-.input-field input[type=text].valid {
-  border-bottom: 1px solid darken($main-color, 100);
-  box-shadow: 0 1px 0 0 #000;
-}
-
-/* label focus color */
-.input-field input[type=text]:focus + label {
-  color: darken($main-color, 100);
-}
-
-/* label underline focus color */
-.input-field input[type=text]:focus {
-  border-bottom: 1px solid darken($main-color, 100);
-  box-shadow: 0 1px 0 0 #000;
-}
-
-.input-field input[type=text].invalid {
-  border-bottom: 1px solid darken($main-color, 100);
-  box-shadow: 0 1px 0 0 #000;
-}
-
-/* icon prefix focus color */
-.input-field .prefix.active {
-  color: darken($main-color, 100);
-}
-
-.btn {
-  background: darken($main-color, 15);
-}
-
-.btn:hover {
-  background: darken($main-color, 5);
+.btn-medium {
+  height: 44px !important;
+  line-height: 46px !important;
 }
