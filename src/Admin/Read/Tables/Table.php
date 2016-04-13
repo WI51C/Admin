@@ -3,12 +3,12 @@
 namespace Admin\Read\Tables;
 
 use Admin\Connection;
+use Admin\Read\AttributeCollector;
 use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
-use Admin\Read\Relations\RelationBinder;
 use Admin\Read\Relations\RelationCollector;
 
-class Table extends HtmlTable
+class Table extends AttributeCollector
 {
 
     /**

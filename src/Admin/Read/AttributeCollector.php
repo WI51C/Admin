@@ -1,8 +1,8 @@
 <?php
 
-namespace Admin\Read\Tables;
+namespace Admin\Read;
 
-class HtmlTable
+class AttributeCollector
 {
 
     /**
