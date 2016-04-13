@@ -7,7 +7,7 @@
             <a class="waves-effect waves-light btn-large btn-medium red table-inspect-exit">Exit</a>
         </div>
     <?php endif ?>
-    <table <?= $this->table->getAttributesString() ?>>
+    <table <?= $this->table->htmlAttributes() ?>>
         <?php if ($this->table->getCaption() !== null): ?>
             <caption><?= $this->table->getCaption() ?></caption>
         <?php endif ?>

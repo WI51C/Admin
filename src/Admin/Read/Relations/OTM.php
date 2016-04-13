@@ -3,9 +3,9 @@
 namespace Admin\Read\Relations;
 
 use Admin\Connection;
-use Admin\Read\Tables\InlineTable;
+use Admin\Read\Tables\ChildTable;
 
-class OTM extends InlineTable
+class OTM extends ChildTable
 {
 
     /**

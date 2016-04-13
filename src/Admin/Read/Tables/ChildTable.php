@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-class InlineTable extends Table
+class ChildTable extends Table
 {
 
     /**

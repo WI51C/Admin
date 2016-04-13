@@ -1,14 +1,12 @@
 <?php
 
-namespace Admin\Read\Tables;
+namespace Admin\Read\Relations;
 
 use Admin\Connection;
-use Admin\Read\Relations\MTM;
-use Admin\Read\Relations\OTM;
-use Admin\Read\Relations\OTO;
+use Admin\Read\Tables\Table;
 use Exception;
 
-class TableRelations
+class RelationCollector
 {
 
     /**
@@ -157,4 +155,5 @@ class TableRelations
     {
         return $this->mtm;
     }
+
 }

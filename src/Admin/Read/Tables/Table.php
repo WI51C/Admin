@@ -6,8 +6,9 @@ use Admin\Connection;
 use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\RelationBinder;
+use Admin\Read\Relations\RelationCollector;
 
-class Table
+class Table extends HtmlTable
 {
 
     /**
@@ -95,15 +96,6 @@ class Table
     protected $group = null;
 
     /**
-     * Attributes to be given to the table html tag.
-     *
-     * @var array
-     */
-    protected $attributes = [
-        'class' => 'striped',
-    ];
-
-    /**
      * The inline tables of the Table.
      *
      * @var RelationBinder
@@ -118,7 +110,7 @@ class Table
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->relations  = new TableRelations($this->connection, $this);
+        $this->relations  = new RelationCollector($this->connection, $this);
     }
 
     /**
@@ -265,21 +257,6 @@ class Table
     }
 
     /**
-     * Defines a new attribute name and value.
-     *
-     * @param string $attributeName the attribute to set.
-     * @param string $value         the value of the attribute.
-     *
-     * @return $this
-     */
-    public function attribute(string $attributeName, string $value)
-    {
-        $this->attributes[$attributeName] = $value;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTable()
@@ -409,27 +386,5 @@ class Table
     public function isInline()
     {
         return $this->inline;
-    }
-
-    /**
-     * Gets the attributes the the table.
-     *
-     * @return array
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * Gets the attributes as a string.
-     *
-     * @return string
-     */
-    public function getAttributesString()
-    {
-        return join(' ', array_map(function ($value, $key) {
-            return sprintf('%s="%s"', $key, $value);
-        }, $this->attributes, array_keys($this->attributes)));
     }
 }
