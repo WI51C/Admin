@@ -14,7 +14,7 @@
         <?php if ($this->table->getHead()): ?>
             <thead>
             <tr>
-                <?php foreach ($this->columns->getColumns() as $column): ?>
+                <?php foreach ($this->columns as $column): ?>
                     <th><?= $column->alias ?></th>
                 <?php endforeach ?>
             </tr>
@@ -24,7 +24,7 @@
             <tbody>
             <?php foreach ($this->data as $key => $row): ?>
             <tr>
-                <?php foreach ($this->columns->getColumns() as $column): ?>
+                <?php foreach ($this->columns as $column): ?>
                     <td><?= $row[$column->name] ?></td>
                 <?php endforeach ?>
             </tr>

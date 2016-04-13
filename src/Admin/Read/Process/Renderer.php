@@ -48,7 +48,7 @@ class Renderer
     {
         $this->data    = $data;
         $this->table   = $table;
-        $this->columns = $columns->sort();
+        $this->columns = $columns->sort()->getColumns();
     }
 
     /**
