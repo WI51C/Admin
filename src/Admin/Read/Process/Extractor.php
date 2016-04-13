@@ -46,7 +46,7 @@ class Extractor
     {
         $this->table   = $table;
         $this->data    = $table->getData();
-        $this->columns = clone $table->columns->autoResolve();
+        $this->columns = $table->columns;
 
         $this->extract($this->table->relations->getOneToManyRelations());
         $this->extract($this->table->relations->getManyToManyRelations());

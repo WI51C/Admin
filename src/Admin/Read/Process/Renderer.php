@@ -5,7 +5,6 @@ namespace Admin\Read\Process;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Tables\Table;
 use Exception;
-use InvalidArgumentException;
 
 class Renderer
 {
@@ -49,7 +48,7 @@ class Renderer
     {
         $this->data    = $data;
         $this->table   = $table;
-        $this->columns = $columns;
+        $this->columns = $columns->sort();
     }
 
     /**

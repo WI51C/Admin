@@ -14,8 +14,8 @@
         <?php if ($this->table->getHead()): ?>
             <thead>
             <tr>
-                <?php foreach ($this->table->columns->getColumns() as $column): ?>
-                    <th><?= $column->getAlias() ?></th>
+                <?php foreach ($this->columns->getColumns() as $column): ?>
+                    <th><?= $column->alias ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>
@@ -23,11 +23,11 @@
         <?php if (!empty($this->data)): ?>
             <tbody>
             <?php foreach ($this->data as $key => $row): ?>
-                <tr>
-                    <?php foreach ($this->table->columns->getColumns() as $column): ?>
-                        <td><?= $row[$column->getName()] ?></td>
-                    <?php endforeach ?>
-                </tr>
+            <tr>
+                <?php foreach ($this->columns->getColumns() as $column): ?>
+                    <td><?= $row[$column->name] ?></td>
+                <?php endforeach ?>
+            </tr>
             <?php endforeach ?>
             </tbody>
         <?php endif ?>

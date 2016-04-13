@@ -12,21 +12,21 @@ class Column extends AttributeCollector
      *
      * @var string
      */
-    protected $name;
+    public $name;
 
     /**
      * The alias (header) of the column.
      *
      * @var string
      */
-    protected $alias;
+    public $alias;
 
     /**
      * Position in the table.
      *
      * @var int
      */
-    protected $position = 100;
+    public $position = 100;
 
     /**
      * Modifiers of the column. The array consists of callable values.
@@ -36,7 +36,7 @@ class Column extends AttributeCollector
      *
      * @var array
      */
-    protected $modifiers = [];
+    public $modifiers = [];
 
     /**
      * Whether or not the column is custom.

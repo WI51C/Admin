@@ -50,22 +50,27 @@ $main-color: #eee;
 }
 
 table {
-  caption {
+
+  caption, thead {
     font-size: 2rem;
-    padding: 10px 15px;
+    padding: 15px;
     text-align: left;
-    background: lighten($main-color, 5%);
+    background: darken($main-color, 2%);
   }
-  thead {
-    background: lighten($main-color, 5%);
-    th {
-      font-weight: bold;
-      border-radius: 0;
-    }
+
+  td, th {
+    padding: 10px 10px;
   }
+
+  th {
+    font-size: .9rem;
+    font-weight: bold;
+  }
+
   td {
-    padding: 10px;
+    font-size: .8rem;
   }
+
   div.inspect-active {
     background: lighten($main-color, 5%);
     width: 100%;
@@ -76,6 +81,7 @@ table {
     display: block !important;
     z-index: 100;
   }
+
   div.table-container {
     display: none;
     .inline-controls {

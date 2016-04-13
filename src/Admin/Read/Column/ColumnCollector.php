@@ -61,7 +61,7 @@ class ColumnCollector
      *
      * @return $this
      */
-    public function addColumn(string $name, string $alias, int $position = 1)
+    public function addColumn(string $name, string $alias, int $position = 100)
     {
         $this->columns[$name] = new Column($name, $alias, $position);
 
@@ -78,7 +78,7 @@ class ColumnCollector
      *
      * @return $this
      */
-    public function addCustom(string $name, string $alias, int $position = 1, callable $callable)
+    public function addCustom(string $name, string $alias, int $position = 100, callable $callable)
     {
         $this->columns[$name] = new CustomColumn($name, $alias, $position, $callable);
 
@@ -95,9 +95,8 @@ class ColumnCollector
         $resolver = new ColumnResolver($this->table);
         $resolver->select();
         $resolver->sort();
-        $this->columns = $resolver->return();
 
-        return $this;
+        return $resolver->return();
     }
 
     /**
@@ -108,9 +107,23 @@ class ColumnCollector
     public function getColumns()
     {
         if (empty($this->columns)) {
-            $this->autoResolve();
+            $this->columns = $this->autoResolve();
         }
 
         return $this->columns;
+    }
+
+    /**
+     * Sorts the columns using their positions.
+     *
+     * @return $this
+     */
+    public function sort()
+    {
+        usort($this->columns, function ($a, $b) {
+            return $a->getPosition() - $b->getPosition();
+        });
+
+        return $this;
     }
 }
