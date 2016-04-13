@@ -49,9 +49,7 @@ class MTM extends OTM
         string $middleJoinType = 'INNER'
     ) {
         parent::__construct($connection, $table, $parentColumn, $childColumn);
-        $this->middleJoinTable     = $middleTable;
-        $this->middleJoinCondition = $middleJoinCondition;
-        $this->middleJoinType      = $middleJoinType;
+        $this->relations->oto($middleTable, $middleJoinCondition, $middleJoinType);
     }
 
     /**
@@ -62,15 +60,17 @@ class MTM extends OTM
     public function getData()
     {
         $query = $this->connection->query();
-        $query->join($this->middleJoinTable, $this->middleJoinCondition, $this->middleJoinType);
-        foreach ($this->database->relations->getOneToOneRelations() as $oto) {
-            $query->join($oto->table, $oto->condition, $oto->type);
+        foreach ($this->relations->getOneToOneRelations() as $oto) {
+            $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
         }
 
-        if ($this->database->offset !== 0) {
-            return $query->get($this->database->table, $this->database->limit);
+        $columns = [];
+        foreach ($this->generateColumns() as $column => $header) {
+            $columns[] = sprintf('%s "%s"', $column, $column);
         }
 
-        return $query->get($this->database->table, [$this->database->offset, $this->database->limit]);
+        return $query->get($this->table, [$this->offset, $this->limit], $columns);
+
+        return $query->get($this->table, [$this->offset, $this->limit]);
     }
 }

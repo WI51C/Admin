@@ -46,6 +46,9 @@ table {
         margin-left: 10px;
       }
     }
+    table {
+      background: lighten($main-color, 5%);
+    }
   }
 }
 

@@ -1,7 +1,6 @@
 $(function () {
 
     $('a.table-inspect-trigger').click(function () {
-        $('.inspect-active').removeClass('inspect-active');
         var container = $(this).siblings('.table-container');
         var table = container.children('table');
         container.addClass('inspect-active');
