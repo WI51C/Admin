@@ -10,6 +10,11 @@ use Admin\Read\Relations\RelationBinder;
 class Table
 {
 
+    /**
+     * Whether or not the table is inline or not.
+     *
+     * @var bool
+     */
     protected $inline = false;
 
     /**
@@ -88,6 +93,15 @@ class Table
      * @var array
      */
     protected $group = null;
+
+    /**
+     * Attributes to be given to the table html tag.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'class' => 'striped',
+    ];
 
     /**
      * The inline tables of the Table.
@@ -247,6 +261,21 @@ class Table
     }
 
     /**
+     * Defines a new attribute name and value.
+     *
+     * @param string $attributeName
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function attribute(string $attributeName, string $value)
+    {
+        $this->attributes[$attributeName] = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getTable()
@@ -376,5 +405,27 @@ class Table
     public function isInline()
     {
         return $this->inline;
+    }
+
+    /**
+     * Gets the attributes the the table.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Gets the attributes as a string.
+     *
+     * @return string
+     */
+    public function getAttributesString()
+    {
+        return join(' ', array_map(function ($value, $key) {
+            return sprintf('%s="%s"', $key, $value);
+        }, $this->attributes, array_keys($this->attributes)));
     }
 }

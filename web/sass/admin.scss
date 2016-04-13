@@ -7,15 +7,18 @@ $main-color: #eee;
   -webkit-font-smoothing: antialiased;
 }
 
+html, body, .row, table {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 table {
+  height: 100%;
   caption {
     font-size: 2rem;
     padding: 10px 15px;
     text-align: left;
     background: lighten($main-color, 5%);
-  }
-  td {
-    padding: 10px 10px;
   }
   thead {
     background: lighten($main-color, 5%);
