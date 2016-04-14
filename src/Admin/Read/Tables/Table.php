@@ -8,8 +8,6 @@ use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
-use Admin\Read\Relations\OTO;
-use Admin\Read\Relations\RelationCollector;
 use InvalidArgumentException;
 
 class Table extends AttributeCollector
@@ -28,13 +26,6 @@ class Table extends AttributeCollector
      * @var string
      */
     protected $table;
-
-    /**
-     * Instance of Connection.
-     *
-     * @var Connection
-     */
-    protected $connection;
 
     /**
      * Caption of the html table.
@@ -108,14 +99,11 @@ class Table extends AttributeCollector
 
     /**
      * Table constructor.
-     *
-     * @param Connection $connection
      */
-    public function __construct(Connection $connection)
+    public function __construct()
     {
-        $this->connection = $connection;
-        $this->relations  = new RelationCollector($this);
-        $this->columns    = new ColumnCollector($this);
+        $this->relations = new RelationCollector($this);
+        $this->columns   = new ColumnCollector($this);
     }
 
     /**
@@ -136,11 +124,13 @@ class Table extends AttributeCollector
     /**
      * Gets the data of the table.
      *
+     * @param Connection $connection the connection to use to get the data.
+     *
      * @return array
      */
-    public function getData()
+    public function getData(Connection $connection)
     {
-        $query = $this->connection->query();
+        $query = $connection->query();
         array_map(function (OTO $oto) use ($query) {
             $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
         }, $this->relations->getOneToOneRelations());
@@ -257,16 +247,6 @@ class Table extends AttributeCollector
     public function getTable()
     {
         return $this->table;
-    }
-
-    /**
-     * Gets the instance of Connection of the table.
-     *
-     * @return Connection
-     */
-    public function getConnection()
-    {
-        return $this->connection;
     }
 
     /**

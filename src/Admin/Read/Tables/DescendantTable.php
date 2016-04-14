@@ -2,8 +2,17 @@
 
 namespace Admin\Read\Tables;
 
+use Admin\Database\TableRelation;
+
 class DescendantTable extends Table
 {
+
+    /**
+     * Relation that defines the DescendantTable.
+     *
+     * @var TableRelation
+     */
+    protected $relation;
 
     /**
      * Whether or not the table is inline.
@@ -20,24 +29,15 @@ class DescendantTable extends Table
     protected $alias;
 
     /**
-     * Message to show in the link to inspect the table.
+     * DescendantTable constructor.
      *
-     * @var string
+     * @param TableRelation $relation the relation that defined the DescendantTable.
      */
-    protected $button = 'SHOW';
-
-    /**
-     * Sets the message property of the table.
-     *
-     * @param string $message the message to display.
-     *
-     * @return $this
-     */
-    public function setButton(string $message)
+    public function __construct(TableRelation $relation)
     {
-        $this->button = $message;
+        parent::__construct();
 
-        return $this;
+        $this->relation = $relation;
     }
 
     /**
@@ -55,16 +55,6 @@ class DescendantTable extends Table
     }
 
     /**
-     * Gets the button message of the inline table.
-     *
-     * @return string
-     */
-    public function getButton()
-    {
-        return $this->button;
-    }
-
-    /**
      * Gets the alias of the table.
      *
      * @return $this
@@ -72,5 +62,27 @@ class DescendantTable extends Table
     public function getAlias()
     {
         return $this->alias;
+    }
+
+    /**
+     * Gets the relation of the DescendantTable.
+     *
+     * @return TableRelation
+     */
+    public function getRelation()
+    {
+        return $this->relation;
+    }
+
+    /**
+     * Sets the relation of the DescendantTable instance.
+     *
+     * @param TableRelation $relation the relation.
+     *
+     * @return $this
+     */
+    public function setRelation($relation)
+    {
+        $this->relation = $relation;
     }
 }

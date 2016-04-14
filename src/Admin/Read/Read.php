@@ -2,10 +2,9 @@
 
 namespace Admin\Read;
 
-use Admin\Contracts\ModuleInterface;
 use Admin\Read\Tables\Table;
 
-class Read extends Table implements ModuleInterface
+class Read extends Table
 {
 
     /**
