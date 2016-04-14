@@ -3,14 +3,14 @@
 namespace Admin\Read\Tables;
 
 use Admin\Connection;
-use Admin\Read\AttributeCollector;
+use Admin\Database\RelationCollector;
+use Admin\Database\Relations\OTO;
+use Admin\Database\Table;
 use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
-use Admin\Read\Process\Extractor;
-use Admin\Read\Process\Renderer;
 use InvalidArgumentException;
 
-class Table extends AttributeCollector
+class HtmlTable extends Table
 {
 
     /**
@@ -113,12 +113,7 @@ class Table extends AttributeCollector
      */
     public function render()
     {
-        $extractor = new Extractor($this);
-        $data      = $extractor->getData();
-        $columns   = $extractor->getColumns();
-        $renderer  = new Renderer($this, $data, $columns);
-
-        return $renderer->render();
+        return 'table';
     }
 
     /**
@@ -188,41 +183,6 @@ class Table extends AttributeCollector
     public function setCaption(string $caption)
     {
         $this->caption = $caption;
-
-        return $this;
-    }
-
-    /**
-     * Sets the columns property of the object.
-     *
-     * @param array $columns    the columns to add in the pattern:
-     *                          [
-     *                          'users.username',
-     *                          'users.password' => 'alias',
-     *                          ],
-     *
-     * @return $this
-     */
-    public function setColumns(array $columns)
-    {
-        foreach ($columns as $column => $alias) {
-            $this->columns[is_int($column) ? $alias : $column] = $alias;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Inserts a new column and optionally an alias.
-     *
-     * @param string      $column the column to add.
-     * @param string|null $alias  the header (alias) of the column in the table.
-     *
-     * @return $this
-     */
-    public function addColumn(string $column, string $alias = null)
-    {
-        $this->columns[$column] = $alias ?? $column;
 
         return $this;
     }

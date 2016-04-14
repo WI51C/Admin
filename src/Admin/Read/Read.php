@@ -2,18 +2,9 @@
 
 namespace Admin\Read;
 
-use Admin\Read\Tables\Table;
+use Admin\Read\Tables\HtmlTable;
 
-class Read extends Table
+class Read extends HtmlTable
 {
 
-    /**
-     * Renders the read Module.
-     *
-     * @return string
-     */
-    public function render()
-    {
-        return parent::render();
-    }
 }

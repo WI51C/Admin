@@ -2,18 +2,14 @@
 
 namespace Admin\Database;
 
-use Admin\Connection;
+use Admin\Database\Relations\MTM;
+use Admin\Database\Relations\OTM;
+use Admin\Database\Relations\OTO;
+use Admin\Read\Tables\DescendantTable;
 use Exception;
 
 class RelationCollector
 {
-
-    /**
-     * The instance of the TableRelations.
-     *
-     * @var Connection
-     */
-    protected $connection;
 
     /**
      * The table instance of the TableRelations.
@@ -50,8 +46,7 @@ class RelationCollector
      */
     public function __construct(Table $parent)
     {
-        $this->connection = $parent->getConnection();
-        $this->parent     = $parent;
+        $this->parent = $parent;
     }
 
     /**
@@ -83,10 +78,11 @@ class RelationCollector
      */
     public function newOTM(string $table, string $parentColumn, string $childColumn)
     {
-        $relation    = new OTM($this->connection, $table, $parentColumn, $childColumn);
-        $this->otm[] = $relation;
+        $relation    = new OTM($table, $parentColumn, $childColumn);
+        $table       = new DescendantTable($relation);
+        $this->otm[] = $table;
 
-        return $relation;
+        return $table;
     }
 
     /**
@@ -110,7 +106,6 @@ class RelationCollector
         string $middleJoinType = 'INNER'
     ) {
         $relation = new MTM(
-            $this->connection,
             $table,
             $parentColumn,
             $childColumn,
@@ -119,9 +114,10 @@ class RelationCollector
             $middleJoinType
         );
 
-        $this->mtm[] = $relation;
+        $table       = new DescendantTable($relation);
+        $this->mtm[] = $table;
 
-        return $relation;
+        return $table;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Column;
 
-use Admin\Read\Tables\Table;
+use Admin\Read\Tables\HtmlTable;
 use InvalidArgumentException;
 
 class ColumnCollector
@@ -25,9 +25,9 @@ class ColumnCollector
     /**
      * ColumnCollector constructor.
      *
-     * @param Table $table table instance.
+     * @param HtmlTable $table table instance.
      */
-    public function __construct(Table $table)
+    public function __construct(HtmlTable $table)
     {
         $this->table = $table;
     }

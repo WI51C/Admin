@@ -4,7 +4,7 @@ namespace Admin\Read\Tables;
 
 use Admin\Database\TableRelation;
 
-class DescendantTable extends Table
+class DescendantTable extends HtmlTable
 {
 
     /**
