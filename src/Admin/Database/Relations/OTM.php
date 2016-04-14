@@ -2,9 +2,9 @@
 
 namespace Admin\Database\Relations;
 
-use Admin\Database\Relation;
+use Admin\Database\TableRelation;
 
-class OTM extends Relation
+class OTM extends TableRelation
 {
 
     /**
