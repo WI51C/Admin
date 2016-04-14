@@ -1,9 +1,8 @@
 <?php
 
-namespace Admin\Read\Relations;
+namespace Admin\Database;
 
 use Admin\Connection;
-use Admin\Read\Tables\Table;
 use Exception;
 
 class RelationCollector
