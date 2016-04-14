@@ -8,8 +8,8 @@ use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
-use Admin\Read\Relations\RelationCollector;
 use Admin\Read\Relations\OTO;
+use Admin\Read\Relations\RelationCollector;
 
 class Table extends AttributeCollector
 {
@@ -145,7 +145,7 @@ class Table extends AttributeCollector
         }, $this->relations->getOneToOneRelations());
 
         $columns = array_map(function (Column $column) {
-            return sprintf('%s "%s"', $column->getName(), $column->getName());
+            return sprintf('%s "%s"', $column->name, $column->name);
         }, $this->columns->getColumns());
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);

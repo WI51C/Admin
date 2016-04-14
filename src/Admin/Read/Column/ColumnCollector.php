@@ -46,7 +46,7 @@ class ColumnCollector
         foreach ($columns as $position => $column) {
             if (count($column) < 3)
                 throw new InvalidArgumentException(sprintf('Array given to setColumns.'));
-            $this->columns[$column[0]] = new StandardColumn($column[0], $column[1], $position);
+            $this->columns[$column[0]] = new Column($column[0], $column[1], $position);
         }
 
         return $this;
@@ -55,32 +55,16 @@ class ColumnCollector
     /**
      * Adds a column to the collector.
      *
-     * @param string $name     the name of the column.
-     * @param string $alias    the alias of the column.
-     * @param int    $position the position of the column.
-     *
-     * @return $this
-     */
-    public function addColumn(string $name, string $alias, int $position = 100)
-    {
-        $this->columns[$name] = new StandardColumn($name, $alias, $position);
-
-        return $this;
-    }
-
-    /**
-     * Adds a custom column to the collector.
-     *
      * @param string   $name     the name of the column.
      * @param string   $alias    the alias of the column.
      * @param int      $position the position of the column.
-     * @param callable $callable the callable that create the content of the column.
+     * @param callable $modifier the modifier.
      *
      * @return $this
      */
-    public function addCustom(string $name, string $alias, int $position = 100, callable $callable)
+    public function addColumn(string $name, string $alias, int $position = 100, callable $modifier = null)
     {
-        $this->columns[$name] = new CustomColumn($name, $alias, $position, $callable);
+        $this->columns[] = new Column($name, $alias, $position, $modifier);
 
         return $this;
     }
@@ -100,7 +84,7 @@ class ColumnCollector
     }
 
     /**
-     * Gets the columns
+     * Gets all the columns from the ColumnCollector.
      *
      * @return array
      */

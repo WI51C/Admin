@@ -96,7 +96,7 @@ class ColumnResolver
         $return = [];
         foreach ($this->columns as $position => $column) {
             $name          = strtolower(sprintf('%s.%s', $column['TABLE_NAME'], $column['COLUMN_NAME']));
-            $return[$name] = new StandardColumn($name, $name, $position);
+            $return[$name] = new Column($name, $name, $position, null);
         }
 
         return $return;

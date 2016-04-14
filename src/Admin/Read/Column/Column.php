@@ -3,8 +3,9 @@
 namespace Admin\Read\Column;
 
 use Admin\Read\AttributeCollector;
+use InvalidArgumentException;
 
-abstract class Column extends AttributeCollector
+class Column extends AttributeCollector
 {
 
     /**
@@ -29,35 +30,68 @@ abstract class Column extends AttributeCollector
     public $position = 100;
 
     /**
-     * Whether or not the column is custom.
+     * Modifier of the column, the <td> value and current row will be passed to the callback.
      *
-     * @var bool
+     * @var callable
      */
-    protected $custom = false;
+    public $modifier;
 
     /**
      * Column constructor.
      *
-     * @param string $name     the name of the column in the database.
-     * @param string $alias    the alias (header) to display in the table.
-     * @param int    $position the position of the column in the table.
+     * @param string        $name     the name of the column in the database.
+     * @param string        $alias    the alias (header) to display in the table.
+     * @param int           $position the position of the column in the table.
+     * @param callable|null $modifier the modifier of the column.
      */
-    public function __construct(string $name, string $alias, int $position = 100)
+    public function __construct(string $name, string $alias, int $position, $modifier)
     {
+        if ($modifier !== null && !is_callable($modifier)) {
+            throw new InvalidArgumentException(sprintf('The modifier for %s is invalid.', $name));
+        }
+
         $this->name     = $name;
         $this->alias    = $alias;
         $this->position = $position;
+        $this->modifier = $modifier;
     }
 
     /**
-     * Returns the value after being modified.
+     * Gets the content of the <td> tag.
      *
-     * @param mixed $value
-     * @param array $row
+     * @param mixed $value the value to display.
+     * @param array $row   the current row.
      *
      * @return mixed
      */
-    abstract public function content($value, array $row);
+    public function content($value, array $row)
+    {
+        return $this->modifier ? call_user_func($this->modifier, $value, $row) : $value;
+    }
+
+    /**
+     * Gets the modifier of the column.
+     *
+     * @return callable
+     */
+    public function getModifier()
+    {
+        return $this->modifier;
+    }
+
+    /**
+     * Sets the modifier of the column.
+     *
+     * @param callable $modifier the callback to set.
+     *
+     * @return $this
+     */
+    public function setModifier($modifier)
+    {
+        $this->modifier = $modifier;
+
+        return $this;
+    }
 
     /**
      * Sets the name of the column.
@@ -129,15 +163,5 @@ abstract class Column extends AttributeCollector
     public function getPosition()
     {
         return $this->position;
-    }
-
-    /**
-     * Returns whether or not the column is custom.
-     *
-     * @return bool
-     */
-    public function isCustom()
-    {
-        return $this->custom;
     }
 }

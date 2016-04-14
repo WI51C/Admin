@@ -48,8 +48,11 @@ class Extractor
         $this->data    = $table->getData();
         $this->columns = $table->columns;
 
-        $this->extract($this->table->relations->getOneToManyRelations());
-        $this->extract($this->table->relations->getManyToManyRelations());
+        if (!empty($relations = $this->table->relations->getOneToManyRelations()))
+            $this->extract($relations);
+
+        if (!empty($relations = $this->table->relations->getManyToManyRelations()))
+            $this->extract($relations);
     }
 
     /**
@@ -74,14 +77,14 @@ class Extractor
                         $subData[] = $tableRow;
                     }
                 }
-                $renderer = new Renderer($relation, $subData, $columns);
-                $this->table->columns->addColumn(
-                    sprintf('table.%s', $relation->getTable()),
-                    $relation->getAlias() ?? $relation->getTable()
-                );
-
+                $renderer                                                     = new Renderer($relation, $subData, $columns);
                 $this->data[$key][sprintf('table.%s', $relation->getTable())] = $renderer->render();
             }
+
+            $this->table->columns->addColumn(
+                sprintf('table.%s', $relation->getTable()),
+                $relation->getAlias() ?? $relation->getTable()
+            );
         });
 
         return $this->data;
