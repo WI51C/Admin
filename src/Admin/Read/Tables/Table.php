@@ -10,6 +10,7 @@ use Admin\Read\Process\Extractor;
 use Admin\Read\Process\Renderer;
 use Admin\Read\Relations\OTO;
 use Admin\Read\Relations\RelationCollector;
+use InvalidArgumentException;
 
 class Table extends AttributeCollector
 {
@@ -140,7 +141,6 @@ class Table extends AttributeCollector
     public function getData()
     {
         $query = $this->connection->query();
-
         array_map(function (OTO $oto) use ($query) {
             $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
         }, $this->relations->getOneToOneRelations());
@@ -150,6 +150,28 @@ class Table extends AttributeCollector
         }, $this->columns->getColumns());
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);
+    }
+
+    /**
+     * Sets pagination of the table.
+     *
+     * @param int $page    the current page.
+     * @param int $results the number of results to display.
+     *
+     * @throws InvalidArgumentException if the page number isn't positive.
+     *
+     * @return $this
+     */
+    public function pagination(int $page = 1, int $results)
+    {
+        if ($page < 1) {
+            throw new InvalidArgumentException('Pagination page number must be positive. %d give.');
+        }
+
+        $this->offset = $results * $page - $results;
+        $this->limit  = $results;
+
+        return $this;
     }
 
     /**
