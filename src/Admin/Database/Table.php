@@ -30,10 +30,13 @@ class Table
 
     /**
      * Table constructor.
+     *
+     * @param Connection $connection an instance of connection.
      */
-    public function __construct()
+    public function __construct(Connection $connection)
     {
-        $this->relations = new RelationCollector($this);
+        $this->connection = $connection;
+        $this->relations  = new RelationCollector($this);
     }
 
     /**

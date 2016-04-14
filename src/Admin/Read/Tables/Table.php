@@ -4,9 +4,7 @@ namespace Admin\Read\Tables;
 
 use Admin\Connection;
 use Admin\Database\RelationCollector;
-use Admin\Database\Relations\OTO;
 use Admin\Database\Table as DatabaseTable;
-use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use InvalidArgumentException;
 
@@ -85,10 +83,12 @@ class Table extends DatabaseTable
 
     /**
      * Table constructor.
+     *
+     * @param Connection $connection an instance of connection.
      */
-    public function __construct()
+    public function __construct(Connection $connection)
     {
-        parent::__construct();
+        parent::__construct($connection);
 
         $this->columns = new ColumnCollector($this);
     }
@@ -100,26 +100,26 @@ class Table extends DatabaseTable
      */
     public function render()
     {
-
+        var_dump($this->getData());
     }
 
     /**
      * Gets the data of the table.
      *
-     * @param Connection $connection the connection to use to get the data.
-     *
      * @return array
      */
-    public function getData(Connection $connection)
+    public function getData()
     {
-        $query = $connection->query();
-        array_map(function (OTO $oto) use ($query) {
-            $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
-        }, $this->relations->getOneToOneRelations());
+        $query   = $this->connection->query();
+        $columns = [];
 
-        $columns = array_map(function (Column $column) {
-            return sprintf('%s "%s"', $column->name, $column->name);
-        }, $this->columns->getColumns());
+        foreach ($this->relations->getOneToOneRelations() as $relation) {
+            $query->join($relation->getTable(), $relation->getCondition(), $relation->getType());
+        }
+
+        foreach ($this->columns->getColumns() as $column) {
+            $columns[] = sprintf('%s "%s"', $column->name, $column->name);
+        }
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);
     }

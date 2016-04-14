@@ -2,6 +2,7 @@
 
 namespace Admin\Read\Tables;
 
+use Admin\Connection;
 use Admin\Database\TableRelation;
 
 class TableDescendant extends Table
@@ -31,11 +32,12 @@ class TableDescendant extends Table
     /**
      * TableDescendant constructor.
      *
-     * @param TableRelation $relation the relation that defined the TableDescendant.
+     * @param Connection    $connection instance of connection.
+     * @param TableRelation $relation   the relation that defined the TableDescendant.
      */
-    public function __construct(TableRelation $relation)
+    public function __construct(Connection $connection, TableRelation $relation)
     {
-        parent::__construct();
+        parent::__construct($connection);
 
         $this->relation = $relation;
     }
