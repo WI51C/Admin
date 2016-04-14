@@ -12,21 +12,21 @@ class OTO extends Relation
      *
      * @var string
      */
-    protected $table;
+    public $table;
 
     /**
      * The condition of the join.
      *
      * @var string
      */
-    protected $condition;
+    public $condition;
 
     /**
      * The type of join to perform.
      *
      * @var string
      */
-    protected $type;
+    public $type;
 
     /**
      * OTO constructor.

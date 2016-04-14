@@ -24,21 +24,21 @@ class RelationCollector
      *
      * @var array
      */
-    protected $oto = [];
+    public $oto = [];
 
     /**
      * The defined One-To-Many relations of the collector.
      *
      * @var array
      */
-    protected $otm = [];
+    public $otm = [];
 
     /**
      * The defined Many-To-Many relations of the collector.
      *
      * @var array
      */
-    protected $mtm = [];
+    public $mtm = [];
 
     /**
      * RelationCollector constructor.

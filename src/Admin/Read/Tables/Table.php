@@ -79,7 +79,7 @@ class Table extends DatabaseTable
      *
      * @var array
      */
-    protected $group = null;
+    protected $groups = [];
 
     /**
      * Table constructor.
@@ -113,8 +113,24 @@ class Table extends DatabaseTable
         $query   = $this->connection->query();
         $columns = [];
 
-        foreach ($this->relations->getOneToOneRelations() as $relation) {
-            $query->join($relation->getTable(), $relation->getCondition(), $relation->getType());
+        foreach ($this->groups as $group) {
+            $query->groupBy($group);
+        }
+
+        foreach ($this->wheres as $where) {
+            $query->where($where[0], $where[1], $where[2], $where[3]);
+        }
+
+        foreach ($this->havings as $having) {
+            $query->having($having[0], $having[1], $having[2], $having[3]);
+        }
+
+        foreach ($this->orders as $order) {
+            $query->orderBy($order[0], $order[1], $order[2]);
+        }
+
+        foreach ($this->relations->oto as $relation) {
+            $query->join($relation->table, $relation->condition, $relation->type);
         }
 
         foreach ($this->columns->getColumns() as $column) {
@@ -134,7 +150,7 @@ class Table extends DatabaseTable
      *
      * @return $this
      */
-    public function pagination(int $page = 1, int $results)
+    public function addPagination(int $page = 1, int $results)
     {
         if ($page < 1) {
             throw new InvalidArgumentException('Pagination page number must be positive. %d give.');
@@ -161,20 +177,6 @@ class Table extends DatabaseTable
     }
 
     /**
-     * Sets whether or not to display the head of the table.
-     *
-     * @param bool $setting
-     *
-     * @return $this
-     */
-    public function showHead(bool $setting)
-    {
-        $this->head = $setting;
-
-        return $this;
-    }
-
-    /**
      * Gets the caption of the table.
      *
      * @return null|string
@@ -182,6 +184,20 @@ class Table extends DatabaseTable
     public function getCaption()
     {
         return $this->caption;
+    }
+
+    /**
+     * Sets whether or not to display the head of the table.
+     *
+     * @param bool $setting
+     *
+     * @return $this
+     */
+    public function setHead(bool $setting)
+    {
+        $this->head = $setting;
+
+        return $this;
     }
 
     /**
@@ -195,6 +211,20 @@ class Table extends DatabaseTable
     }
 
     /**
+     * Sets the limit of the table.
+     *
+     * @param int $limit the limit to set.
+     *
+     * @return $this
+     */
+    public function setLimit(int $limit)
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
      * Gets the LIMIT clauses of the table.
      *
      * @return int|null
@@ -202,6 +232,20 @@ class Table extends DatabaseTable
     public function getLimit()
     {
         return $this->limit;
+    }
+
+    /**
+     * Sets the offset of the table.
+     *
+     * @param int $offset the offset to set.
+     *
+     * @return $this
+     */
+    public function setOffset(int $offset)
+    {
+        $this->offset = $offset;
+
+        return $this;
     }
 
     /**
@@ -215,6 +259,28 @@ class Table extends DatabaseTable
     }
 
     /**
+     * Adds a where clause to the table exclusion.
+     *
+     * @param string $whereProp  the property to exclude by.
+     * @param string $whereValue the value to exclude by.
+     * @param string $operator   the operator to use in the exclusion.
+     * @param string $cond       the condition to link conditions together with.
+     *
+     * @return $this
+     */
+    public function addWhere(string $whereProp, string $whereValue = 'DBNULL', string $operator = '=', string $cond = 'AND')
+    {
+        $this->wheres[] = [
+            $whereProp,
+            $whereValue,
+            $operator,
+            $cond,
+        ];
+
+        return $this;
+    }
+
+    /**
      * Gets the WHERE clauses of the table.
      *
      * @return array
@@ -222,6 +288,28 @@ class Table extends DatabaseTable
     public function getWheres()
     {
         return $this->wheres;
+    }
+
+    /**
+     * Adds a having clause to the table exclusion.
+     *
+     * @param string $havingProp  the property to exclude by.
+     * @param string $havingValue the value to exclude by.
+     * @param string $operator    the operator to use in the exclusion.
+     * @param string $cond        the condition to link conditions together with.
+     *
+     * @return $this
+     */
+    public function addHaving(string $havingProp, string $havingValue = 'DBNULL', string $operator = '=', string $cond = 'AND')
+    {
+        $this->havings[] = [
+            $havingProp,
+            $havingValue,
+            $operator,
+            $cond,
+        ];
+
+        return $this;
     }
 
     /**
@@ -235,6 +323,26 @@ class Table extends DatabaseTable
     }
 
     /**
+     * Adds an ORDER BY clause to the query.
+     *
+     * @param string $orderByField     the property to oder by.
+     * @param string $orderByDirection the direction.
+     * @param array  $customFields     fieldset for ORDER BY FIELD() ordering.
+     *
+     * @return $this
+     */
+    public function addOrder(string $orderByField, string $orderByDirection = 'DESC', $customFields = null)
+    {
+        $this->orders[] = [
+            $orderByField,
+            $orderByDirection,
+            $customFields,
+        ];
+
+        return $this;
+    }
+
+    /**
      * Gets the ORDER BY clauses of the table.
      *
      * @return array
@@ -245,13 +353,27 @@ class Table extends DatabaseTable
     }
 
     /**
+     * Adds a GROUP BY clause to the query.
+     *
+     * @param string $groupByField the field to group by.
+     *
+     * @return $this
+     */
+    public function addGroup(string $groupByField)
+    {
+        $this->groups[] = $groupByField;
+
+        return $this;
+    }
+
+    /**
      * Gets the GROUP BY clauses of the table.
      *
      * @return array
      */
     public function getGroup()
     {
-        return $this->group;
+        return $this->groups;
     }
 
     /**
