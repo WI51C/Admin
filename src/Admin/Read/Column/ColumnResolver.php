@@ -55,7 +55,7 @@ class ColumnResolver
     /**
      * Selects columns from the database.
      *
-     * @return void
+     * @return $this
      */
     public function select()
     {
@@ -63,6 +63,8 @@ class ColumnResolver
         $query->where('TABLE_SCHEMA', $this->connection->database);
         $query->where('TABLE_NAME', ['IN' => $this->tables]);
         $this->columns = $query->get('information_schema.columns', null, ['COLUMN_NAME', 'TABLE_NAME', 'ORDINAL_POSITION']);
+
+        return $this;
     }
 
     /**
@@ -72,15 +74,17 @@ class ColumnResolver
      *          -> OTO relations
      *              -> Database order
      *
-     * @return void
+     * @return $this
      */
     public function sort()
     {
-        usort($this->columns, function ($a, $b) {
+        usort($this->columns, function (array $a, array $b) {
             return $a['TABLE_NAME'] === $b['TABLE_NAME'] ?
                 $a['ORDINAL_POSITION'] - $b['ORDINAL_POSITION'] :
                 array_search($a['TABLE_NAME'], $this->tables) - array_search($b['TABLE_NAME'], $this->tables);
         });
+
+        return $this;
     }
 
     /**
