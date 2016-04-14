@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Tables;
 
-class ChildTable extends Table
+class DescendantTable extends Table
 {
 
     /**

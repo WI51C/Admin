@@ -3,9 +3,9 @@
 namespace Admin\Read\Relations;
 
 use Admin\Connection;
-use Admin\Read\Tables\ChildTable;
+use Admin\Read\Tables\DescendantTable;
 
-class OTM extends ChildTable
+class OTM extends DescendantTable
 {
 
     /**
