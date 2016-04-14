@@ -13,6 +13,19 @@ class StandardColumn extends Column
     public $modifier;
 
     /**
+     * Gets the content of the <td> tag.
+     *
+     * @param mixed $value the value to display.
+     * @param array $row   the current row.
+     *
+     * @return mixed
+     */
+    public function content($value, array $row)
+    {
+        return $this->modifier ? call_user_func($this->modifier, $value, $row) : $value;
+    }
+
+    /**
      * Gets the modifier of the column.
      *
      * @return callable

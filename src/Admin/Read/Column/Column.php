@@ -50,6 +50,16 @@ abstract class Column extends AttributeCollector
     }
 
     /**
+     * Returns the value after being modified.
+     *
+     * @param mixed $value
+     * @param array $row
+     *
+     * @return mixed
+     */
+    abstract public function content($value, array $row);
+
+    /**
      * Sets the name of the column.
      *
      * @param string $name the string to set as the name.

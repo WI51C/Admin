@@ -3,7 +3,6 @@
 namespace Admin\Read\Column;
 
 use Admin\Connection;
-use Admin\Read\Relations\OTO;
 use Admin\Read\Tables\Table;
 
 class ColumnResolver
@@ -97,7 +96,7 @@ class ColumnResolver
         $return = [];
         foreach ($this->columns as $position => $column) {
             $name          = strtolower(sprintf('%s.%s', $column['TABLE_NAME'], $column['COLUMN_NAME']));
-            $return[$name] = new Column($name, $name, $position);
+            $return[$name] = new StandardColumn($name, $name, $position);
         }
 
         return $return;

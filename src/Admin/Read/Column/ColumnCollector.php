@@ -46,7 +46,7 @@ class ColumnCollector
         foreach ($columns as $position => $column) {
             if (count($column) < 3)
                 throw new InvalidArgumentException(sprintf('Array given to setColumns.'));
-            $this->columns[$column[0]] = new Column($column[0], $column[1], $position);
+            $this->columns[$column[0]] = new StandardColumn($column[0], $column[1], $position);
         }
 
         return $this;
@@ -63,7 +63,7 @@ class ColumnCollector
      */
     public function addColumn(string $name, string $alias, int $position = 100)
     {
-        $this->columns[$name] = new Column($name, $alias, $position);
+        $this->columns[$name] = new StandardColumn($name, $alias, $position);
 
         return $this;
     }

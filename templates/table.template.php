@@ -25,7 +25,7 @@
             <?php foreach ($this->data as $key => $row): ?>
                 <tr>
                     <?php foreach ($this->columns as $column): ?>
-                        <td><?= $column->apply($row[$column->name], $row) ?></td>
+                        <td><?= $column->content($row[$column->name], $row) ?></td>
                     <?php endforeach ?>
                 </tr>
             <?php endforeach ?>

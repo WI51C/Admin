@@ -28,6 +28,19 @@ class CustomColumn extends Column
     }
 
     /**
+     * Gets the content of the <td> tag.
+     *
+     * @param mixed $value the value to display.
+     * @param array $row   the current row.
+     *
+     * @return mixed
+     */
+    public function content($value, array $row)
+    {
+        return $this->result ? call_user_func($this->modifier, $value, $row) : $value;
+    }
+
+    /**
      * Sets the result callable of the custom column.
      *
      * @param callable $result the callable to set.
