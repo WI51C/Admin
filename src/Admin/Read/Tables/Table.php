@@ -5,12 +5,12 @@ namespace Admin\Read\Tables;
 use Admin\Connection;
 use Admin\Database\RelationCollector;
 use Admin\Database\Relations\OTO;
-use Admin\Database\Table;
+use Admin\Database\Table as DatabaseTable;
 use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use InvalidArgumentException;
 
-class Table extends Table
+class Table extends DatabaseTable
 {
 
     /**
@@ -100,7 +100,7 @@ class Table extends Table
      */
     public function render()
     {
-        return 'table';
+
     }
 
     /**

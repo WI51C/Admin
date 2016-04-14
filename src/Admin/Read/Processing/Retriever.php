@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\Producer;
+namespace Admin\Read\Processing;
 
 use Admin\Read\Tables\Table;
 
