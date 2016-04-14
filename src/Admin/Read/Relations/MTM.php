@@ -3,7 +3,6 @@
 namespace Admin\Read\Relations;
 
 use Admin\Connection;
-use Admin\Read\Column\Column;
 
 class MTM extends OTM
 {
@@ -66,11 +65,11 @@ class MTM extends OTM
             $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
         });
 
-        $columns = array_map(function (Column $column) {
-            $name = $column->getName();
-
-            return sprintf('%s "%s"', $name, $name);
-        }, $this->columns->getColumns());
+        $columns = [];
+        foreach ($this->columns->getColumns() as $column) {
+            $name      = $column->getName();
+            $columns[] = sprintf('%s "%s"', $name, $name);
+        }
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);
     }
