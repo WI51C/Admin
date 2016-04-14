@@ -84,7 +84,7 @@ class Extractor
             $this->table->columns->addColumn(
                 sprintf('table.%s', $relation->getTable()),
                 $relation->getAlias() ?? $relation->getTable()
-            );
+            )->addAttribute('class', 'column-small');
         });
 
         return $this->data;

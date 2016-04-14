@@ -15,7 +15,7 @@
             <thead>
             <tr>
                 <?php foreach ($this->columns as $column): ?>
-                    <th><?= $column->alias ?></th>
+                    <th <?= $column->htmlAttributes()?>><?= $column->alias ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>

@@ -5,7 +5,7 @@ namespace Admin\Read\Column;
 use Admin\Read\AttributeCollector;
 use InvalidArgumentException;
 
-class Column
+class Column extends AttributeCollector
 {
 
     /**

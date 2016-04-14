@@ -64,9 +64,10 @@ class ColumnCollector
      */
     public function addColumn(string $name, string $alias, int $position = 100, callable $modifier = null)
     {
-        $this->columns[] = new Column($name, $alias, $position, $modifier);
+        $column          = new Column($name, $alias, $position, $modifier);
+        $this->columns[] = $column;
 
-        return $this;
+        return $column;
     }
 
     /**
