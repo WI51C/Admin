@@ -24,7 +24,7 @@ class OTM extends Relation
     /**
      * Local column name of the join.
      *
-     * @var
+     * @var string
      */
     public $childColumn;
 
@@ -79,7 +79,7 @@ class OTM extends Relation
     /**
      * Sets the parentColumn of the OTM.
      *
-     * @param string $parentColumn
+     * @param string $parentColumn the name of the column.
      *
      * @return $this
      */
