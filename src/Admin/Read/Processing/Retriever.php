@@ -36,12 +36,31 @@ class Retriever
     /**
      * Retrieves the data from the table.
      *
-     * @return $this
+     * @return array
      */
     public function retrieve()
     {
-        $this->return = [];
+        return [
+            $this->table->getData(),
+            $this->getRelations(),
+        ];
+    }
 
-        return $this;
+    /**
+     * Gets the relational data of the table.
+     *
+     * @return array
+     */
+    protected function getRelations()
+    {
+        $relations = [];
+        foreach (array_merge($this->table->relations->otm, $this->table->relations->mtm) as $relation) {
+            $relations[] = [
+                $relation,
+                $relation->getData(),
+            ];
+        }
+
+        return $relations;
     }
 }

@@ -2,11 +2,14 @@
 
 namespace Admin\Read\Tables;
 
+
 use Admin\Connection;
 use Admin\Database\RelationCollector;
 use Admin\Database\Table as DatabaseTable;
 use Admin\Read\Column\ColumnCollector;
+use Admin\Read\Processing\Retriever;
 use InvalidArgumentException;
+use Exception;
 
 class Table extends DatabaseTable
 {
@@ -100,11 +103,14 @@ class Table extends DatabaseTable
      */
     public function render()
     {
-        var_dump($this->getData());
+        $retriever = new Retriever($this);
+        var_dump($retriever->retrieve());
     }
 
     /**
      * Gets the data of the table.
+     *
+     * @throws Exception if the table was defined.
      *
      * @return array
      */
@@ -135,6 +141,10 @@ class Table extends DatabaseTable
 
         foreach ($this->columns->getColumns() as $column) {
             $columns[] = sprintf('%s "%s"', $column->name, $column->name);
+        }
+
+        if ($this->table === null) {
+            throw new Exception('Table cannot be undefined.');
         }
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);

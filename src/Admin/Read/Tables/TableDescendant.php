@@ -39,6 +39,7 @@ class TableDescendant extends Table
     {
         parent::__construct($connection);
 
+        $this->table    = $relation->table;
         $this->relation = $relation;
     }
 
