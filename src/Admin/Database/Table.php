@@ -19,23 +19,20 @@ class Table
      *
      * @var string
      */
-    protected $name;
+    public $table;
 
     /**
      * The relations of the table.
      *
      * @var RelationCollector
      */
-    protected $relations;
+    public $relations;
 
     /**
      * Table constructor.
-     *
-     * @param string $name the name of the table.
      */
-    public function __construct(string $name)
+    public function __construct()
     {
-        $this->name      = $name;
         $this->relations = new RelationCollector($this);
     }
 
@@ -68,21 +65,21 @@ class Table
      *
      * @return string
      */
-    public function getName()
+    public function getTable()
     {
-        return $this->name;
+        return $this->table;
     }
 
     /**
      * Sets the name of the table.
      *
-     * @param string $name the name to set.
+     * @param string $table the name to set.
      *
      * @return Table
      */
-    public function setName(string $name)
+    public function setTable(string $table)
     {
-        $this->name = $name;
+        $this->table = $table;
 
         return $this;
     }

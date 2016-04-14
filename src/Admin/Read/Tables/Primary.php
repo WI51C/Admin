@@ -10,7 +10,7 @@ use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use InvalidArgumentException;
 
-class HtmlTable extends Table
+class Primary extends Table
 {
 
     /**
@@ -19,13 +19,6 @@ class HtmlTable extends Table
      * @var bool
      */
     protected $inline = false;
-
-    /**
-     * Name of table to select from.
-     *
-     * @var string
-     */
-    protected $table;
 
     /**
      * Caption of the html table.
@@ -95,6 +88,8 @@ class HtmlTable extends Table
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->columns = new ColumnCollector($this);
     }
 
@@ -152,20 +147,6 @@ class HtmlTable extends Table
     }
 
     /**
-     * Sets the primary table.
-     *
-     * @param string $table the table to set.
-     *
-     * @return $this
-     */
-    public function setTable(string $table)
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-    /**
      * Sets the caption of the table.
      *
      * @param string $caption the caption to display above the table.
@@ -191,14 +172,6 @@ class HtmlTable extends Table
         $this->head = $setting;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTable()
-    {
-        return $this->table;
     }
 
     /**

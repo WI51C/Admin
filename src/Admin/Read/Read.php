@@ -2,9 +2,9 @@
 
 namespace Admin\Read;
 
-use Admin\Read\Tables\HtmlTable;
+use Admin\Read\Tables\Primary;
 
-class Read extends HtmlTable
+class Read extends Primary
 {
 
 }

@@ -4,11 +4,11 @@ namespace Admin\Read\Tables;
 
 use Admin\Database\TableRelation;
 
-class DescendantTable extends HtmlTable
+class Descendant extends Primary
 {
 
     /**
-     * Relation that defines the DescendantTable.
+     * Relation that defines the Descendant.
      *
      * @var TableRelation
      */
@@ -29,9 +29,9 @@ class DescendantTable extends HtmlTable
     protected $alias;
 
     /**
-     * DescendantTable constructor.
+     * Descendant constructor.
      *
-     * @param TableRelation $relation the relation that defined the DescendantTable.
+     * @param TableRelation $relation the relation that defined the Descendant.
      */
     public function __construct(TableRelation $relation)
     {
@@ -65,7 +65,7 @@ class DescendantTable extends HtmlTable
     }
 
     /**
-     * Gets the relation of the DescendantTable.
+     * Gets the relation of the Descendant.
      *
      * @return TableRelation
      */
@@ -75,7 +75,7 @@ class DescendantTable extends HtmlTable
     }
 
     /**
-     * Sets the relation of the DescendantTable instance.
+     * Sets the relation of the Descendant instance.
      *
      * @param TableRelation $relation the relation.
      *
