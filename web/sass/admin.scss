@@ -14,6 +14,7 @@ $main-color: #eee;
   top: 0px;
   bottom: 0px;
   left: 0px;
+  overflow-y: auto;
 
   a {
     padding: 10px 5px 10px 15px;
@@ -81,7 +82,7 @@ table {
     height: 100%;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     display: block !important;
     z-index: 100;
   }
