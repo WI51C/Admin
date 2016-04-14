@@ -60,6 +60,23 @@ class Column extends AttributeCollector
     }
 
     /**
+     * Applies defined modifiers to the value.
+     *
+     * @param mixed $value the value to modify.
+     * @param array $row   the row of the value.
+     *
+     * @return mixed
+     */
+    public function apply($value, array $row)
+    {
+        foreach ($this->modifiers as $modifier) {
+            $value = $modifier($value, $row);
+        }
+
+        return $value;
+    }
+
+    /**
      * Sets the name of the column.
      *
      * @param string $name the string to set as the name.

@@ -23,11 +23,11 @@
         <?php if (!empty($this->data)): ?>
             <tbody>
             <?php foreach ($this->data as $key => $row): ?>
-            <tr>
-                <?php foreach ($this->columns as $column): ?>
-                    <td><?= $row[$column->name] ?></td>
-                <?php endforeach ?>
-            </tr>
+                <tr>
+                    <?php foreach ($this->columns as $column): ?>
+                        <td><?= $column->apply($row[$column->name], $row) ?></td>
+                    <?php endforeach ?>
+                </tr>
             <?php endforeach ?>
             </tbody>
         <?php endif ?>
