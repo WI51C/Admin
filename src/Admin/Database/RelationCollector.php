@@ -5,7 +5,7 @@ namespace Admin\Database;
 use Admin\Database\Relations\MTM;
 use Admin\Database\Relations\OTM;
 use Admin\Database\Relations\OTO;
-use Admin\Read\Tables\VisualTableDescendant;
+use Admin\Read\Tables\TableDescendant;
 use Exception;
 
 class RelationCollector
@@ -62,7 +62,7 @@ class RelationCollector
     public function newOTM(string $table, string $parentColumn, string $childColumn)
     {
         $relation    = new OTM($table, $parentColumn, $childColumn);
-        $table       = new VisualTableDescendant($relation);
+        $table       = new TableDescendant($relation);
         $this->otm[] = $table;
 
         return $table;
@@ -97,7 +97,7 @@ class RelationCollector
             $middleJoinType
         );
 
-        $table       = new VisualTableDescendant($relation);
+        $table       = new TableDescendant($relation);
         $this->mtm[] = $table;
 
         return $table;

@@ -71,7 +71,7 @@ class ColumnResolver
 
     /**
      * Sorts the columns using this order:
-     * -> VisualTable table
+     * -> Table table
      *      -> Database order
      *          -> OTO relations
      *              -> Database order

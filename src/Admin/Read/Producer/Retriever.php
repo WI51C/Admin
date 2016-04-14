@@ -2,13 +2,13 @@
 
 namespace Admin\Read\Producer;
 
-use Admin\Read\Tables\VisualTable;
+use Admin\Read\Tables\Table;
 
 class Retriever
 {
 
     /**
-     * @var VisualTable
+     * @var Table
      */
     protected $table;
 }
