@@ -120,7 +120,7 @@ class ColumnCollector
      */
     public function sort()
     {
-        usort($this->columns, function ($a, $b) {
+        usort($this->columns, function (Column $a, Column $b) {
             return $a->getPosition() - $b->getPosition();
         });
 
