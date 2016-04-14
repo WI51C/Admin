@@ -4,11 +4,11 @@ namespace Admin\Read\Tables;
 
 use Admin\Database\TableRelation;
 
-class Descendant extends Primary
+class VisualTableDescendant extends VisualTable
 {
 
     /**
-     * Relation that defines the Descendant.
+     * Relation that defines the VisualTableDescendant.
      *
      * @var TableRelation
      */
@@ -29,9 +29,9 @@ class Descendant extends Primary
     protected $alias;
 
     /**
-     * Descendant constructor.
+     * VisualTableDescendant constructor.
      *
-     * @param TableRelation $relation the relation that defined the Descendant.
+     * @param TableRelation $relation the relation that defined the VisualTableDescendant.
      */
     public function __construct(TableRelation $relation)
     {
@@ -65,7 +65,7 @@ class Descendant extends Primary
     }
 
     /**
-     * Gets the relation of the Descendant.
+     * Gets the relation of the VisualTableDescendant.
      *
      * @return TableRelation
      */
@@ -75,7 +75,7 @@ class Descendant extends Primary
     }
 
     /**
-     * Sets the relation of the Descendant instance.
+     * Sets the relation of the VisualTableDescendant instance.
      *
      * @param TableRelation $relation the relation.
      *

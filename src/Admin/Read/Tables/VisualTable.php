@@ -10,7 +10,7 @@ use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use InvalidArgumentException;
 
-class Primary extends Table
+class VisualTable extends Table
 {
 
     /**

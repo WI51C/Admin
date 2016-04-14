@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Column;
 
-use Admin\Read\Tables\Primary;
+use Admin\Read\Tables\VisualTable;
 use InvalidArgumentException;
 
 class ColumnCollector
@@ -25,9 +25,9 @@ class ColumnCollector
     /**
      * ColumnCollector constructor.
      *
-     * @param Primary $table table instance.
+     * @param VisualTable $table table instance.
      */
-    public function __construct(Primary $table)
+    public function __construct(VisualTable $table)
     {
         $this->table = $table;
     }

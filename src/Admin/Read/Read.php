@@ -2,9 +2,9 @@
 
 namespace Admin\Read;
 
-use Admin\Read\Tables\Primary;
+use Admin\Read\Tables\VisualTable;
 
-class Read extends Primary
+class Read extends VisualTable
 {
 
 }
