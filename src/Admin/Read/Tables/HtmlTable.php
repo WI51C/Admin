@@ -91,19 +91,11 @@ class HtmlTable extends Table
     protected $group = null;
 
     /**
-     * The inline tables of the Table.
-     *
-     * @var RelationCollector
-     */
-    public $relations;
-
-    /**
      * Table constructor.
      */
     public function __construct()
     {
-        $this->relations = new RelationCollector($this);
-        $this->columns   = new ColumnCollector($this);
+        $this->columns = new ColumnCollector($this);
     }
 
     /**
