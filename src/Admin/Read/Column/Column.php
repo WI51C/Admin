@@ -4,7 +4,7 @@ namespace Admin\Read\Column;
 
 use Admin\Read\AttributeCollector;
 
-class Column extends AttributeCollector
+abstract class Column extends AttributeCollector
 {
 
     /**
@@ -29,16 +29,6 @@ class Column extends AttributeCollector
     public $position = 100;
 
     /**
-     * Modifiers of the column. The array consists of callable values.
-     * The callable will be passed the current value and row of the data.
-     *
-     * The return value of the callable will then be inserted instead.
-     *
-     * @var array
-     */
-    public $modifiers = [];
-
-    /**
      * Whether or not the column is custom.
      *
      * @var bool
@@ -52,28 +42,11 @@ class Column extends AttributeCollector
      * @param string $alias    the alias (header) to display in the table.
      * @param int    $position the position of the column in the table.
      */
-    public function __construct(string $name, string $alias, int $position)
+    public function __construct(string $name, string $alias, int $position = 100)
     {
         $this->name     = $name;
         $this->alias    = $alias;
         $this->position = $position;
-    }
-
-    /**
-     * Applies defined modifiers to the value.
-     *
-     * @param mixed $value the value to modify.
-     * @param array $row   the row of the value.
-     *
-     * @return mixed
-     */
-    public function apply($value, array $row)
-    {
-        foreach ($this->modifiers as $modifier) {
-            $value = $modifier($value, $row);
-        }
-
-        return $value;
     }
 
     /**
@@ -146,20 +119,6 @@ class Column extends AttributeCollector
     public function getPosition()
     {
         return $this->position;
-    }
-
-    /**
-     * Adds a modifier to the column.
-     *
-     * @param callable $callable the modifier callable.
-     *
-     * @return $this
-     */
-    public function addModifier(callable $callable)
-    {
-        $this->modifiers[] = $callable;
-
-        return $this;
     }
 
     /**

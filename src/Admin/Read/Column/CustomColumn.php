@@ -10,7 +10,7 @@ class CustomColumn extends Column
      *
      * @var callable
      */
-    protected $callable;
+    protected $result;
 
     /**
      * Column constructor.
@@ -18,25 +18,25 @@ class CustomColumn extends Column
      * @param string   $name     the name of the column in the database.
      * @param string   $alias    the alias (header) to display in the table.
      * @param int      $position the position of the column in the table.
-     * @param callable $callable the callable to produce the callable of the columns <td> tags.
+     * @param callable $result   the callable to produce the callable of the columns <td> tags.
      */
-    public function __construct(string $name, $alias, int $position, callable $callable)
+    public function __construct(string $name, $alias, int $position, callable $result)
     {
         parent::__construct($name, $alias, $position);
 
-        $this->callable = $callable;
+        $this->result = $result;
     }
 
     /**
-     * Sets the callable callable of the custom column.
+     * Sets the result callable of the custom column.
      *
-     * @param callable $callable the callable to set.
+     * @param callable $result the callable to set.
      *
      * @return $this
      */
-    public function setCallable(callable $callable)
+    public function setResult(callable $result)
     {
-        $this->callable = $callable;
+        $this->result = $result;
 
         return $this;
     }
@@ -46,8 +46,8 @@ class CustomColumn extends Column
      *
      * @return callable
      */
-    public function getCallable()
+    public function getResult()
     {
-        return $this->callable;
+        return $this->result;
     }
 }
