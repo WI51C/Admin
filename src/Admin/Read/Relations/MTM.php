@@ -3,6 +3,7 @@
 namespace Admin\Read\Relations;
 
 use Admin\Connection;
+use Admin\Read\Column\Column;
 
 class MTM extends OTM
 {
@@ -59,19 +60,18 @@ class MTM extends OTM
      */
     public function getData()
     {
-        $query = $this->connection->query();
-        foreach ($this->relations->getOneToOneRelations() as $oto) {
+        $query     = $this->connection->query();
+        $relations = $this->relations->getOneToOneRelations();
+        array_walk($relations, function (OTO $oto) use ($query) {
             $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
-        }
+        });
 
-        $columns = [];
-        foreach ($this->columns->getColumns() as $column) {
-            $name      = $column->getName();
-            $columns[] = sprintf('%s "%s"', $name, $name);
-        }
+        $columns = array_map(function (Column $column) {
+            $name = $column->getName();
+
+            return sprintf('%s "%s"', $name, $name);
+        }, $this->columns->getColumns());
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);
-
-        return $query->get($this->table, [$this->offset, $this->limit]);
     }
 }

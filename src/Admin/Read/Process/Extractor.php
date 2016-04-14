@@ -2,6 +2,7 @@
 
 namespace Admin\Read\Process;
 
+use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Relations\OTM;
 use Admin\Read\Tables\Table;
 use Exception;
@@ -103,7 +104,7 @@ class Extractor
     /**
      * Gets the headers of the Extractor.
      *
-     * @return array
+     * @return ColumnCollector
      */
     public function getColumns()
     {

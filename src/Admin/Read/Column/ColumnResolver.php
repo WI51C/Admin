@@ -3,6 +3,7 @@
 namespace Admin\Read\Column;
 
 use Admin\Connection;
+use Admin\Read\Relations\OTO;
 use Admin\Read\Tables\Table;
 
 class ColumnResolver
@@ -47,8 +48,10 @@ class ColumnResolver
         $this->connection = $table->getConnection();
 
         $this->tables = [$this->table->getTable()];
-        foreach ($this->table->relations->getOneToOneRelations() as $oto)
+        $relations    = $this->table->relations->getOneToOneRelations();
+        array_walk($relations, function (OTO $oto) {
             $this->tables[] = $oto->getTable();
+        });
     }
 
     /**

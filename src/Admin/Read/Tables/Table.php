@@ -140,6 +140,7 @@ class Table extends AttributeCollector
     public function getData()
     {
         $query = $this->connection->query();
+
         array_map(function (OTO $oto) use ($query) {
             $query->join($oto->getTable(), $oto->getCondition(), $oto->getType());
         }, $this->relations->getOneToOneRelations());
