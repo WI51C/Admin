@@ -48,14 +48,6 @@ class CustomColumn
     }
 
     /**
-     * Gets the content of
-     */
-    public function getContent()
-    {
-
-    }
-
-    /**
      * Gets the header of the column.
      *
      * @return string
