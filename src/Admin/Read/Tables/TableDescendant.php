@@ -32,15 +32,11 @@ class TableDescendant extends Table
     /**
      * TableDescendant constructor.
      *
-     * @param Connection    $connection instance of connection.
-     * @param TableRelation $relation   the relation that defined the TableDescendant.
+     * @param Connection $connection instance of connection.
      */
-    public function __construct(Connection $connection, TableRelation $relation)
+    public function __construct(Connection $connection)
     {
         parent::__construct($connection);
-
-        $this->table    = $relation->table;
-        $this->relation = $relation;
     }
 
     /**

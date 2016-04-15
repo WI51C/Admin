@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\RelationCollector;
+namespace Admin\Read\Tables\Descendants;
 
 use Admin\Read\Tables\Table;
 

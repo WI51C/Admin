@@ -4,15 +4,34 @@ namespace Admin\Read\Tables;
 
 
 use Admin\Connection;
-use Admin\Database\RelationCollector;
-use Admin\Database\Table as DatabaseTable;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Processing\Retriever;
 use InvalidArgumentException;
 use Exception;
 
-class Table extends DatabaseTable
+class Table
 {
+
+    /**
+     * Name of the table.
+     *
+     * @var string
+     */
+    public $table;
+
+    /**
+     * Relations of the table.
+     *
+     * @var RelationCollector
+     */
+    public $relations;
+
+    /**
+     * The connection instance of the table.
+     *
+     * @var Connection
+     */
+    protected $connection;
 
     /**
      * Whether or not the table is inline or not.
@@ -91,9 +110,9 @@ class Table extends DatabaseTable
      */
     public function __construct(Connection $connection)
     {
-        parent::__construct($connection);
-
-        $this->columns = new ColumnCollector($this);
+        $this->connection = $connection;
+        $this->relations  = new RelationCollector($this);
+        $this->columns    = new ColumnCollector($this);
     }
 
     /**
@@ -116,6 +135,10 @@ class Table extends DatabaseTable
      */
     public function getData()
     {
+        if ($this->table === null) {
+            throw new Exception('Table cannot be undefined.');
+        }
+
         $query   = $this->connection->query();
         $columns = [];
 
@@ -143,11 +166,55 @@ class Table extends DatabaseTable
             $columns[] = sprintf('%s "%s"', $column->name, $column->name);
         }
 
-        if ($this->table === null) {
-            throw new Exception('Table cannot be undefined.');
-        }
-
         return $query->get($this->table, [$this->offset, $this->limit], $columns);
+    }
+
+    /**
+     * Gets the name of the table in the database.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * Sets the name of the table.
+     *
+     * @param string $table the name to set.
+     *
+     * @return $this
+     */
+    public function setTable($table)
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+    /**
+     * Gets the connection instance of the table.
+     *
+     * @return Connection
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
+    /**
+     * Sets the connection instance of the table.
+     *
+     * @param Connection $connection
+     *
+     * @return $this
+     */
+    public function setConnection(Connection $connection)
+    {
+        $this->connection = $connection;
+
+        return $this;
     }
 
     /**
@@ -384,6 +451,20 @@ class Table extends DatabaseTable
     public function getGroup()
     {
         return $this->groups;
+    }
+
+    /**
+     * Sets the RelationCollector instance of the table.
+     *
+     * @param RelationCollector $relationCollector instance to set.
+     *
+     * @return $this
+     */
+    public function setRelations(RelationCollector $relationCollector)
+    {
+        $this->relations = $relationCollector;
+
+        return $this;
     }
 
     /**
