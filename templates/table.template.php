@@ -1,21 +1,21 @@
-<?php if ($this->table->isInline()): ?>
-    <a class="waves-effect waves-light btn-large btn-medium red table-inspect-trigger"><?= $this->table->getbutton() ?></a>
+<?php if ($this->table->inline): ?>
+    <a class="waves-effect waves-light btn-large btn-medium red table-inspect-trigger"><?= $this->table->open ?></a>
 <?php endif ?>
 <div class="table-container">
-    <?php if ($this->table->isInline()): ?>
+    <?php if ($this->table->inline): ?>
         <div class="inline-controls">
             <a class="waves-effect waves-light btn-large btn-medium red table-inspect-exit">Exit</a>
         </div>
     <?php endif ?>
     <table <?= $this->table->htmlAttributes() ?>>
-        <?php if ($this->table->getCaption() !== null): ?>
-            <caption><?= $this->table->getCaption() ?></caption>
+        <?php if ($this->table->caption !== null): ?>
+            <caption><?= $this->table->caption ?></caption>
         <?php endif ?>
-        <?php if ($this->table->getHead()): ?>
+        <?php if ($this->table->head): ?>
             <thead>
             <tr>
                 <?php foreach ($this->columns as $column): ?>
-                    <th <?= $column->htmlAttributes()?>><?= $column->alias ?></th>
+                    <th <?= $column->htmlAttributes() ?>><?= $column->alias ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>

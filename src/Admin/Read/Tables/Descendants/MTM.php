@@ -32,7 +32,7 @@ class MTM extends OTM
      * @param Table  $parent              the parent of the relation.
      * @param string $table               the table to (primary) display.
      * @param string $parentColumn        the parent column to join on.
-     * @param string $childColumn         the child column to join on.
+     * @param string $descendantColumn    the child column to join on.
      * @param string $middleTable         the table to join the primary table on.
      * @param string $middleJoinCondition the condition to join the middle and primary table on.
      * @param string $middleJoinType      the type of join to perform between to middle and primary table.
@@ -41,15 +41,17 @@ class MTM extends OTM
         Table $parent,
         string $table,
         string $parentColumn,
-        string $childColumn,
+        string $descendantColumn,
         string $middleTable,
         string $middleJoinCondition,
         string $middleJoinType
     ) {
-        parent::__construct($parent, $table, $parentColumn, $childColumn);
+        parent::__construct($parent, $table, $parentColumn, $descendantColumn);
         $this->middleJoinTable     = $middleTable;
         $this->middleJoinType      = $middleJoinType;
         $this->middleJoinCondition = $middleJoinCondition;
+
+        $this->relations->addOto($middleTable, $middleJoinCondition, $middleJoinType);
     }
 
     /**

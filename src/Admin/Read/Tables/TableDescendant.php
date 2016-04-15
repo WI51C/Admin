@@ -3,10 +3,16 @@
 namespace Admin\Read\Tables;
 
 use Admin\Connection;
-use Admin\Database\TableRelation;
 
 class TableDescendant extends Table
 {
+
+    /**
+     * Text to display in the button to open the table.
+     *
+     * @var string
+     */
+    public $open = 'Open';
 
     /**
      * Relation that defines the TableDescendant.
@@ -20,14 +26,14 @@ class TableDescendant extends Table
      *
      * @var bool
      */
-    protected $inline = true;
+    public $inline = true;
 
     /**
      * Alias of the table in the main table.
      *
      * @var string
      */
-    protected $alias;
+    public $alias;
 
     /**
      * TableDescendant constructor.
@@ -37,6 +43,30 @@ class TableDescendant extends Table
     public function __construct(Connection $connection)
     {
         parent::__construct($connection);
+    }
+
+    /**
+     * Gets the text to display in the button to open the table.
+     *
+     * @return string
+     */
+    public function getOpen()
+    {
+        return $this->open;
+    }
+
+    /**
+     * Sets the text to display in the button to open the table.
+     *
+     * @param string $open the text to display.
+     *
+     * @return TableDescendant
+     */
+    public function setOpen(string $open)
+    {
+        $this->open = $open;
+
+        return $this;
     }
 
     /**
@@ -60,7 +90,7 @@ class TableDescendant extends Table
      */
     public function getAlias()
     {
-        return $this->alias;
+        return $this->alias ?? $this->table;
     }
 
     /**

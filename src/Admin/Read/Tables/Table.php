@@ -4,12 +4,14 @@ namespace Admin\Read\Tables;
 
 
 use Admin\Connection;
+use Admin\Read\AttributeCollector;
 use Admin\Read\Column\ColumnCollector;
+use Admin\Read\Processing\Renderer;
 use Admin\Read\Processing\Retriever;
 use InvalidArgumentException;
 use Exception;
 
-class Table
+class Table extends AttributeCollector
 {
 
     /**
@@ -27,25 +29,25 @@ class Table
     public $relations;
 
     /**
-     * The connection instance of the table.
-     *
-     * @var Connection
-     */
-    protected $connection;
-
-    /**
      * Whether or not the table is inline or not.
      *
      * @var bool
      */
-    protected $inline = false;
+    public $inline = false;
+
+    /**
+     * Setting to show the head of the table.
+     *
+     * @var bool
+     */
+    public $head = true;
 
     /**
      * Caption of the html table.
      *
      * @var string|null
      */
-    protected $caption;
+    public $caption;
 
     /**
      * Columns of the table.
@@ -53,13 +55,6 @@ class Table
      * @var ColumnCollector
      */
     public $columns;
-
-    /**
-     * Setting to show the head of the table.
-     *
-     * @var bool
-     */
-    protected $head = true;
 
     /**
      * Limit of the table.
@@ -104,6 +99,13 @@ class Table
     protected $groups = [];
 
     /**
+     * The connection instance of the table.
+     *
+     * @var Connection
+     */
+    protected $connection;
+
+    /**
      * Table constructor.
      *
      * @param Connection $connection an instance of connection.
@@ -123,7 +125,9 @@ class Table
     public function render()
     {
         $retriever = new Retriever($this);
-        var_dump($retriever->retrieve());
+        $renderer  = new Renderer($retriever->table, $retriever->data);
+
+        return $renderer->render();
     }
 
     /**

@@ -57,8 +57,8 @@ class OTM extends TableDescendant
 
         $this->parent           = $parent;
         $this->table            = $table;
-        $this->parentColumn     = $parentColumn;
-        $this->descendantColumn = $descendantColumn;
+        $this->parentColumn     = strtolower($parentColumn);
+        $this->descendantColumn = strtolower($descendantColumn);
     }
 
     /**
@@ -104,7 +104,7 @@ class OTM extends TableDescendant
      */
     public function setParentColumn(string $parentColumn)
     {
-        $this->parentColumn = $parentColumn;
+        $this->parentColumn = strtolower($parentColumn);
 
         return $this;
     }
@@ -128,7 +128,7 @@ class OTM extends TableDescendant
      */
     public function setDescendantColumn(string $descendantColumn)
     {
-        $this->descendantColumn = $descendantColumn;
+        $this->descendantColumn = strtolower($descendantColumn);
 
         return $this;
     }

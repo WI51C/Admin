@@ -47,7 +47,7 @@ class OTO
     {
         $this->parent    = $parent;
         $this->table     = $table;
-        $this->condition = strtolower($condition);
+        $this->condition = $condition;
         $this->type      = $type;
     }
 
