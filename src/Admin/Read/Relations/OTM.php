@@ -1,11 +1,19 @@
 <?php
 
-namespace Admin\Database\Relations;
+namespace Admin\Read\RelationCollector;
 
-use Admin\Database\Relation;
+use Admin\Read\Tables\Table;
+use Admin\Read\Tables\TableDescendant;
 
-class OTO extends Relation
+class OTM extends TableDescendant
 {
+
+    /**
+     * Parent of the relation.
+     *
+     * @var Table
+     */
+    public $parent;
 
     /**
      * The table of the join.
@@ -31,12 +39,14 @@ class OTO extends Relation
     /**
      * OTO constructor.
      *
-     * @param string $table
-     * @param string $condition
-     * @param string $type
+     * @param Table  $parent    parent of the relation.
+     * @param string $table     the of the table to relate to.
+     * @param string $condition the condition to join on.
+     * @param string $type      the type of join to perform.
      */
-    public function __construct(string $table, string $condition, string $type = 'INNER')
+    public function __construct(Table $parent, string $table, string $condition, string $type)
     {
+        $this->parent    = $parent;
         $this->table     = $table;
         $this->condition = $condition;
         $this->type      = $type;

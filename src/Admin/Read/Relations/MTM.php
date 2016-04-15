@@ -1,6 +1,8 @@
 <?php
 
-namespace Admin\Database\Relations;
+namespace Admin\Read\RelationCollector;
+
+use Admin\Read\Tables\Table;
 
 class MTM extends OTM
 {
@@ -11,14 +13,12 @@ class MTM extends OTM
      * @var string
      */
     public $middleJoinTable;
-
     /**
      * The condition to join the middle and primary table.
      *
      * @var string
      */
     public $middleJoinCondition;
-
     /**
      * The join type of the middle and primary table relation.
      *
@@ -29,6 +29,7 @@ class MTM extends OTM
     /**
      * MTM constructor.
      *
+     * @param Table  $parent              the parent of the relation.
      * @param string $table               the table to (primary) display.
      * @param string $parentColumn        the parent column to join on.
      * @param string $childColumn         the child column to join on.
@@ -37,15 +38,15 @@ class MTM extends OTM
      * @param string $middleJoinType      the type of join to perform between to middle and primary table.
      */
     public function __construct(
+        Table $parent,
         string $table,
         string $parentColumn,
         string $childColumn,
         string $middleTable,
         string $middleJoinCondition,
-        string $middleJoinType = 'INNER'
+        string $middleJoinType
     ) {
-        parent::__construct($table, $parentColumn, $childColumn);
-
+        parent::__construct($parent, $table, $parentColumn, $childColumn);
         $this->middleJoinTable     = $middleTable;
         $this->middleJoinType      = $middleJoinType;
         $this->middleJoinCondition = $middleJoinCondition;
