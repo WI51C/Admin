@@ -15,17 +15,21 @@
             <thead>
             <tr>
                 <?php foreach ($this->columns as $column): ?>
-                    <th <?= $column->stringifyAttributes() ?>><?= $column->alias ?></th>
+                    <th <?= $column->stringifyAttributes() ?>><?= $column->header ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>
         <?php endif ?>
         <?php if (!empty($this->data)): ?>
             <tbody>
-            <?php foreach ($this->data as $key => $row): ?>
+            <?php foreach ($this->data as $position => $row): ?>
                 <tr>
                     <?php foreach ($this->columns as $column): ?>
-                        <td><?= $column->content($row[$column->name], $row) ?></td>
+                        <?php if ($column->custom): ?>
+                            <td><?= call_user_func($column->callable, $row, $position) ?></td>
+                        <?php else: ?>
+                            <td><?= $column->modifier ? call_user_func($column->modifier, $row[$column->name]) : $row[$column->name] ?></td>
+                        <?php endif ?>
                     <?php endforeach ?>
                 </tr>
             <?php endforeach ?>

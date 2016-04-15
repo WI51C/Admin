@@ -56,18 +56,38 @@ class ColumnCollector
      * Adds a column to the collector.
      *
      * @param string   $name     the name of the column.
-     * @param string   $alias    the alias of the column.
+     * @param string   $header   the header of the column.
      * @param int      $position the position of the column.
      * @param callable $modifier the modifier.
      *
      * @return Column
      */
-    public function addColumn(string $name, string $alias, int $position = 100, callable $modifier = null)
+    public function addColumn(string $name, string $header, int $position = 100, callable $modifier = null)
     {
-        $column          = new Column($name, $alias, $position, $modifier);
+        $column          = new Column($name, $header, $position);
         $this->columns[] = $column;
 
+        if ($modifier !== null)
+            $column->setModifier($modifier);
+
         return $column;
+    }
+
+    /**
+     * Adds a custom column to the table.
+     *
+     * @param string          $header   the header (header) of the column.
+     * @param int             $position the position of the column in the table.
+     * @param        callable $callable the callable to produce the content of the column.
+     *
+     * @return $this
+     */
+    public function addCustom(string $header, int $position, callable $callable)
+    {
+        $custom          = new CustomColumn($header, $position, $callable);
+        $this->columns[] = $custom;
+
+        return $this;
     }
 
     /**
@@ -106,7 +126,7 @@ class ColumnCollector
     public function sort()
     {
         usort($this->columns, function (Column $a, Column $b) {
-            return $a->getPosition() - $b->getPosition();
+            return $a->position - $b->position;
         });
 
         return $this;

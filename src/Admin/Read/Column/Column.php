@@ -16,11 +16,11 @@ class Column extends AttributeCollector
     public $name;
 
     /**
-     * The alias (header) of the column.
+     * The header (header) of the column.
      *
      * @var string
      */
-    public $alias;
+    public $header;
 
     /**
      * Position in the table.
@@ -37,36 +37,24 @@ class Column extends AttributeCollector
     public $modifier;
 
     /**
-     * Column constructor.
+     * Whether or not the column is custom.
      *
-     * @param string        $name     the name of the column in the database.
-     * @param string        $alias    the alias (header) to display in the table.
-     * @param int           $position the position of the column in the table.
-     * @param callable|null $modifier the modifier of the column.
+     * @var bool
      */
-    public function __construct(string $name, string $alias, int $position, $modifier)
-    {
-        if ($modifier !== null && !is_callable($modifier)) {
-            throw new InvalidArgumentException(sprintf('The modifier for %s is invalid.', $name));
-        }
-
-        $this->name     = $name;
-        $this->alias    = $alias;
-        $this->position = $position;
-        $this->modifier = $modifier;
-    }
+    public $custom = false;
 
     /**
-     * Gets the content of the <td> tag.
+     * Column constructor.
      *
-     * @param mixed $value the value to display.
-     * @param array $row   the current row.
-     *
-     * @return mixed
+     * @param string $name     the name of the column in the database.
+     * @param string $header   the header (header) to display in the table.
+     * @param int    $position the position of the column in the table.
      */
-    public function content($value, array $row)
+    public function __construct(string $name, string $header, int $position)
     {
-        return $this->modifier ? call_user_func($this->modifier, $value, $row) : $value;
+        $this->name     = $name;
+        $this->header   = $header;
+        $this->position = $position;
     }
 
     /**
@@ -118,27 +106,27 @@ class Column extends AttributeCollector
     }
 
     /**
-     * Sets the alias of the column.
+     * Sets the header of the column.
      *
-     * @param string $alias the string to set as the alias.
+     * @param string $header the string to set as the header.
      *
      * @return $this
      */
-    public function setAlias(string $alias)
+    public function setHeader(string $header)
     {
-        $this->alias = $alias;
+        $this->header = $header;
 
         return $this;
     }
 
     /**
-     * Gets the alias of the column.
+     * Gets the header of the column.
      *
      * @return string
      */
-    public function getAlias()
+    public function getHeader()
     {
-        return $this->alias ?? $this->name;
+        return $this->header ?? $this->name;
     }
 
     /**

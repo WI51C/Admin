@@ -29,11 +29,11 @@ class TableDescendant extends Table
     public $inline = true;
 
     /**
-     * Alias of the table in the main table.
+     * Header of the table in the main table.
      *
      * @var string
      */
-    public $alias;
+    public $header;
 
     /**
      * TableDescendant constructor.
@@ -70,27 +70,27 @@ class TableDescendant extends Table
     }
 
     /**
-     * Sets the alias of the table column in the main table.
+     * Sets the header of the table column in the main table.
      *
-     * @param string $alias the alias to set.
+     * @param string $header the header to set.
      *
      * @return $this
      */
-    public function setAlias(string $alias)
+    public function setHeader(string $header)
     {
-        $this->alias = $alias;
+        $this->header = $header;
 
         return $this;
     }
 
     /**
-     * Gets the alias of the table.
+     * Gets the header of the table.
      *
      * @return $this
      */
-    public function getAlias()
+    public function getHeader()
     {
-        return $this->alias ?? $this->table;
+        return $this->header ?? $this->table;
     }
 
     /**
