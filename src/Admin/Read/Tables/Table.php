@@ -4,7 +4,7 @@ namespace Admin\Read\Tables;
 
 
 use Admin\Connection;
-use Admin\Read\AttributeCollector;
+use Admin\Html\AttributeCollector;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Processing\Renderer;
 use Admin\Read\Processing\Retriever;
@@ -167,7 +167,7 @@ class Table extends AttributeCollector
         }
 
         foreach ($this->columns->getColumns() as $column) {
-            $columns[] = sprintf('%s "%s"', $column->name, $column->name);
+            $columns[] = sprintf('%s \'%s\'', $column->name, $column->name);
         }
 
         return $query->get($this->table, [$this->offset, $this->limit], $columns);

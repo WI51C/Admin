@@ -7,7 +7,7 @@
             <a class="waves-effect waves-light btn-large btn-medium red table-inspect-exit">Exit</a>
         </div>
     <?php endif ?>
-    <table <?= $this->table->htmlAttributes() ?>>
+    <table <?= $this->table->stringifyAttributes() ?>>
         <?php if ($this->table->caption !== null): ?>
             <caption><?= $this->table->caption ?></caption>
         <?php endif ?>
@@ -15,7 +15,7 @@
             <thead>
             <tr>
                 <?php foreach ($this->columns as $column): ?>
-                    <th <?= $column->htmlAttributes() ?>><?= $column->alias ?></th>
+                    <th <?= $column->stringifyAttributes() ?>><?= $column->alias ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>

@@ -2,7 +2,7 @@
 
 namespace Admin\Read\Column;
 
-use Admin\Read\AttributeCollector;
+use Admin\Html\AttributeCollector;
 use InvalidArgumentException;
 
 class Column extends AttributeCollector

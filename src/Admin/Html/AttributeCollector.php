@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read;
+namespace Admin\Html;
 
 class AttributeCollector
 {
@@ -15,13 +15,7 @@ class AttributeCollector
     /**
      * Sets the attributes of the table.
      *
-     * @param array $attributes     an array of attributes with the structure:
-     *                              [
-     *                              'attribute' => 'value',
-     *                              'attribute' => 'value',
-     *                              'attribute' => 'value',
-     *                              'attribute' => 'value',
-     *                              ]
+     * @param array $attributes an array of attributes and their value.
      *
      * @return $this
      */
@@ -60,7 +54,7 @@ class AttributeCollector
      *
      * @return string
      */
-    public function htmlAttributes()
+    public function stringifyAttributes()
     {
         return join(' ', array_map(function ($value, string $attribute) {
                            return sprintf('%s="%s"', $attribute, $value);
