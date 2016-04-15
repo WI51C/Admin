@@ -74,23 +74,6 @@ class ColumnCollector
     }
 
     /**
-     * Adds a custom column to the table.
-     *
-     * @param string          $header   the header (header) of the column.
-     * @param int             $position the position of the column in the table.
-     * @param        callable $callable the callable to produce the content of the column.
-     *
-     * @return $this
-     */
-    public function addCustom(string $header, int $position, callable $callable)
-    {
-        $custom          = new CustomColumn($header, $position, $callable);
-        $this->columns[] = $custom;
-
-        return $this;
-    }
-
-    /**
      * Automatically resolves the columns to select from the table.
      *
      * @return $this

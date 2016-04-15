@@ -25,11 +25,7 @@
             <?php foreach ($this->data as $position => $row): ?>
                 <tr>
                     <?php foreach ($this->columns as $column): ?>
-                        <?php if ($column->custom): ?>
-                            <td><?= call_user_func($column->callable, $row, $position) ?></td>
-                        <?php else: ?>
-                            <td><?= $column->modifier ? call_user_func($column->modifier, $row[$column->name]) : $row[$column->name] ?></td>
-                        <?php endif ?>
+                        <td><?= $column->modifier ? call_user_func($column->modifier, $row[$column->name]) : $row[$column->name] ?></td>
                     <?php endforeach ?>
                 </tr>
             <?php endforeach ?>
