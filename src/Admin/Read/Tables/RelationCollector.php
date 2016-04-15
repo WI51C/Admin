@@ -51,16 +51,15 @@ class RelationCollector
     /**
      * Adds an One-To-One relation to another table.
      *
-     * @param string $table            the table of the relation.
-     * @param string $parentColumn     the column of the parent table that relates to the descendant table.
-     * @param string $descendantColumn the descendant column to match the value of the parent table.
-     * @param string $type             the type of join to perform.
+     * @param string $table     the table of the relation.
+     * @param string $condition the condition to join on.
+     * @param string $type      the type of join to perform.
      *
      * @return $this
      */
-    public function addOto(string $table, string $parentColumn, string $descendantColumn, string $type = 'INNER')
+    public function addOto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = new OTO($this->parent, $table, $parentColumn, $descendantColumn, $type);
+        $this->oto[] = new OTO($this->parent, $table, $condition, $type);
 
         return $this;
     }

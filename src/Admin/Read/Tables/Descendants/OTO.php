@@ -26,14 +26,7 @@ class OTO
      *
      * @var string
      */
-    public $parentColumn;
-
-    /**
-     * The descendant column of the condition of the join.
-     *
-     * @var string
-     */
-    public $descendantColumn;
+    public $condition;
 
     /**
      * The type of join to perform.
@@ -45,19 +38,17 @@ class OTO
     /**
      * OTO constructor.
      *
-     * @param Table  $parent           parent of the relation.
-     * @param string $table            the of the table to relate to.
-     * @param string $parentColumn     the parent column of the condition.
-     * @param string $descendantColumn the descendant column of the condition.
-     * @param string $type             the type of join to perform.
+     * @param Table  $parent    parent of the relation.
+     * @param string $table     the of the table to relate to.
+     * @param string $condition the condition to join on.
+     * @param string $type      the type of join to perform.
      */
-    public function __construct(Table $parent, string $table, string $parentColumn, string $descendantColumn, string $type)
+    public function __construct(Table $parent, string $table, string $condition, string $type)
     {
-        $this->parent           = $parent;
-        $this->table            = $table;
-        $this->parentColumn     = strtolower($parentColumn);
-        $this->descendantColumn = strtolower($descendantColumn);
-        $this->type             = $type;
+        $this->parent    = $parent;
+        $this->table     = $table;
+        $this->condition = strtolower($condition);
+        $this->type      = $type;
     }
 
     /**
@@ -85,49 +76,25 @@ class OTO
     }
 
     /**
-     * Gets the parent column of the condition.
+     * Gets the condition of the OTO join.
      *
      * @return string
      */
-    public function getParentColumn()
+    public function getCondition()
     {
-        return $this->parentColumn;
+        return $this->condition;
     }
 
     /**
-     * Sets the parent column of the condition.
+     * Sets the condition of the OTO join.
      *
-     * @param string $parentColumn the column.
+     * @param string $condition the condition to set.
      *
      * @return $this
      */
-    public function setParentColumn(string $parentColumn)
+    public function setCondition(string $condition)
     {
-        $this->parentColumn = strtolower($$parentColumn);
-
-        return $this;
-    }
-
-    /**
-     * Gets the descendant column of the condition.
-     *
-     * @return string
-     */
-    public function getDescendantColumn()
-    {
-        return $this->descendantColumn;
-    }
-
-    /**
-     * Sets the descendant column of the condition.
-     *
-     * @param string $descendantColumn the column.
-     *
-     * @return $this
-     */
-    public function setDescendantColumn(string $descendantColumn)
-    {
-        $this->descendantColumn = strtolower($$descendantColumn);
+        $this->condition = $condition;
 
         return $this;
     }
