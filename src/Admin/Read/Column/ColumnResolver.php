@@ -3,7 +3,7 @@
 namespace Admin\Read\Column;
 
 use Admin\Connection;
-use Admin\Database\Relations\OTO;
+use Admin\Read\Tables\Descendants\OTO;
 use Admin\Read\Tables\Table;
 
 class ColumnResolver
