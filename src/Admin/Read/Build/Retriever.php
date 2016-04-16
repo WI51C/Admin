@@ -3,7 +3,7 @@
 namespace Admin\Read\Build;
 
 use Admin\Read\Tables\Table;
-use MongoDB\Driver\Exception\Exception;
+use Exception;
 
 class Retriever
 {
