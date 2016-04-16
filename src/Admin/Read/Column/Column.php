@@ -2,9 +2,7 @@
 
 namespace Admin\Read\Column;
 
-use Admin\HTML\AttributeCollector;
-
-class Column extends AttributeCollector
+class Column
 {
 
     /**
