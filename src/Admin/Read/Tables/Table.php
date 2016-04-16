@@ -5,8 +5,8 @@ namespace Admin\Read\Tables;
 
 use Admin\Connection;
 use Admin\Read\Column\ColumnCollector;
-use Admin\Read\Processing\Renderer;
-use Admin\Read\Processing\Retriever;
+use Admin\Read\Build\Renderer;
+use Admin\Read\Build\Retriever;
 use InvalidArgumentException;
 use Exception;
 

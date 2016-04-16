@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Read\Processing;
+namespace Admin\Read\Build;
 
 use Admin\Read\Tables\Table;
 
