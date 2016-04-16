@@ -48,7 +48,7 @@ class ColumnResolver
         $this->connection = $table->getConnection();
 
         $this->tables = [$this->table->getTable()];
-        $relations    = $this->table->relations->getOto();
+        $relations    = $this->table->getOto();
         array_walk($relations, function (OTO $oto) {
             $this->tables[] = $oto->getTable();
         });

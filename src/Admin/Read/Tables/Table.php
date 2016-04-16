@@ -4,14 +4,13 @@ namespace Admin\Read\Tables;
 
 
 use Admin\Connection;
-use Admin\Html\AttributeCollector;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Processing\Renderer;
 use Admin\Read\Processing\Retriever;
 use InvalidArgumentException;
 use Exception;
 
-class Table extends AttributeCollector
+class Table extends RelationCollector
 {
 
     /**
@@ -20,13 +19,6 @@ class Table extends AttributeCollector
      * @var string
      */
     public $table;
-
-    /**
-     * Relations of the table.
-     *
-     * @var RelationCollector
-     */
-    public $relations;
 
     /**
      * Whether or not the table is inline or not.
@@ -113,7 +105,6 @@ class Table extends AttributeCollector
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->relations  = new RelationCollector($this);
         $this->columns    = new ColumnCollector($this);
     }
 
@@ -162,7 +153,7 @@ class Table extends AttributeCollector
             $query->orderBy($order[0], $order[1], $order[2]);
         }
 
-        foreach ($this->relations->oto as $relation) {
+        foreach ($this->oto as $relation) {
             $query->join($relation->table, $relation->condition, $relation->type);
         }
 
@@ -455,30 +446,6 @@ class Table extends AttributeCollector
     public function getGroup()
     {
         return $this->groups;
-    }
-
-    /**
-     * Sets the RelationCollector instance of the table.
-     *
-     * @param RelationCollector $relationCollector instance to set.
-     *
-     * @return $this
-     */
-    public function setRelations(RelationCollector $relationCollector)
-    {
-        $this->relations = $relationCollector;
-
-        return $this;
-    }
-
-    /**
-     * Gets the relation of the table.
-     *
-     * @return RelationCollector
-     */
-    public function getRelations()
-    {
-        return $this->relations;
     }
 
     /**

@@ -44,7 +44,7 @@ class Retriever
      */
     protected function retrieve()
     {
-        foreach (array_merge($this->table->relations->otm, $this->table->relations->mtm) as $relation) {
+        foreach (array_merge($this->table->otm, $this->table->mtm) as $relation) {
             $relationData = $relation->getData();
             foreach ($this->data as $dataPosition => $dataRow) {
                 $name    = '#table.' . $relation->table;

@@ -6,15 +6,8 @@ use Admin\Read\Tables\Descendants\MTM;
 use Admin\Read\Tables\Descendants\OTO;
 use Admin\Read\Tables\Descendants\OTM;
 
-class RelationCollector
+abstract class RelationCollector
 {
-
-    /**
-     * The parent table of  the RelationCollector.
-     *
-     * @var Table
-     */
-    public $parent;
 
     /**
      * The defined One-To-One relations of the collector.
@@ -38,17 +31,6 @@ class RelationCollector
     public $mtm = [];
 
     /**
-     * RelationCollector constructor.
-     *
-     * @param Table $parent the parent of the collector.
-     */
-    public function __construct(Table $parent)
-    {
-        $this->parent = $parent;
-    }
-
-
-    /**
      * Adds an One-To-One relation to another table.
      *
      * @param string $table     the table of the relation.
@@ -59,7 +41,7 @@ class RelationCollector
      */
     public function addOto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = new OTO($this->parent, $table, $condition, $type);
+        $this->oto[] = new OTO($this, $table, $condition, $type);
 
         return $this;
     }
@@ -75,7 +57,7 @@ class RelationCollector
      */
     public function addOtm(string $table, string $parentColumn, string $descendantColumn)
     {
-        $table       = new OTM($this->parent, $table, $parentColumn, $descendantColumn);
+        $table       = new OTM($this, $table, $parentColumn, $descendantColumn);
         $this->otm[] = $table;
 
         return $table;
@@ -101,30 +83,10 @@ class RelationCollector
         string $linkCondition,
         string $linkType = 'INNER'
     ) {
-        $table       = new MTM($this->parent, $table, $parentColumn, $descendantColumn, $linkTable, $linkCondition, $linkType);
+        $table       = new MTM($this, $table, $parentColumn, $descendantColumn, $linkTable, $linkCondition, $linkType);
         $this->mtm[] = $table;
 
         return $table;
-    }
-
-    /**
-     * @return Table
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param Table $parent
-     *
-     * @return RelationCollector
-     */
-    public function setParent($parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Html;
+namespace Admin\HTML;
 
 class AttributeCollector
 {
