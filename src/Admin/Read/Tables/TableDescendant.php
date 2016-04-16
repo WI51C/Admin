@@ -123,26 +123,4 @@ class TableDescendant extends Table
     {
         return $this->header ?? $this->table;
     }
-
-    /**
-     * Gets the relation of the TableDescendant.
-     *
-     * @return TableRelation
-     */
-    public function getRelation()
-    {
-        return $this->relation;
-    }
-
-    /**
-     * Sets the relation of the TableDescendant instance.
-     *
-     * @param TableRelation $relation the relation.
-     *
-     * @return $this
-     */
-    public function setRelation($relation)
-    {
-        $this->relation = $relation;
-    }
 }

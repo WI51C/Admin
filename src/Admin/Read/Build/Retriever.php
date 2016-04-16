@@ -2,6 +2,7 @@
 
 namespace Admin\Read\Build;
 
+use Admin\Read\Tables\Descendants\OTM;
 use Admin\Read\Tables\Table;
 use Exception;
 
@@ -45,22 +46,22 @@ class Retriever
     protected function retrieve()
     {
         foreach (array_merge($this->table->otm, $this->table->mtm) as $relation) {
-            $retriever    = new Retriever($relation);
-            $relationData = $retriever->data;
-            foreach ($this->data as $dataPosition => $dataRow) {
-                $name    = '#table.' . $relation->table;
+            $relationData = (new Retriever($relation))->data;
+            foreach ($this->data as $dataPosition => &$dataRow) {
                 $subData = [];
+                $name    = '#table.' . $relation->table;
                 foreach ($relationData as $relationPosition => $relationRow) {
                     if ($relationRow[$relation->descendantColumn] === $dataRow[$relation->parentColumn]) {
                         $subData[] = $relationRow;
                     }
                 }
 
-                $renderer                         = new Renderer($relation, $subData);
-                $this->data[$dataPosition][$name] = $renderer->render();
+                $renderer       = new Renderer($relation, $subData);
+                $dataRow[$name] = $renderer->render();
             }
 
-            $this->table->columns->add($name, $relation->getHeader())->attributes->add('class', 'column-100');
+            $this->table->columns->add($name, $relation->header ?? $relation->table)
+                ->attributes->add('class', 'column-100');
         }
 
         return $this;
