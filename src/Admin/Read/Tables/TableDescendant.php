@@ -12,7 +12,14 @@ class TableDescendant extends Table
      *
      * @var string
      */
-    public $open = 'Open';
+    public $openMessage = 'OPEN';
+
+    /**
+     * Text to display in the button to close the table.
+     *
+     * @var string
+     */
+    public $closeMessage = 'EXIT';
 
     /**
      * Relation that defines the TableDescendant.
@@ -50,9 +57,9 @@ class TableDescendant extends Table
      *
      * @return string
      */
-    public function getOpen()
+    public function getOpenMessage()
     {
-        return $this->open;
+        return $this->openMessage;
     }
 
     /**
@@ -62,9 +69,33 @@ class TableDescendant extends Table
      *
      * @return TableDescendant
      */
-    public function setOpen(string $open)
+    public function setOpenMessage(string $open)
     {
-        $this->open = $open;
+        $this->openMessage = $open;
+
+        return $this;
+    }
+
+    /**
+     * Gets the message to display in the button to close the table.
+     *
+     * @return string
+     */
+    public function getCloseMessage()
+    {
+        return $this->closeMessage;
+    }
+
+    /**
+     * Gets the message to display in the button to close the table.
+     *
+     * @param string $closeMessage the message to set.
+     *
+     * @return $this
+     */
+    public function setCloseMessage(string $closeMessage)
+    {
+        $this->closeMessage = $closeMessage;
 
         return $this;
     }

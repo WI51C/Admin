@@ -1,10 +1,10 @@
 <?php if ($this->table->inline): ?>
-    <a class="waves-effect waves-light btn-large btn-medium red table-inspect-trigger"><?= $this->table->open ?></a>
+    <a class="waves-effect waves-light btn-large btn-medium red table-inspect-trigger"><?= $this->table->openMessage ?></a>
 <?php endif ?>
 <div class="table-container">
     <?php if ($this->table->inline): ?>
         <div class="inline-controls">
-            <a class="waves-effect waves-light btn-large btn-medium red table-inspect-exit">Exit</a>
+            <a class="waves-effect waves-light btn-large btn-medium red table-inspect-exit"><?= $this->table->closeMessage ?></a>
         </div>
     <?php endif ?>
     <table>
