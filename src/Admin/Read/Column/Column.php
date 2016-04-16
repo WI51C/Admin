@@ -27,18 +27,11 @@ class Column
     public $position = 100;
 
     /**
-     * Modifier of the column, the <td> value and current row will be passed to the callback.
+     * Transformers of the column.
      *
-     * @var callable
+     * @var Transformers
      */
-    public $modifier;
-
-    /**
-     * Whether or not the column is custom.
-     *
-     * @var bool
-     */
-    public $custom = false;
+    public $transformers;
 
     /**
      * Column constructor.
@@ -49,33 +42,10 @@ class Column
      */
     public function __construct(string $name, string $header, int $position)
     {
-        $this->name     = $name;
-        $this->header   = $header;
-        $this->position = $position;
-    }
-
-    /**
-     * Gets the modifier of the column.
-     *
-     * @return callable
-     */
-    public function getModifier()
-    {
-        return $this->modifier;
-    }
-
-    /**
-     * Sets the modifier of the column.
-     *
-     * @param callable $modifier the callback to set.
-     *
-     * @return $this
-     */
-    public function setModifier($modifier)
-    {
-        $this->modifier = $modifier;
-
-        return $this;
+        $this->name         = $name;
+        $this->header       = $header;
+        $this->position     = $position;
+        $this->transformers = new Transformers();
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace Admin\Read\Column;
 
 use Admin\Read\Tables\Table;
-use InvalidArgumentException;
 
 class ColumnCollector
 {
@@ -33,20 +32,37 @@ class ColumnCollector
     }
 
     /**
-     * Sets the columns to show.
-     *
-     * @param array $columns the columns to show.
-     *
-     * @throws InvalidArgumentException
+     * Automatically resolves the columns to display in the table.
      *
      * @return $this
      */
-    public function setColumns(array $columns)
+    public function all()
     {
-        foreach ($columns as $position => $column) {
-            if (count($column) < 3)
-                throw new InvalidArgumentException(sprintf('Array given to setColumns.'));
-            $this->columns[$column[0]] = new Column($column[0], $column[1], $position, null);
+        $resolver      = new ColumnResolver($this->table);
+        $this->columns = $resolver->resolve();
+
+        return $this->table;
+    }
+
+    /**
+     * Sets the columns of the table as an array.
+     *
+     * @param array $columns        the columns to set. The array should be structured like so:
+     *                              [
+     *                              'column' => 'alias',
+     *                              'column' => 'alias',
+     *                              'column' => 'alias',
+     *                              ];
+     *
+     *
+     *
+     * @return $this
+     */
+    public function set(array $columns)
+    {
+        $this->columns = [];
+        foreach ($columns as $column => $alias) {
+            $this->columns[] = new Column(is_int($column) ? $alias : $column, $alias, 100);
         }
 
         return $this;
@@ -55,50 +71,18 @@ class ColumnCollector
     /**
      * Adds a column to the collector.
      *
-     * @param string   $name     the name of the column.
-     * @param string   $header   the header of the column.
-     * @param int      $position the position of the column.
-     * @param callable $modifier the modifier.
+     * @param string $name     the name of the column.
+     * @param string $header   the header of the column.
+     * @param int    $position the position of the column.
      *
      * @return Column
      */
-    public function addColumn(string $name, string $header, int $position = 100, callable $modifier = null)
+    public function add(string $name, string $header, int $position = 100)
     {
         $column          = new Column($name, $header, $position);
         $this->columns[] = $column;
 
-        if ($modifier !== null)
-            $column->setModifier($modifier);
-
         return $column;
-    }
-
-    /**
-     * Automatically resolves the columns to select from the table.
-     *
-     * @return $this
-     */
-    public function autoResolve()
-    {
-        $resolver = new ColumnResolver($this->table);
-        $resolver->select();
-        $resolver->sort();
-
-        return $resolver->return();
-    }
-
-    /**
-     * Gets all the columns from the ColumnCollector.
-     *
-     * @return array
-     */
-    public function getColumns()
-    {
-        if (empty($this->columns)) {
-            $this->columns = $this->autoResolve();
-        }
-
-        return $this->columns;
     }
 
     /**
@@ -111,6 +95,54 @@ class ColumnCollector
         usort($this->columns, function (Column $a, Column $b) {
             return $a->position - $b->position;
         });
+
+        return $this;
+    }
+
+    /**
+     * Gets the table instance of the ColumnCollector.
+     *
+     * @return Table
+     */
+    public function getTable()
+    {
+        return $this->table;
+    }
+
+    /**
+     * Sets the table instance of the ColumnCollector.
+     *
+     * @param Table $table the table to set.
+     *
+     * @return $this
+     */
+    public function setTable($table)
+    {
+        $this->table = $table;
+
+        return $this;
+    }
+
+    /**
+     * Gets the array of columns of the instance.
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * Sets the array of columns of the instance.
+     *
+     * @param array $columns the array of columns to set.
+     *
+     * @return $this
+     */
+    public function setColumns(array $columns)
+    {
+        $this->columns = $columns;
 
         return $this;
     }
