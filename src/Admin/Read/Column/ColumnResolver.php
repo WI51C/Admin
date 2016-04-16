@@ -78,8 +78,6 @@ class ColumnResolver
             $return[$name] = new Column($name, $name, $position);
         }
 
-        var_dump($return);
-
         return $return;
     }
 }
