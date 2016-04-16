@@ -48,13 +48,6 @@ class ColumnCollector
      * Sets the columns of the table as an array.
      *
      * @param array $columns        the columns to set. The array should be structured like so:
-     *                              [
-     *                              'column' => 'alias',
-     *                              'column' => 'alias',
-     *                              'column' => 'alias',
-     *                              ];
-     *
-     *
      *
      * @return $this
      */
@@ -130,6 +123,10 @@ class ColumnCollector
      */
     public function getColumns()
     {
+        if (empty($this->columns)) {
+            $this->all();
+        }
+
         return $this->columns;
     }
 

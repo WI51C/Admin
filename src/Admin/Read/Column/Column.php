@@ -2,6 +2,8 @@
 
 namespace Admin\Read\Column;
 
+use Admin\Read\AttributeCollector;
+
 class Column
 {
 
@@ -34,6 +36,13 @@ class Column
     public $transformers;
 
     /**
+     * Attributes of the column.
+     *
+     * @var AttributeCollector
+     */
+    public $attributes;
+
+    /**
      * Column constructor.
      *
      * @param string $name     the name of the column in the database.
@@ -46,6 +55,7 @@ class Column
         $this->header       = $header;
         $this->position     = $position;
         $this->transformers = new Transformers();
+        $this->attributes   = new AttributeCollector();
     }
 
     /**

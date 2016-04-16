@@ -25,7 +25,11 @@
             <?php foreach ($this->data as $position => $row): ?>
                 <tr class="table-row">
                     <?php foreach ($this->columns as $column): ?>
-                        <td class="table-data"><?= $column->modifier ? call_user_func($column->modifier, $row[$column->name]) : $row[$column->name] ?></td>
+                        <td class="table-data">
+                            <?= $column->transformers->empty ?
+                                $row[$column->name] :
+                                $column->transformers->getContent($row[$column->name], $row, $position) ?>
+                        </td>
                     <?php endforeach ?>
                 </tr>
             <?php endforeach ?>

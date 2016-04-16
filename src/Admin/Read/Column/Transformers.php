@@ -15,6 +15,13 @@ class Transformers
     public $calls = [];
 
     /**
+     * Whether or not the calls array is empty.
+     *
+     * @var bool
+     */
+    public $empty = true;
+
+    /**
      * Adds a transformer to the Transformers instance.
      *
      * @param Closure $closure the callable to add.
@@ -24,8 +31,27 @@ class Transformers
     public function add(Closure $closure)
     {
         $this->calls[] = $closure;
+        $this->empty   = false;
 
         return $this;
+    }
+
+    /**
+     * Gets the content of the td.
+     *
+     * @param mixed $value    the current value of the row.
+     * @param array $row      the current row.
+     * @param int   $position the position in the table.
+     *
+     * @return mixed
+     */
+    public function getContent($value, array $row, int $position)
+    {
+        foreach ($this->calls as $call) {
+            $value = $call($value, $row, $position);
+        }
+
+        return $value;
     }
 
     /**

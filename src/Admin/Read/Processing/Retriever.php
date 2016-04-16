@@ -60,7 +60,7 @@ class Retriever
                 $this->data[$dataPosition][$name] = $renderer->render();
             }
 
-            $this->table->columns->addColumn($name, $relation->getHeader())->addAttribute('class', 'column-100');
+            $this->table->columns->add($name, $relation->getHeader())->attributes->add('class', 'column-100');
         }
 
         return $this;
