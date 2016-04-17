@@ -51,7 +51,7 @@ class MTM extends OTM
         $this->middleJoinType      = $middleJoinType;
         $this->middleJoinCondition = $middleJoinCondition;
 
-        $this->addOto($middleTable, $middleJoinCondition, $middleJoinType);
+        $this->relations->addOto($middleTable, $middleJoinCondition, $middleJoinType);
     }
 
     /**

@@ -11,7 +11,7 @@ use Admin\Read\Build\Retriever;
 use InvalidArgumentException;
 use Exception;
 
-class Table extends RelationCollector
+class Table
 {
 
     /**
@@ -99,6 +99,13 @@ class Table extends RelationCollector
     protected $connection;
 
     /**
+     * The relations of the Table instance.
+     *
+     * @var RelationCollector
+     */
+    public $relations;
+
+    /**
      * Table constructor.
      *
      * @param Connection $connection an instance of connection.
@@ -107,6 +114,7 @@ class Table extends RelationCollector
     {
         $this->connection = $connection;
         $this->columns    = new ColumnCollector($this);
+        $this->relations  = new RelationCollector($this);
     }
 
     /**
@@ -154,11 +162,11 @@ class Table extends RelationCollector
             $query->orderBy($order[0], $order[1], $order[2]);
         }
 
-        foreach ($this->oto as $relation) {
+        foreach ($this->relations->oto as $relation) {
             $query->join($relation->table, $relation->condition, $relation->type);
         }
 
-        return $query->get($this->table, [$this->offset, $this->limit], array_map(function(Column $column){
+        return $query->get($this->table, [$this->offset, $this->limit], array_map(function (Column $column) {
             return sprintf('%s \'%s\'', $column->name, $column->name);
         }, $this->columns->all()));
     }

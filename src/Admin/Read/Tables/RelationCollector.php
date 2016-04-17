@@ -6,8 +6,15 @@ use Admin\Read\Tables\Descendants\MTM;
 use Admin\Read\Tables\Descendants\OTO;
 use Admin\Read\Tables\Descendants\OTM;
 
-abstract class RelationCollector
+class RelationCollector
 {
+
+    /**
+     * The parent Table instance of the RelationCollector.
+     *
+     * @var Table
+     */
+    protected $parent;
 
     /**
      * The defined One-To-One relations of the collector.
@@ -31,6 +38,16 @@ abstract class RelationCollector
     public $mtm = [];
 
     /**
+     * RelationCollector constructor.
+     *
+     * @param Table $table the parent Table.
+     */
+    public function __construct(Table $table)
+    {
+        $this->parent = $table;
+    }
+
+    /**
      * Adds an One-To-One relation to another table.
      *
      * @param string $table     the table of the relation.
@@ -41,7 +58,7 @@ abstract class RelationCollector
      */
     public function addOto(string $table, string $condition, string $type = 'INNER')
     {
-        $this->oto[] = new OTO($this, $table, $condition, $type);
+        $this->oto[] = new OTO($this->parent, $table, $condition, $type);
 
         return $this;
     }
@@ -57,7 +74,7 @@ abstract class RelationCollector
      */
     public function addOtm(string $table, string $parentColumn, string $descendantColumn)
     {
-        $table       = new OTM($this, $table, $parentColumn, $descendantColumn);
+        $table       = new OTM($this->parent, $table, $parentColumn, $descendantColumn);
         $this->otm[] = $table;
 
         return $table;
@@ -83,7 +100,7 @@ abstract class RelationCollector
         string $linkCondition,
         string $linkType = 'INNER'
     ) {
-        $table       = new MTM($this, $table, $parentColumn, $descendantColumn, $linkTable, $linkCondition, $linkType);
+        $table       = new MTM($this->parent, $table, $parentColumn, $descendantColumn, $linkTable, $linkCondition, $linkType);
         $this->mtm[] = $table;
 
         return $table;

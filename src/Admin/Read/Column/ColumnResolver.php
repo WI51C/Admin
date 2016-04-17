@@ -48,7 +48,7 @@ class ColumnResolver
         $this->connection = $table->getConnection();
         $this->tables     = [$this->table->getTable()];
 
-        foreach ($this->table->getOto() as $relation) {
+        foreach ($this->table->relations->oto as $relation) {
             $this->tables[] = $relation->table;
         }
     }
