@@ -4,6 +4,7 @@ namespace Admin\Read\Tables;
 
 
 use Admin\Connection;
+use Admin\Read\Column\Column;
 use Admin\Read\Column\ColumnCollector;
 use Admin\Read\Build\Renderer;
 use Admin\Read\Build\Retriever;
@@ -157,11 +158,9 @@ class Table extends RelationCollector
             $query->join($relation->table, $relation->condition, $relation->type);
         }
 
-        foreach ($this->columns->all() as $column) {
-            $columns[] = sprintf('%s \'%s\'', $column->name, $column->name);
-        }
-
-        return $query->get($this->table, [$this->offset, $this->limit], $columns);
+        return $query->get($this->table, [$this->offset, $this->limit], array_map(function(Column $column){
+            return sprintf('%s \'%s\'', $column->name, $column->name);
+        }, $this->columns->all()));
     }
 
     /**

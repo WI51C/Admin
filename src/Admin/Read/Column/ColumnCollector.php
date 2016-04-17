@@ -81,10 +81,9 @@ class ColumnCollector
      */
     public function all()
     {
-        $resolver      = new ColumnResolver($this->table);
-        $this->columns = $resolver->resolve();
+        $resolver = new ColumnResolver($this->table);
 
-        return $this;
+        return $resolver->resolve();
     }
 
     /**
