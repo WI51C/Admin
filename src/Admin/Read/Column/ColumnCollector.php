@@ -32,30 +32,22 @@ class ColumnCollector
     }
 
     /**
-     * Automatically resolves the columns to display in the table.
+     * Sets the columns of the table.
+     *
+     * @param array $column         the array using the structure:
+     *                              [
+     *                              'column' => 'header',
+     *                              'column' => 'header',
+     *                              ...
+     *                              ]
      *
      * @return $this
      */
-    public function all()
-    {
-        $resolver      = new ColumnResolver($this->table);
-        $this->columns = $resolver->resolve();
-
-        return $this->table;
-    }
-
-    /**
-     * Sets the columns of the table as an array.
-     *
-     * @param array $columns        the columns to set. The array should be structured like so:
-     *
-     * @return $this
-     */
-    public function set(array $columns)
+    public function set(array $column)
     {
         $this->columns = [];
-        foreach ($columns as $column => $alias) {
-            $this->columns[] = new Column(is_int($column) ? $alias : $column, $alias, 100);
+        foreach ($column as $column => $header) {
+            $this->add(is_int($column) ? $header : $column, $header);
         }
 
         return $this;
@@ -64,18 +56,35 @@ class ColumnCollector
     /**
      * Adds a column to the collector.
      *
-     * @param string $name     the name of the column.
+     * @param string $column   the name of the column.
      * @param string $header   the header of the column.
      * @param int    $position the position of the column.
      *
      * @return Column
      */
-    public function add(string $name, string $header, int $position = 100)
+    public function add(string $column, string $header, int $position = 100)
     {
-        $column          = new Column($name, $header, $position);
+        if (strpos($column, '.') === false) {
+            $column = $this->table->table . '.' . $column;
+        }
+
+        $column          = new Column($column, $header, $position);
         $this->columns[] = $column;
 
         return $column;
+    }
+
+    /**
+     * Gets all the columns to display in the table.
+     *
+     * @return $this
+     */
+    public function all()
+    {
+        $resolver      = new ColumnResolver($this->table);
+        $this->columns = $resolver->resolve();
+
+        return $this;
     }
 
     /**
@@ -109,7 +118,7 @@ class ColumnCollector
      *
      * @return $this
      */
-    public function setTable($table)
+    public function setTable(Table $table)
     {
         $this->table = $table;
 
@@ -123,10 +132,6 @@ class ColumnCollector
      */
     public function getColumns()
     {
-        if (empty($this->columns)) {
-            $this->all();
-        }
-
         return $this->columns;
     }
 

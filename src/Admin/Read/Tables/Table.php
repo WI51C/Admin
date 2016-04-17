@@ -157,7 +157,7 @@ class Table extends RelationCollector
             $query->join($relation->table, $relation->condition, $relation->type);
         }
 
-        foreach ($this->columns->getColumns() as $column) {
+        foreach ($this->columns->all() as $column) {
             $columns[] = sprintf('%s \'%s\'', $column->name, $column->name);
         }
 
