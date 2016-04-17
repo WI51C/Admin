@@ -74,6 +74,14 @@ class RelationCollector
      */
     public function addOtm(string $table, string $parentColumn, string $descendantColumn)
     {
+        if (strpos($parentColumn, '.') === false) {
+            $parentColumn = $this->parent->table . '.' . $parentColumn;
+        }
+
+        if (strpos($descendantColumn, '.') === false) {
+            $descendantColumn = $table . '.' . $descendantColumn;
+        }
+
         $table       = new OTM($this->parent, $table, $parentColumn, $descendantColumn);
         $this->otm[] = $table;
 
@@ -100,6 +108,14 @@ class RelationCollector
         string $linkCondition,
         string $linkType = 'INNER'
     ) {
+        if (strpos($parentColumn, '.') === false) {
+            $parentColumn = $this->parent->table . '.' . $parentColumn;
+        }
+
+        if (strpos($descendantColumn, '.') === false) {
+            $descendantColumn = $table . '.' . $descendantColumn;
+        }
+
         $table       = new MTM($this->parent, $table, $parentColumn, $descendantColumn, $linkTable, $linkCondition, $linkType);
         $this->mtm[] = $table;
 

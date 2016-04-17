@@ -77,13 +77,25 @@ class ColumnCollector
     /**
      * Gets all the columns to display in the table.
      *
-     * @return $this
+     * @return array
      */
     public function all()
     {
         $resolver = new ColumnResolver($this->table);
 
         return $resolver->resolve();
+    }
+
+    /**
+     * Displays all available columns in the table.
+     *
+     * @return $this
+     */
+    public function displayAll()
+    {
+        $this->columns = $this->all();
+
+        return $this;
     }
 
     /**
