@@ -29,13 +29,6 @@ class Column
     public $position = 100;
 
     /**
-     * Transformers of the column.
-     *
-     * @var Transformers
-     */
-    public $transformers;
-
-    /**
      * Attributes of the column.
      *
      * @var AttributeCollector
@@ -54,7 +47,6 @@ class Column
         $this->name         = $name;
         $this->header       = $header;
         $this->position     = $position;
-        $this->transformers = new Transformers();
         $this->attributes   = new AttributeCollector();
     }
 

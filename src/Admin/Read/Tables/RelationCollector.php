@@ -56,7 +56,7 @@ class RelationCollector
      *
      * @return $this
      */
-    public function addOto(string $table, string $condition, string $type = 'INNER')
+    public function oto(string $table, string $condition, string $type = 'INNER')
     {
         $this->oto[] = new OTO($this->parent, $table, $condition, $type);
 
@@ -72,7 +72,7 @@ class RelationCollector
      *
      * @return TableDescendant
      */
-    public function addOtm(string $table, string $parentColumn, string $descendantColumn)
+    public function otm(string $table, string $parentColumn, string $descendantColumn)
     {
         if (strpos($parentColumn, '.') === false) {
             $parentColumn = $this->parent->table . '.' . $parentColumn;
@@ -100,7 +100,7 @@ class RelationCollector
      *
      * @return TableDescendant
      */
-    public function addMtm(
+    public function mtm(
         string $table,
         string $parentColumn,
         string $descendantColumn,

@@ -34,21 +34,50 @@ class ColumnCollector
     /**
      * Sets the columns of the table.
      *
-     * @param array $column         the array using the structure:
-     *                              [
-     *                              'column' => 'header',
-     *                              'column' => 'header',
-     *                              ...
-     *                              ]
+     * @param array $columns an array of columns and aliases to display.
      *
      * @return $this
      */
-    public function set(array $column)
+    public function set(array $columns)
     {
         $this->columns = [];
-        foreach ($column as $column => $header) {
+        foreach ($columns as $column => $header) {
             $this->add(is_int($column) ? $header : $column, $header);
         }
+
+        return $this;
+    }
+
+    /**
+     * Gets a column from the ColumnCollector.
+     *
+     * @param string $column the name of the column to get.
+     *
+     * @return Column
+     */
+    public function get(string $column)
+    {
+        if (strpos($column, '') === false) {
+            $column = $this->table->table . '.' . $column;
+        }
+
+
+    }
+
+    /**
+     * Removes a column from the ColumnCollector.
+     *
+     * @param string $column the name of the column to remove.
+     *
+     * @return $this
+     */
+    public function remove(string $column)
+    {
+        if (strpos($column, '') === false) {
+            $column = $this->table->table . '.' . $column;
+        }
+
+        unset($this->columns[$column]);
 
         return $this;
     }
@@ -68,8 +97,8 @@ class ColumnCollector
             $column = $this->table->table . '.' . $column;
         }
 
-        $column          = new Column($column, $header, $position);
-        $this->columns[] = $column;
+        $columnInstance         = new Column($column, $header, $position);
+        $this->columns[$column] = $columnInstance;
 
         return $column;
     }
