@@ -15,17 +15,17 @@
             <thead class="table-head">
             <tr class="table-head-row">
                 <?php foreach ($this->columns as $column): ?>
-                    <th class="table-header"><?= $column->header ?></th>
+                    <th><?= $column->header ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>
         <?php endif ?>
         <?php if (!empty($this->data)): ?>
-            <tbody class="table-body">
+            <tbody>
             <?php foreach ($this->data as $position => $row): ?>
-                <tr class="table-row">
+                <tr>
                     <?php foreach ($this->columns as $column): ?>
-                        <td class="table-data">
+                        <td>
                             <?= empty($column->modifiers) ? $row[$column->name] : $column->modify($row[$column->name], $row, $position) ?>
                         </td>
                     <?php endforeach ?>
