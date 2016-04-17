@@ -100,7 +100,7 @@ class ColumnCollector
         $columnInstance         = new Column($column, $header, $position);
         $this->columns[$column] = $columnInstance;
 
-        return $column;
+        return $columnInstance;
     }
 
     /**
