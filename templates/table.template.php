@@ -26,7 +26,7 @@
                 <tr class="table-row">
                     <?php foreach ($this->columns as $column): ?>
                         <td class="table-data">
-                            <?= $row[$column->name] ?>
+                            <?= empty($column->modifiers) ? $row[$column->name] : $column->modify($row[$column->name], $row, $position) ?>
                         </td>
                     <?php endforeach ?>
                 </tr>

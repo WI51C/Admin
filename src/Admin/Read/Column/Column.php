@@ -36,6 +36,13 @@ class Column
     public $attributes;
 
     /**
+     * Modifiers of the column.
+     *
+     * @var array
+     */
+    public $modifiers = [];
+
+    /**
      * Column constructor.
      *
      * @param string $name     the name of the column in the database.
@@ -44,10 +51,59 @@ class Column
      */
     public function __construct(string $name, string $header, int $position)
     {
-        $this->name         = $name;
-        $this->header       = $header;
-        $this->position     = $position;
-        $this->attributes   = new AttributeCollector();
+        $this->name       = $name;
+        $this->header     = $header;
+        $this->position   = $position;
+        $this->attributes = new AttributeCollector();
+    }
+
+    /**
+     * Apply a modifier to the column.
+     *
+     * @param callable $callback   to callback that produces the result of the <td> tag.
+     * @param array    $parameters the parameters to pass to the callback are:
+     *                             - $val the current value.
+     *                             - $row the current row.
+     *                             - $pos the position (index) of the current row.
+     *                             - Any value that doesnt match any of the above will be passed to the callback.
+     *
+     * @return $this
+     */
+    public function apply(callable $callback, array $parameters = ['$val'])
+    {
+        $this->modifiers[] = [
+            $callback,
+            $parameters,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Modifies a value using the modifiers defined in the column instance.
+     *
+     * @param mixed $value    the current value.
+     * @param array $row      the current row.
+     * @param int   $position the position (index) of the current row.
+     *
+     * @return mixed
+     */
+    public function modify($value, array $row, int $position)
+    {
+        foreach ($this->modifiers as $modifier) {
+            foreach ($modifier[1] as $position => $parameter) {
+                if ($parameter === '$val')
+                    $modifier[1][$position] = $value;
+                elseif ($parameter === '$row')
+                    $modifier[1][$position] = $row;
+                elseif ($parameter === '$pos')
+                    $modifier[1][$position] = $position;
+            }
+
+            $value = call_user_func_array($modifier[0], $modifier[1]);
+        }
+
+        return $value;
     }
 
     /**
