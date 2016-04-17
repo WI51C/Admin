@@ -26,9 +26,7 @@
                 <tr class="table-row">
                     <?php foreach ($this->columns as $column): ?>
                         <td class="table-data">
-                            <?= $column->transformers->empty ?
-                                $row[$column->name] :
-                                $column->transformers->getContent($row[$column->name], $row, $position) ?>
+                            <?= $row[$column->name] ?>
                         </td>
                     <?php endforeach ?>
                 </tr>
