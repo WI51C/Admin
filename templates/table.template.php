@@ -9,11 +9,11 @@
     <?php endif ?>
     <table class="table">
         <?php if ($this->table->caption !== null): ?>
-            <caption class="table-caption"><?= $this->table->caption ?></caption>
+            <caption><?= $this->table->caption ?></caption>
         <?php endif ?>
         <?php if ($this->table->head): ?>
-            <thead class="table-head">
-            <tr class="table-head-row">
+            <thead>
+            <tr>
                 <?php foreach ($this->columns as $column): ?>
                     <th <?= $column->attributes ?>><?= $column->header ?></th>
                 <?php endforeach ?>
