@@ -2,8 +2,6 @@
 
 namespace Admin\Read\Tables;
 
-use Admin\Connection;
-
 class TableDescendant extends Table
 {
 
@@ -22,13 +20,6 @@ class TableDescendant extends Table
     public $closeMessage = 'EXIT';
 
     /**
-     * Relation that defines the TableDescendant.
-     *
-     * @var TableRelation
-     */
-    protected $relation;
-
-    /**
      * Whether or not the table is inline.
      *
      * @var bool
@@ -41,16 +32,6 @@ class TableDescendant extends Table
      * @var string
      */
     public $header;
-
-    /**
-     * TableDescendant constructor.
-     *
-     * @param Connection $connection instance of connection.
-     */
-    public function __construct(Connection $connection)
-    {
-        parent::__construct($connection);
-    }
 
     /**
      * Gets the text to display in the button to open the table.

@@ -44,6 +44,20 @@ class OTM extends TableDescendant
     public $type;
 
     /**
+     * All relational data.
+     *
+     * @var array
+     */
+    protected $relationalData;
+
+    /**
+     * Current relational (parent) value.
+     *
+     * @var mixed
+     */
+    protected $currentRelation;
+
+    /**
      * OTO constructor.
      *
      * @param Table  $parent           parent of the relation.
@@ -59,6 +73,22 @@ class OTM extends TableDescendant
         $this->table            = $table;
         $this->parentColumn     = strtolower($parentColumn);
         $this->descendantColumn = strtolower($descendantColumn);
+    }
+
+    /**
+     * Gets the relational data matching the current relational data.
+     *
+     * @return array
+     */
+    public function getData()
+    {
+        if ($this->relationalData === null) {
+            $this->relationalData = parent::getData();
+        }
+
+        return array_filter($this->relationalData, function (array $row) {
+            return $row[$this->descendantColumn] === $this->currentRelation;
+        });
     }
 
     /**
@@ -153,5 +183,57 @@ class OTM extends TableDescendant
     public function getTable()
     {
         return $this->table;
+    }
+
+    /**
+     * Gets the current relational data.
+     *
+     * @return array
+     */
+    public function getRelationalData()
+    {
+        if ($this->relationalData === null) {
+            $this->relationalData = $this->getData();
+        }
+
+        return $this->relationalData;
+    }
+
+    /**
+     * Sets the current relational data.
+     *
+     * @param array $relationalData the array to set.
+     *
+     * @return $this
+     */
+    public function setRelationalData(array $relationalData)
+    {
+        $this->relationalData = $relationalData;
+
+        return $this;
+    }
+
+    /**
+     * Gets the current relational value.
+     *
+     * @return mixed
+     */
+    public function getCurrentRelation()
+    {
+        return $this->currentRelation;
+    }
+
+    /**
+     * Sets the current relation. Used when calling getData().
+     *
+     * @param mixed $currentRelation the current relational value.
+     *
+     * @return $this
+     */
+    public function setCurrentRelation($currentRelation)
+    {
+        $this->currentRelation = $currentRelation;
+
+        return $this;
     }
 }
