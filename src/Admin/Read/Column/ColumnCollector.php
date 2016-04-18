@@ -3,6 +3,7 @@
 namespace Admin\Read\Column;
 
 use Admin\Read\Tables\Table;
+use InvalidArgumentException;
 
 class ColumnCollector
 {
@@ -53,6 +54,8 @@ class ColumnCollector
      *
      * @param string $column the name of the column to get.
      *
+     * @throws InvalidArgumentException if the column doesnt exist.
+     *
      * @return Column
      */
     public function get(string $column)
@@ -61,7 +64,11 @@ class ColumnCollector
             $column = $this->table->table . '.' . $column;
         }
 
+        if (!array_key_exists($column, $this->columns)) {
+            throw new InvalidArgumentException(sprintf('The column %s could not be found.', $column));
+        }
 
+        return $this->columns[$column];
     }
 
     /**
