@@ -36,6 +36,27 @@ class Column
     public $attributes;
 
     /**
+     * Whether or not the user should be able to sort in the column.
+     *
+     * @var bool
+     */
+    public $sortable = true;
+
+    /**
+     * Whether or not the user should be able to search in the column.
+     *
+     * @var bool
+     */
+    public $searchable = true;
+
+    /**
+     * Whether or not the user should be able to select from the values in the array from a <select> tag.
+     *
+     * @var bool
+     */
+    public $selectable = false;
+
+    /**
      * Modifiers of the column.
      *
      * @var array
@@ -91,13 +112,13 @@ class Column
     public function modify($value, array $row, int $position)
     {
         foreach ($this->modifiers as $modifier) {
-            foreach ($modifier[1] as $position => $parameter) {
+            foreach ($modifier[1] as $i => $parameter) {
                 if ($parameter === '$val')
-                    $modifier[1][$position] = $value;
+                    $modifier[1][$i] = $value;
                 elseif ($parameter === '$row')
-                    $modifier[1][$position] = $row;
+                    $modifier[1][$i] = $row;
                 elseif ($parameter === '$pos')
-                    $modifier[1][$position] = $position;
+                    $modifier[1][$i] = $position;
             }
 
             $value = call_user_func_array($modifier[0], $modifier[1]);
@@ -176,5 +197,121 @@ class Column
     public function getPosition()
     {
         return $this->position;
+    }
+
+    /**
+     * @return AttributeCollector
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param AttributeCollector $attributes
+     *
+     * @return Column
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Gets whether or not the user should be able to sort in the column.
+     *
+     * @return boolean
+     */
+    public function isSortable()
+    {
+        return $this->sortable;
+    }
+
+    /**
+     * Sets whether or not the user should be able to sort in the column.
+     *
+     * @param boolean $sortable the value to set.
+     *
+     * @return $this
+     */
+    public function setSortable(bool $sortable)
+    {
+        $this->sortable = $sortable;
+
+        return $this;
+    }
+
+    /**
+     * Gets whether or not the user should be able to search in the column.
+     *
+     * @return boolean
+     */
+    public function isSearchable()
+    {
+        return $this->searchable;
+    }
+
+    /**
+     * Sets whether or not the user should be able to search in the column.
+     *
+     * @param boolean $searchable the value to set.
+     *
+     * @return $this
+     */
+    public function setSearchable(bool $searchable)
+    {
+        $this->searchable = $searchable;
+
+        return $this;
+    }
+
+    /**
+     * Gets whether or not the user should be able to select from the values in the array from a <select> tag.
+     *
+     * @return boolean
+     */
+    public function isSelectable()
+    {
+        return $this->selectable;
+    }
+
+    /**
+     * Sets whether or not the user should be able to select from the values in the array from a <select> tag.
+     *
+     * @param boolean $selectable the value to set.
+     *
+     * @return $this
+     */
+    public function setSelectable(bool $selectable)
+    {
+        $this->selectable = $selectable;
+
+        return $this;
+    }
+
+    /**
+     * Gets the modifiers of the column.
+     *
+     * @return array
+     */
+    public function getModifiers()
+    {
+        return $this->modifiers;
+    }
+
+    /**
+     * Sets the modifiers of the column.
+     *
+     * @param array $modifiers the modifier to set.
+     *
+     * @return $this
+     */
+    public function setModifiers(array $modifiers)
+    {
+        $this->modifiers = $modifiers;
+
+        return $this;
     }
 }
