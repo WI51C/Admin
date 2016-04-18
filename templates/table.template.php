@@ -15,7 +15,7 @@
             <thead class="table-head">
             <tr class="table-head-row">
                 <?php foreach ($this->columns as $column): ?>
-                    <th><?= $column->header ?></th>
+                    <th <?= $column->attributes ?>><?= $column->header ?></th>
                 <?php endforeach ?>
             </tr>
             </thead>

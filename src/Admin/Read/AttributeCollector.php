@@ -28,8 +28,20 @@ class AttributeCollector
     }
 
     /**
+     * Converts the attributes to HTML.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return join(' ', array_map(function ($value, $attribute) {
+            return sprintf('%s="%s"', $attribute, $value);
+        }, $this->attributes, array_keys($this->attributes)));
+    }
+
+    /**
      * Gets the attributes of the collector.
-     * 
+     *
      * @return array
      */
     public function getAttributes()
