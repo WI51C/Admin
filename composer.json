@@ -1,7 +1,8 @@
 {
   "minimum-stability": "dev",
   "require": {
-    "joshcam/mysqli-database-class": "dev-master"
+    "joshcam/mysqli-database-class": "dev-master",
+    "symfony/http-foundation": "dev-master"
   },
   "autoload": {
     "psr-4": {

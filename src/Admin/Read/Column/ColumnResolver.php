@@ -2,8 +2,7 @@
 
 namespace Admin\Read\Column;
 
-use Admin\Connection;
-use Admin\Read\Tables\Descendants\OTO;
+use Admin\Panel\Connection;
 use Admin\Read\Tables\Table;
 
 class ColumnResolver
